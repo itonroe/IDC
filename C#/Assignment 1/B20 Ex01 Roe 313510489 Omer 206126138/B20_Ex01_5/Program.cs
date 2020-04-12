@@ -16,6 +16,7 @@ namespace B20_Ex01_5
             smallestDigitInNumber();
             numOfDigitsDivideBy3();
             numOfDigitsGraterThanLastDigit();
+            //Missing close function
             Console.ReadLine();
         }
 
