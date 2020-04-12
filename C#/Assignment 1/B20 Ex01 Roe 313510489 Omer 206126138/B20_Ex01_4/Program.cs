@@ -46,19 +46,12 @@ namespace B20_Ex01_4
 
         static bool IsStringValid(string i_UserString)
         {
-            bool valid = true;
-
-            if ((!IsStringNumery(i_UserString) && !IsStringAlphabetic(i_UserString)) || !IsStringInLength(i_UserString, k_LengthOfString))
-            {
-                valid = false;
-            }
-
-            return valid;
+            return !((!IsStringNumery(i_UserString) && !IsStringAlphabetic(i_UserString)) || !IsStringInLength(i_UserString, k_LengthOfString));
         }
 
         static bool IsStringNumery(string i_UserString)
         {
-            return s_StringIsNumber = int.TryParse(i_UserString, out int numberOfString);
+            return s_StringIsNumber = int.TryParse(i_UserString, out int _);
         }
 
         static bool IsStringAlphabetic(string i_UserString)
