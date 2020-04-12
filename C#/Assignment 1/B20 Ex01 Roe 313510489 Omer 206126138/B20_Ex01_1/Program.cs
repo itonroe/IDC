@@ -30,8 +30,7 @@ namespace B20_Ex01_1
 
             PrintStatics();
 
-
-            Console.ReadLine();
+            CloseApplication();
         }
 
         static string ReadNumber()
@@ -114,9 +113,9 @@ namespace B20_Ex01_1
             double sumOfZeros = CountZerosInNum(s_BinaryNumber1) + CountZerosInNum(s_BinaryNumber2) + CountZerosInNum(s_BinaryNumber3);
             double sumOfOnes = (k_NumOfInputs * k_LengthOfNumber) - sumOfZeros;
 
-            Console.WriteLine("Average zeros is: {0}", sumOfZeros / k_NumOfInputs);
+            Console.WriteLine("Average zeros is: {0}", String.Format("{0:0.00}", sumOfZeros / k_NumOfInputs));
 
-            Console.WriteLine("Average ones is: {0}", sumOfOnes / k_NumOfInputs);
+            Console.WriteLine("Average ones is: {0}", String.Format("{0:0.00}", sumOfOnes / k_NumOfInputs));
         }
 
         static int CountZerosInNum(string i_Number)
@@ -231,6 +230,12 @@ namespace B20_Ex01_1
             }
 
             return minNumber;
+        }
+
+        static void CloseApplication()
+        {
+            Console.WriteLine("\nThat's it, press any letter to exit");
+            Console.ReadKey();
         }
     }
 }
