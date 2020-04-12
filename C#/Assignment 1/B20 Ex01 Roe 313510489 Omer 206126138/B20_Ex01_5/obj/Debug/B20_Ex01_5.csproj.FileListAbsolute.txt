@@ -1,0 +1,5 @@
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_5\bin\Debug\B20_Ex01_5.exe
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_5\bin\Debug\B20_Ex01_5.pdb
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_5\obj\Debug\B20_Ex01_5.csprojAssemblyReference.cache
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_5\obj\Debug\B20_Ex01_5.exe
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_5\obj\Debug\B20_Ex01_5.pdb
