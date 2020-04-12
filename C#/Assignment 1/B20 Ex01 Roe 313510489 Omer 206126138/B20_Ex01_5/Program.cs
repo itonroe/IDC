@@ -11,20 +11,20 @@ namespace B20_Ex01_5
 
         public static void Main(string[] args)
         {
-            read();
-            biggestDigitInNumber();
-            smallestDigitInNumber();
-            numOfDigitsDivideBy3();
-            numOfDigitsGraterThanLastDigit();
+            Read();
+            BiggestDigitInNumber();
+            SmallestDigitInNumber();
+            NumOfDigitsDivideBy3();
+            NumOfDigitsGraterThanLastDigit();
             //Missing close function
             Console.ReadLine();
         }
 
-        public static void read()
+        public static void Read()
         {
             Console.WriteLine("Please enter a positive number 9 digit length :");
             m_StringUserInput = Console.ReadLine();
-            while(!numberValidation())
+            while(!NumberValidation())
             {
                 Console.WriteLine("Wrong input, please try again :");
                 m_StringUserInput = Console.ReadLine();
@@ -32,12 +32,12 @@ namespace B20_Ex01_5
             Console.WriteLine("Thnak you!");
         }
 
-        public static Boolean numberValidation()
+        public static Boolean NumberValidation()
         {
-            return int.TryParse(m_StringUserInput, out m_IntegerUserInput);
+            return int.TryParse(m_StringUserInput, out m_IntegerUserInput) && m_StringUserInput.Length == 9;
         }
 
-        public static void biggestDigitInNumber()
+        public static void BiggestDigitInNumber()
         {
             int maxDigit = 0;
 
@@ -54,7 +54,7 @@ namespace B20_Ex01_5
             Console.WriteLine("The biggest digit in the number is : {0}", maxDigit);
         }
 
-        public static void smallestDigitInNumber()
+        public static void SmallestDigitInNumber()
         {
             int minDigit = 9;
 
@@ -71,7 +71,7 @@ namespace B20_Ex01_5
             Console.WriteLine("The smallest digit in the number is : {0}", minDigit);
         }
 
-        public static void numOfDigitsDivideBy3()
+        public static void NumOfDigitsDivideBy3()
         {
             int numOfDigitsDivideBy3 = 0;
 
@@ -84,15 +84,15 @@ namespace B20_Ex01_5
             Console.WriteLine("The number of digits which can be divide by 3 is : {0}", numOfDigitsDivideBy3);
         }
         
-        public static void numOfDigitsGraterThanLastDigit()
+        public static void NumOfDigitsGraterThanLastDigit()
         {
-            int lastDigit = m_StringUserInput[m_StringUserInput.Length - 1];
+            char lastDigit = m_StringUserInput[m_StringUserInput.Length - 1];
             int numOfDigitsGraterThanLastDigit = 0;
 
             for (int i = 0; i < m_StringUserInput.Length - 1; i++)
             {
                 // >= or >?
-                if (Int32.Parse("" + m_StringUserInput[i]) >= lastDigit)
+                if (m_StringUserInput[i] >= lastDigit)
                     numOfDigitsGraterThanLastDigit++;
             }
 
