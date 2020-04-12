@@ -6,5 +6,9 @@ namespace B20_Ex01_3
 {
     class Program
     {
+        static void Main()
+        {
+
+        }
     }
 }
