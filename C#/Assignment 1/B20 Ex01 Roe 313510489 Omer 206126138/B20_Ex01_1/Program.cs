@@ -13,7 +13,6 @@ namespace B20_Ex01_1
 
         static void Main()
         {
-
             Console.WriteLine("Enter 3 positive 9 length binary numbers follow by ENTER");
 
             Console.WriteLine("\nFirst number:");
@@ -88,7 +87,12 @@ namespace B20_Ex01_1
 
         static int BinaryToDecimal(string i_BinaryNumber)
         {
-            int binaryNumber = Convert.ToInt32(i_BinaryNumber, 2);
+            int binaryNumber = 0;
+
+            for (int i = i_BinaryNumber.Length - 1; i >= 0; i--)
+            {
+                binaryNumber += (int)Math.Pow(2, i_BinaryNumber.Length - 1 - i) * (int)(i_BinaryNumber[i] - 48);
+            }
 
             return binaryNumber;
         }
