@@ -1,0 +1,6 @@
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_2\bin\Debug\B20_Ex01_2.exe
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_2\bin\Debug\B20_Ex01_2.pdb
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_2\obj\Debug\B20_Ex01_2.csprojAssemblyReference.cache
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_2\obj\Debug\B20_Ex01_2.csproj.CoreCompileInputs.cache
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_2\obj\Debug\B20_Ex01_2.exe
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_2\obj\Debug\B20_Ex01_2.pdb
