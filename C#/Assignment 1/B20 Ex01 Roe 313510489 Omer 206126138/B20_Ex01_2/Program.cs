@@ -4,9 +4,9 @@ using System.Text;
 
 namespace B20_Ex01_2
 {
-    class Program
+    public class Program
     {
-        static int s_Height;
+        public static int s_Height;
 
         static void Main()
         {
@@ -15,7 +15,7 @@ namespace B20_Ex01_2
             PrintHourGlass(s_Height);
         }
 
-        static void PrintHourGlass(int i_CurrentHeight)
+        public static void PrintHourGlass(int i_CurrentHeight)
         {
             if (i_CurrentHeight <= 1)
             {
@@ -33,7 +33,7 @@ namespace B20_Ex01_2
             Console.WriteLine(Asterisks(i_CurrentHeight));
         }
 
-        static string Asterisks(int i_Length)
+        public static string Asterisks(int i_Length)
         {
             StringBuilder asterisks = new StringBuilder();
 

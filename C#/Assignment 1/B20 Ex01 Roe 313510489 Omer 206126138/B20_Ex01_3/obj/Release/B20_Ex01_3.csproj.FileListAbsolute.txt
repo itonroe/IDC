@@ -1,0 +1,9 @@
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\obj\Release\B20_Ex01_3.csprojAssemblyReference.cache
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\obj\Release\B20_Ex01_3.csproj.CoreCompileInputs.cache
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\bin\Release\B20_Ex01_3.exe
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\bin\Release\B20_Ex01_3.pdb
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\bin\Release\B20_Ex01_2.exe
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\bin\Release\B20_Ex01_2.pdb
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\obj\Release\B20_Ex01_3.csproj.CopyComplete
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\obj\Release\B20_Ex01_3.exe
+C:\GitHub\IDC\C#\Assignment 1\B20 Ex01 Roe 313510489 Omer 206126138\B20_Ex01_3\obj\Release\B20_Ex01_3.pdb
