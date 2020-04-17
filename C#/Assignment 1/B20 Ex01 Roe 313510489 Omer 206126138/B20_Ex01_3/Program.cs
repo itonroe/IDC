@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace B20_Ex01_3
+namespace B20_Ex01_03
 {
     class Program
     {
@@ -11,9 +11,7 @@ namespace B20_Ex01_3
         {
             Console.WriteLine("Enter height of hourglass follow by ENTER");
 
-            B20_Ex01_2.Program.s_Height = ReadNumber();
-            B20_Ex01_2.Program.PrintHourGlass(B20_Ex01_2.Program.s_Height);
-
+            B20_Ex01_02.Program.InitHourGlass(ReadNumber());
 
             CloseApplication();
         }

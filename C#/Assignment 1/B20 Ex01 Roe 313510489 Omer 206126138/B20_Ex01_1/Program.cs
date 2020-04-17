@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace B20_Ex01_1
+namespace B20_Ex01_01
 {
     class Program
     {
@@ -13,7 +13,7 @@ namespace B20_Ex01_1
 
         static void Main()
         {
-            Console.WriteLine("Enter 3 positive 9 length binary numbers follow by ENTER");
+            Console.WriteLine($"Enter {k_NumOfInputs} positive {k_LengthOfNumber} length binary numbers follow by ENTER");
 
             Console.WriteLine("\nFirst number:");
             s_BinaryNumber1 = ReadNumber();
@@ -25,7 +25,8 @@ namespace B20_Ex01_1
             s_BinaryNumber3 = ReadNumber();
 
             Console.WriteLine("\nYour numbers are: '{0}', '{1}' and '{2}'", BinaryToDecimal(s_BinaryNumber1),
-                                                                 BinaryToDecimal(s_BinaryNumber2), BinaryToDecimal(s_BinaryNumber3));
+                                                                            BinaryToDecimal(s_BinaryNumber2), 
+                                                                            BinaryToDecimal(s_BinaryNumber3));
 
             PrintStatics();
 
@@ -47,14 +48,7 @@ namespace B20_Ex01_1
         
         static bool IsNumValid(string i_Number)
         {
-            bool valid = true;
-
-            if (!IsNumBinary(i_Number) || !IsNumInLength(i_Number, k_LengthOfNumber))
-            {
-                valid = false;
-            }
-
-            return valid;
+            return (IsNumBinary(i_Number) && IsNumInLength(i_Number, k_LengthOfNumber));
         }
 
         static bool IsNumBinary(string i_Number)
@@ -75,26 +69,19 @@ namespace B20_Ex01_1
 
         static bool IsNumInLength(string i_Number, int i_Length)
         {
-            bool validLength = true;
-
-            if (i_Number.Length != i_Length)
-            {
-                validLength = false;
-            }
-
-            return validLength;
+            return (i_Number.Length == i_Length);
         }
 
         static int BinaryToDecimal(string i_BinaryNumber)
         {
-            int binaryNumber = 0;
+            int decimalNumber = 0;
 
             for (int i = i_BinaryNumber.Length - 1; i >= 0; i--)
             {
-                binaryNumber += (int)Math.Pow(2, i_BinaryNumber.Length - 1 - i) * (int)(i_BinaryNumber[i] - 48);
+                decimalNumber += (int)Math.Pow(2, i_BinaryNumber.Length - 1 - i) * (int)(i_BinaryNumber[i] - 48);
             }
 
-            return binaryNumber;
+            return decimalNumber;
         }
 
         static void PrintStatics()

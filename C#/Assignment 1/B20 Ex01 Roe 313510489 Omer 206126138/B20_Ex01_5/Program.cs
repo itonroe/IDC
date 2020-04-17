@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace B20_Ex01_5
+namespace B20_Ex01_05
 {
     class Program
     {
+        const int k_LengthOfNumber = 9;
+
         static string s_StringUserInput;
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter a 9 digit positive number follow by ENTER:");
+            Console.WriteLine($"Enter a {k_LengthOfNumber} digit positive number follow by ENTER");
 
             s_StringUserInput = ReadLine();
-
-            Console.WriteLine("\nThank you!");
 
             PrintStatics();
 
@@ -25,19 +25,28 @@ namespace B20_Ex01_5
         {
             string userNumber = Console.ReadLine();
 
-            while(!NumberValidation(userNumber))
+            while(!IsNumValid(userNumber))
             {
-                Console.WriteLine("Wrong input, please try again:");
-
+                Console.WriteLine("Number is not valid, Please try again.");
                 userNumber = Console.ReadLine();
             }
 
             return userNumber;
         }
 
-        static bool NumberValidation(string i_Number)
+        static bool IsNumValid(string i_Number)
         {
-            return int.TryParse(i_Number, out int _) && i_Number.Length == 9;
+            return (IsNumDecimal(i_Number) && IsNumInLength(i_Number, k_LengthOfNumber));
+        }
+
+        static bool IsNumDecimal(string i_Number)
+        {
+            return int.TryParse(i_Number, out int _);
+        }
+
+        static bool IsNumInLength(string i_Number, int i_Length)
+        {
+            return (i_Number.Length == i_Length);
         }
 
         static void PrintStatics()
@@ -107,7 +116,7 @@ namespace B20_Ex01_5
 
             for (int i = 0; i < s_StringUserInput.Length - 1; i++)
             {
-                if (s_StringUserInput[i] >= lastDigit)
+                if (s_StringUserInput[i] > lastDigit)
                     numOfDigitsGraterThanLastDigit++;
             }
 

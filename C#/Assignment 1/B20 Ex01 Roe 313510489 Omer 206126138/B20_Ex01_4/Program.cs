@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace B20_Ex01_4
+namespace B20_Ex01_04
 {
     class Program
     {
@@ -13,7 +13,7 @@ namespace B20_Ex01_4
 
         static void Main()
         {
-            Console.WriteLine("Enter 8 length string made up of numbers or english letters follow by ENTER");
+            Console.WriteLine($"Enter {k_LengthOfString} length string made up of numbers or english letters follow by ENTER");
             s_UserString = ReadLine();
 
             Console.WriteLine("\nIs input is a polyndrom: {0}", IsPolyndrom(s_UserString));
@@ -72,43 +72,32 @@ namespace B20_Ex01_4
 
         static bool IsStringInLength(string i_UserString, int i_Length)
         {
-            bool validLength = true;
-
-            if (i_UserString.Length != i_Length)
-            {
-                validLength = false;
-            }
-
-            return validLength;
+            return i_UserString.Length == i_Length;
         }
 
         static bool IsPolyndrom(string i_StringToCheck)
         {
             int stringLength = i_StringToCheck.Length;
+            bool returnValue;
 
             if (stringLength <= 1)
             {
-                return true;
-            }
+                returnValue = true;
 
-            if (i_StringToCheck[0] != i_StringToCheck[stringLength - 1])
+            } else if (i_StringToCheck[0] != i_StringToCheck[stringLength - 1])
             {
-                return false;
+                returnValue = false;
+            } else
+            {
+                returnValue = IsPolyndrom(i_StringToCheck.Substring(1, stringLength - 2));
             }
 
-            return IsPolyndrom(i_StringToCheck.Substring(1, stringLength - 2));
+            return returnValue;
         }
 
         static bool IsDivisibleWithNum(int i_NumToDivdeWith)
         {
-            bool isDivisible = true;
-
-            if (int.Parse(s_UserString) % i_NumToDivdeWith != 0)
-            {
-                isDivisible = false;
-            }
-
-            return isDivisible;
+            return (int.Parse(s_UserString) % i_NumToDivdeWith == 0);
         }
 
         static int SumOfCapitalLetters()
