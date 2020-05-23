@@ -8,16 +8,52 @@ namespace B20_EX02
     public class Board
     {
         private Cell[,] m_Board;
-        
+        private int m_BoardWidth;
+        private int m_BoardHeight;
+        public int Width
+        {
+            get
+            {
+                return m_BoardWidth;
+            }
+            set
+            {
+                m_BoardWidth = value;
+            }
+        }
+        public int Height
+        {
+            get
+            {
+                return m_BoardHeight;
+            }
+            set
+            {
+                m_BoardHeight = value;
+            }
+        }
+
         public Board()
         {}
 
-        public void SetSize(int i_Width, int i_Height) { 
-            m_Board = new Cell[i_Height, i_Width];
+
+        public void SetSize()
+        {
+            m_Board = new Cell[m_BoardHeight, m_BoardWidth];
         }
+
+        /*public void SetSize(int i_Width, int i_Height) 
+        {
+            Width = i_Width;
+            Height = i_Height;
+
+            m_Board = new Cell[i_Height, i_Width];
+        }*/
 
         public void Build()
         {
+            SetSize();
+
             int countLetters = NumOfCards();
 
             for (int i = 0; i < countLetters; i++)
@@ -41,7 +77,7 @@ namespace B20_EX02
             int x = point[0];
             int y = point[1];
 
-            m_Board[x, y] = new Cell();
+            m_Board[x, y] = new Cell(x, y);
             m_Board[x, y].Letter = i_Letter;
         }
 
@@ -57,32 +93,53 @@ namespace B20_EX02
             return point;
         }
 
-        public void ShowCell(int i_X, int i_Y)
+        public Point ShowRandomCell()
         {
-            m_Board[i_X, i_Y].Visible = true;
+            int[] point = RandCellPoint();
+            Cell cell = GetCellByPoint(point[0], point[1]);
+
+            while (cell.Visible)
+            {
+                point = RandCellPoint();
+                cell = GetCellByPoint(point[0], point[1]);
+            }
+
+            cell.Visible = true;
+
+            return new Point(point[0], point[1]);
         }
 
-        public void HideCell(int i_X, int i_Y)
+        public void ShowCell(string i_Cell)
         {
-            m_Board[i_X, i_Y].Visible = false;
+            GetCell(i_Cell).Visible = true;
+        }
+
+        public void HideCell(string i_Cell)
+        {
+            GetCell(i_Cell).Visible = false;
         }
 
         public Cell GetCell(string i_Cell)
         {
-            int x = i_Cell[0] - 'A';
-            int y = int.Parse(i_Cell[1].ToString()) - 1;
+            int y = i_Cell[0] - 'A';
+            int x = int.Parse(i_Cell[1].ToString()) - 1;
 
             return m_Board[x, y];
         }
 
+        public Cell GetCellByPoint(int i_X, int i_Y)
+        {
+            return m_Board[i_X, i_Y];
+        }
+
         public bool ValidCell(string i_Cell)
         {
-            int x = i_Cell[0] - 'A';
-            int y = int.Parse(i_Cell[1].ToString()) - 1;
+            int y = i_Cell[0] - 'A';
+            int x = int.Parse(i_Cell[1].ToString()) - 1;
 
             bool valid = true;
 
-            if (x > m_Board.GetLength(0) || y > m_Board.GetLength(1))
+            if (x < 0 || x > m_Board.GetLength(0) || y > m_Board.GetLength(1) || y < 0)
             {
                 valid = false;
             }
@@ -120,7 +177,7 @@ namespace B20_EX02
             //First and Seconds Lines           
             for (int j = 0; j < m_Board.GetLength(1); j++)
             {
-                lines[0] += " " + (char)('A' + j) + "  ";
+                lines[0] += string.Format(" {0}  ", (char)('A' + j));
                 lines[1] += "====";
             }
 
@@ -137,7 +194,7 @@ namespace B20_EX02
                         lines[i + 1] += "=";
                     }
 
-                    lines[i] += " " + m_Board[(i / 2) - 1, j].Letter + " |";
+                    lines[i] += string.Format(" {0} |", m_Board[(i / 2) - 1, j].Visible ? m_Board[(i / 2) - 1, j].Letter : ' ');
                     lines[i + 1] += "====";
                 }
             }

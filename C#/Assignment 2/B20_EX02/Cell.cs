@@ -9,9 +9,19 @@ namespace B20_EX02
         private char m_Letter;
         private bool m_Visisble;
 
-        public Cell()
+        private Point m_Point;
+        public Point Point
+        {
+            get
+            {
+                return m_Point;
+            }
+        }
+
+        public Cell(int x, int y)
         {
             m_Visisble = false;
+            m_Point = new Point(x, y);
         }
 
         public bool Visible

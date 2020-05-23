@@ -4,3 +4,5 @@ C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.csprojAssemblyReferenc
 C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.csproj.CoreCompileInputs.cache
 C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.exe
 C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.pdb
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\bin\Debug\Ex02.ConsoleUtils.dll
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.csproj.CopyComplete
