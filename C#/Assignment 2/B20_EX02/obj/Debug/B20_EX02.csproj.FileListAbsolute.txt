@@ -1,0 +1,6 @@
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\bin\Debug\B20_EX02.exe
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\bin\Debug\B20_EX02.pdb
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.csprojAssemblyReference.cache
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.csproj.CoreCompileInputs.cache
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.exe
+C:\GitHub\IDC\C#\Assignment 2\B20_EX02\obj\Debug\B20_EX02.pdb
