@@ -36,19 +36,10 @@ namespace B20_EX02
         public Board()
         {}
 
-
         public void SetSize()
         {
             m_Board = new Cell[m_BoardHeight, m_BoardWidth];
         }
-
-        /*public void SetSize(int i_Width, int i_Height) 
-        {
-            Width = i_Width;
-            Height = i_Height;
-
-            m_Board = new Cell[i_Height, i_Width];
-        }*/
 
         public void Build()
         {
@@ -67,85 +58,85 @@ namespace B20_EX02
 
         private void AddCell(char i_Letter)
         {
-            int[] point = RandCellPoint();
+            Point point = RandCellPoint();
 
-            while (m_Board[point[0], point[1]] != null)
+            while (m_Board[point.X, point.Y] != null)
             {
                 point = RandCellPoint();
             }
 
-            int x = point[0];
-            int y = point[1];
+            int x = point.X;
+            int y = point.Y;
 
             m_Board[x, y] = new Cell(x, y);
             m_Board[x, y].Letter = i_Letter;
         }
 
-        private int[] RandCellPoint()
+        private Point RandCellPoint()
         {
             Random random = new Random();
 
-            int[] point = new int[2];
-
-            point[0] = random.Next(0, m_Board.GetLength(0));
-            point[1] = random.Next(0, m_Board.GetLength(1));
-
-            return point;
+            return new Point(random.Next(0, m_Board.GetLength(0)), random.Next(0, m_Board.GetLength(1)));
         }
 
-        public Point ShowRandomCell()
+        /*public Point ShowRandomCell()
         {
-            int[] point = RandCellPoint();
-            Cell cell = GetCellByPoint(point[0], point[1]);
+            Point point = RandCellPoint();
+            Cell cell = GetCellByPoint(point);
 
             while (cell.Visible)
             {
                 point = RandCellPoint();
-                cell = GetCellByPoint(point[0], point[1]);
+                cell = GetCellByPoint(point);
             }
 
             cell.Visible = true;
 
-            return new Point(point[0], point[1]);
+            return point;
+        }*/
+
+        public bool CellIsVisible(Cell i_Cell)
+        {
+            return i_Cell.Visible;
         }
 
         public void ShowCell(string i_Cell)
         {
-            GetCell(i_Cell).Visible = true;
+            GetCellByString(i_Cell).Visible = true;
         }
 
         public void HideCell(string i_Cell)
         {
-            GetCell(i_Cell).Visible = false;
+            GetCellByString(i_Cell).Visible = false;
         }
 
-        public Cell GetCell(string i_Cell)
+        public Cell GetCellByString(string i_Cell)
         {
             int y = i_Cell[0] - 'A';
-            int x = int.Parse(i_Cell[1].ToString()) - 1;
+            int x = i_Cell[1] - '1';
 
             return m_Board[x, y];
         }
 
-        public Cell GetCellByPoint(int i_X, int i_Y)
+        public Cell GetCellByPoint(Point i_Point)
         {
-            return m_Board[i_X, i_Y];
+            return m_Board[i_Point.X, i_Point.Y];
         }
 
         public bool ValidCell(string i_Cell)
         {
             int y = i_Cell[0] - 'A';
-            int x = int.Parse(i_Cell[1].ToString()) - 1;
+            int x = i_Cell[1] - '1';
 
             bool valid = true;
 
-            if (x < 0 || x > m_Board.GetLength(0) || y > m_Board.GetLength(1) || y < 0)
+            if (x < 0 || x >= m_Board.GetLength(0) || y >= m_Board.GetLength(1) || y < 0)
             {
                 valid = false;
             }
             else
             {
-                if (GetCell(i_Cell).Visible)
+                if (CellIsVisible(GetCellByString(i_Cell)))
                 {
                     valid = false;
                 }
@@ -154,16 +145,29 @@ namespace B20_EX02
             return valid;
         }
 
-        public void Print()
-        {
-            Console.WriteLine(this.ToString());
-        }
-
         public int NumOfCards()
         {
             return (m_Board.GetLength(0) * m_Board.GetLength(1)) / 2;
         }
 
+        public bool BouardIsFull()
+        {
+            bool isFull = true;
+
+            for (int i = 0; i < m_Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Board.GetLength(1); j++)
+                {
+                    if (!CellIsVisible(GetCellByPoint(new Point(i, j))))
+                    {
+                        isFull = false;
+                        break;
+                    }
+                }
+            }
+
+            return isFull;
+        }
         public override string ToString()
         {
             StringBuilder boardDisplay = new StringBuilder();

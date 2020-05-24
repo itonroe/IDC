@@ -8,20 +8,12 @@ namespace B20_EX02
     {
         private char m_Letter;
         private bool m_Visisble;
-
         private Point m_Point;
-        public Point Point
-        {
-            get
-            {
-                return m_Point;
-            }
-        }
 
-        public Cell(int x, int y)
+        public Cell(int i_X, int i_Y)
         {
             m_Visisble = false;
-            m_Point = new Point(x, y);
+            m_Point = new Point(i_X, i_Y);
         }
 
         public bool Visible
@@ -45,6 +37,14 @@ namespace B20_EX02
             set
             {
                 m_Letter = value;
+            }
+        }
+
+        public Point Point
+        {
+            get
+            {
+                return m_Point;
             }
         }
     }

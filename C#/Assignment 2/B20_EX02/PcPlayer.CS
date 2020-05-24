@@ -26,11 +26,11 @@ namespace B20_EX02
 
             if ((prob[points[0].X, points[0].Y] + prob[points[1].X, points[1].Y]) / 2 > 30)
             {
-                game.PcGuess(points);
+                //game.PcGuess(points);
             }
             else
             {
-                game.PcRandomGuess();
+                //game.PcRandomGuess();
             }
         }
         public Point[] MostRememberdCardsByValue(int card)
@@ -43,7 +43,7 @@ namespace B20_EX02
             {
                 for (int j = 0; j < prob.GetLength(1); j++)
                 {
-                    if ((card == m_Board.GetCellByPoint(i,j).Letter - 1 - 'A'))
+                    if ((card == m_Board.GetCellByPoint(new Point(i, j)).Letter - 1 - 'A'))
                     {
                         if (first)
                         {
@@ -99,7 +99,7 @@ namespace B20_EX02
             {
                 for (int j = 0; j < prob.GetLength(1); j++)
                 {
-                    values[m_Board.GetCellByPoint(i, j).Letter - 'A'] += prob[i, j];
+                    values[m_Board.GetCellByPoint(new Point(i, j)).Letter - 'A'] += prob[i, j];
                 }
             }
         }

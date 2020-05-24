@@ -6,43 +6,50 @@ namespace B20_EX02
 {
     public class Player
     {
-        private string name;
-        private int score;
-        private bool humenOrPc;
+        private string m_Name;
+        private int m_Score;
+        private bool m_Turn;
+        //private bool humenOrPc;
 
         public Player()
         {
-            this.name = "";
-            this.score = 0;
-            this.humenOrPc = true;
+            this.m_Name = "";
+            this.m_Score = 0;
+            //this.humenOrPc = true;
         }
 
         public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return m_Name; }
+            set { m_Name = value; }
         }
 
         public int Score
         {
-            get { return score; }
-            set { score = value; }
+            get { return m_Score; }
+            set { m_Score = value; }
         }
 
-        public bool HumenOrPc
+        /*public bool HumenOrPc
         {
             get { return humenOrPc; }
             set { humenOrPc = value; }
+        }*/
+
+        public bool Turn
+        {
+            get { return m_Turn; }
+            set { m_Turn = value; }
         }
 
-        public bool CompareTo(Player b)
+        public bool CompareTo(Player i_Player)
         {
-            bool AisBigger = false;
+            bool A_isBigger = true;
 
-            if (this.score > b.score)
-                AisBigger = true;
+            if (m_Score < i_Player.Score)
+                A_isBigger = false;
 
-            return AisBigger;
+            return A_isBigger;
         }
     }
 }

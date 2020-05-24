@@ -4,50 +4,19 @@ namespace B20_EX02
 {
     public class Game
     {
-        private const int k_MinWidth = 2;
+        public PcPlayer pcPlayer = new PcPlayer();
+
+        private const int k_MinWidth = 4;
         private const int k_MaxWidth = 6;
-        private const int k_MinHeight = 2;
+        private const int k_MinHeight = 4;
         private const int k_MaxHeight = 6;
 
-        public PcPlayer pcPlayer = new PcPlayer();
+        private Player m_PlayerTurn;
 
         private Board m_Board;
         private Player m_P1;
-        public string Player1_Name
-        {
-            get
-            {
-                return m_P1.Name;
-            }
-            set
-            {
-                m_P1.Name = value;
-            }
-        }
         private Player m_P2;
-        public string Player2_Name
-        {
-            get
-            {
-                return m_P2.Name;
-            }
-            set
-            {
-                m_P2.Name = value;
-            }
-        }
         private char m_GameMode;
-        public char GameMode
-        {
-            get
-            {
-                return m_GameMode;
-            }
-            set
-            {
-                m_GameMode = value;
-            }
-        }
         private bool m_GameIsOn;
 
         public Game()
@@ -58,7 +27,7 @@ namespace B20_EX02
             m_GameIsOn = false;
         }
 
-        public void StartGame()
+        public void BuildGame()
         {
             m_Board.Build();
 
@@ -67,18 +36,7 @@ namespace B20_EX02
                 pcPlayer.InitGame(m_Board);
             }
 
-            m_GameIsOn = true;
-
-            while (m_GameIsOn)
-            {
-                Round();
-
-                if (m_P1.Score + m_P2.Score == m_Board.NumOfCards())
-                {
-                    m_GameIsOn = false;
-                    return;
-                }
-            }
+            ChangeTurn();
         }
 
         public void SetWidth(string i_Width)
@@ -91,65 +49,47 @@ namespace B20_EX02
             m_Board.Height = int.Parse(i_Height);
         }
 
-        public bool ValidBoardWidth(string i_Width)
+        public bool ValidWidth(string i_Width)
         {
             return int.TryParse(i_Width, out _) && int.Parse(i_Width) <= k_MaxWidth && int.Parse(i_Width) >= k_MinWidth;
         }
 
-        public bool ValidBoardHeight(string i_Height)
+        public bool ValidHeight(string i_Height)
         {
             return int.TryParse(i_Height, out _) && (int.Parse(i_Height) <= k_MaxHeight && int.Parse(i_Height) >= k_MinHeight) && (int.Parse(i_Height) * m_Board.Width % 2 == 0);
         }
 
-        public void Round()
+        public void OpenCard(string i_Card)
         {
-            Ex02.ConsoleUtils.Screen.Clear();
-            Turn(m_P1);
+            m_Board.ShowCell(i_Card);
 
-            if (m_P1.Score + m_P2.Score == m_Board.NumOfCards())
+            if (m_GameMode == 'S')
             {
-                m_GameIsOn = false;
-                return;
-            }   
-
-            Ex02.ConsoleUtils.Screen.Clear();
-
-            if (m_GameMode == 'M')
-            {
-                Turn(m_P2);
-            }
-            else
-            {
-                TurnPc();
+                pcPlayer.RefreshPcMemory(m_Board.GetCellByString(i_Card));
             }
         }
 
-        public void Turn(Player i_Player)
+        public void ChangeTurn()
         {
-            string card1 = FirstPick(i_Player.Name);
-            string card2 = SecondPick(i_Player.Name);
-
-            if (MatchingCards(card1, card2))
+            if (m_P1.Turn)
             {
-                m_Board.ShowCell(card2);
-                i_Player.Score++;
+                m_P1.Turn = false;
+                m_P2.Turn = true;
+                m_PlayerTurn = m_P2;
             }
             else
             {
-                System.Threading.Thread.Sleep(2000);
-                m_Board.HideCell(card1);
-                m_Board.HideCell(card2);
+                m_P1.Turn = true;
+                m_P2.Turn = false;
+                m_PlayerTurn = m_P1;
             }
-
-            Ex02.ConsoleUtils.Screen.Clear();
-            m_Board.Print();
         }
 
-        public void TurnPc()
+        /*public void TurnPc()
         {
             pcPlayer.Turn(this);
         }
-
+        
         public void PcGuess(Point[] i_Points)
         {
             System.Threading.Thread.Sleep(2000);
@@ -209,93 +149,41 @@ namespace B20_EX02
                 pcPlayer.prob[pick1.X, pick1.Y] = 0;
                 pcPlayer.prob[pick2.X, pick2.Y] = 0;
             }
-        }
-
-        public string ChooseCard(string i_CardNumber)
-        {
-            Console.WriteLine($"Choose {i_CardNumber} card:");
-
-            string card;
-
-            while (!ValidCard(card = Console.ReadLine()))
-            {
-                Console.WriteLine($"Choose {i_CardNumber} card again:");
-            }
-
-            m_Board.ShowCell(card);
-
-            if (m_GameMode == 'S')
-            {
-                pcPlayer.RefreshPcMemory(m_Board.GetCell(card));
-            }
-
-            return card;
-        }
+        }*/
 
         public bool ValidCard(string i_InputCard)
         {
-            bool validcard = true;
-
-            if (i_InputCard.Equals("Q"))
-                ExitGame();
-            else
-            {
-                if (i_InputCard.Length != 2 || !(i_InputCard[0] <= 'Z' && i_InputCard[0] >= 'A') || !(i_InputCard[1] >= '0'  && i_InputCard[1] <= '9'))
-                {
-                    validcard = false;
-                }
-                else
-                {
-                    validcard = m_Board.ValidCell(i_InputCard);
-                }
-            }
-
-            return validcard;
-        }
-
-        private string FirstPick(string i_PlayerName)
-        {
-            Console.WriteLine($"Turn: {i_PlayerName}, first pick\n");
-            m_Board.Print();
-
-            string card = ChooseCard("first");
-
-            Ex02.ConsoleUtils.Screen.Clear();
-
-            return card;
-        }
-
-        private string SecondPick(string i_PlayerName)
-        {
-            Console.WriteLine($"Turn: {i_PlayerName}, second pick\n");
-            m_Board.Print();
-
-            string card = ChooseCard("second");
-
-            Ex02.ConsoleUtils.Screen.Clear();
-
-            Console.WriteLine($"Turn: {i_PlayerName}, second pick\n");
-            m_Board.Print();
-
-            return card;
+            return m_Board.ValidCell(i_InputCard);
         }
 
         public bool MatchingCards(string i_Card1, string i_Card2)
         {
-            return m_Board.GetCell(i_Card1).Letter == m_Board.GetCell(i_Card2).Letter;
+            bool match = m_Board.GetCellByString(i_Card1).Letter == m_Board.GetCellByString(i_Card2).Letter;
+
+            if (match)
+            {
+                m_PlayerTurn.Score++;
+            }
+            else
+            {
+                HideCards(i_Card1, i_Card2);
+            }
+
+            return match;
         }
 
-        public bool MatchingCards(Cell pick1, Cell pick2)
+        /*public bool MatchingCardsByCell(Cell i_Pick1, Cell i_Pick2)
         {
-            return pick1.Letter == pick2.Letter;
+            return i_Pick1.Letter == i_Pick2.Letter;
+        }*/
+
+        public void HideCards(string i_Card1, string i_Card2)
+        {
+            m_Board.HideCell(i_Card1);
+            m_Board.HideCell(i_Card2);
         }
 
-        public string GetScore()
-       {
-           return $"The Score is:\n    {m_P1.Name} - {m_P1.Score}\n    {m_P2.Name} - {m_P2.Score}";
-       }
-
-        public string GetWinner()
+        public string GetWinnerName()
         {
             string winner = m_P1.Name;
 
@@ -308,14 +196,85 @@ namespace B20_EX02
                 winner = "no one... it's a tie.";
             }
 
-            return $"The winner is {winner}";
+            return winner;
         }
 
-        public void ExitGame()
+        public bool IsEnded()
         {
-            Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine("{player.Name}, thank you for playing memory game");
-            m_GameIsOn = false;
+            bool isEnded = true;
+
+            if (m_Board.BouardIsFull())
+            {
+                m_GameIsOn = false;
+            }
+            else
+            {
+                isEnded = false;
+            }
+
+            return isEnded;
+        }
+
+        public override string ToString()
+        {
+            return m_Board.ToString();
+        }
+
+        public string PlayerTurn_Name
+        {
+            get { return m_PlayerTurn.Name; }
+        }
+        public string Player1_Name
+        {
+            get
+            {
+                return m_P1.Name;
+            }
+            set
+            {
+                m_P1.Name = value;
+            }
+        }
+        public string Player2_Name
+        {
+            get
+            {
+                return m_P2.Name;
+            }
+            set
+            {
+                m_P2.Name = value;
+            }
+        }
+        public int Player1_Score
+        {
+            get { return m_P1.Score; }
+        }
+        public int Player2_Score
+        {
+            get { return m_P2.Score; }
+        }
+        public char GameMode
+        {
+            get
+            {
+                return m_GameMode;
+            }
+            set
+            {
+                m_GameMode = value;
+            }
+        }
+        public bool GameIsOn
+        {
+            get 
+            { 
+                return m_GameIsOn; 
+            }
+            set 
+            { 
+                m_GameIsOn = value; 
+            }
         }
     }
 }
