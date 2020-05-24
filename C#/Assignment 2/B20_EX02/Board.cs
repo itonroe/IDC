@@ -79,7 +79,7 @@ namespace B20_EX02
             return new Point(random.Next(0, m_Board.GetLength(0)), random.Next(0, m_Board.GetLength(1)));
         }
 
-        /*public Point ShowRandomCell()
+        public Cell ShowAndReturnRandomCell()
         {
             Point point = RandCellPoint();
             Cell cell = GetCellByPoint(point);
@@ -92,8 +92,8 @@ namespace B20_EX02
 
             cell.Visible = true;
 
-            return point;
-        }*/
+            return GetCellByPoint(point);
+        }
 
         public bool CellIsVisible(Cell i_Cell)
         {

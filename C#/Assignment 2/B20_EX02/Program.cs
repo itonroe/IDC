@@ -94,13 +94,16 @@ namespace B20_EX02
 
             while (m_Game.GameIsOn)
             {
-                Round();
+                if (m_Game.GameMode == 'M')
+                    MultiPlayerRound();
+                else
+                    SinglePlayerRound();
             }
         }
 
-        public static void Round()
+        public static void MultiPlayerRound()
         {
-            Turn();
+            HumenTurn();
 
             if (m_Game.IsEnded() || !m_Game.GameIsOn)
             {
@@ -109,7 +112,7 @@ namespace B20_EX02
 
             m_Game.ChangeTurn();
 
-            Turn();
+            HumenTurn();
 
             if (m_Game.IsEnded() || !m_Game.GameIsOn)
             {
@@ -119,7 +122,14 @@ namespace B20_EX02
             m_Game.ChangeTurn();
         }
 
-        public static void Turn()
+        public static void SinglePlayerRound()
+        {
+            HumenTurn();
+
+            PcTurn();
+        }
+
+        public static void HumenTurn()
         {
             Ex02.ConsoleUtils.Screen.Clear();
 
@@ -191,7 +201,14 @@ namespace B20_EX02
             Console.WriteLine(m_Game);
 
             m_Game.MatchingCards(card1, card2);
+
+            if (m_Game.GameMode == 'S')
+            {
+                m_Game.pcPlayer.RefreshPcMemory(m_Game.m_Board.GetCellByString(card1));
+                m_Game.pcPlayer.RefreshPcMemory(m_Game.m_Board.GetCellByString(card2));
+            }
         }
+
 
         public static bool ValidCard(string i_InputCard)
         {
@@ -230,6 +247,61 @@ namespace B20_EX02
             m_Game.GameIsOn = false;
             Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Thank you for playing our memory game");
+        }
+
+        public static void PcTurn()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine("Pc is thinking...");
+            System.Threading.Thread.Sleep(2000);
+
+            Cell[] picks = m_Game.pcPlayer.Turn();
+
+            if (!PcPickIsValid(ref picks[0]))
+                picks[0] = PcRandomGuess();
+
+            if (!PcPickIsValid(ref picks[1]))
+                picks[1] = PcRandomGuess();
+
+            if(picks[0].Letter != picks[1].Letter)
+            {
+                picks[0].Visible = false;
+                picks[1].Visible = false;
+            }
+
+        }
+
+        public static bool PcPickIsValid(ref Cell pick)
+        {
+            bool returnValue = true;
+
+            if (pick == null)
+                returnValue = false;
+            else
+            {
+                System.Threading.Thread.Sleep(3000);
+                Console.WriteLine("Pc remember card : ");
+                pick.Visible = true;
+            }
+
+            return returnValue;
+        }
+
+        public static Cell PcRandomGuess()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine("COMPUTER IS UsingRandomMethod...");
+
+            System.Threading.Thread.Sleep(2000);
+
+            Cell cell = m_Game.m_Board.ShowAndReturnRandomCell();
+            Console.WriteLine(m_Game);
+
+            System.Threading.Thread.Sleep(2000);
+
+            m_Game.pcPlayer.RefreshPcMemory(cell);
+
+            return cell;
         }
     }
 }

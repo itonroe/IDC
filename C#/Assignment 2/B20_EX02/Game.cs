@@ -13,7 +13,7 @@ namespace B20_EX02
 
         private Player m_PlayerTurn;
 
-        private Board m_Board;
+        public Board m_Board;// changed to public
         private Player m_P1;
         private Player m_P2;
         private char m_GameMode;
@@ -85,72 +85,6 @@ namespace B20_EX02
             }
         }
 
-        /*public void TurnPc()
-        {
-            pcPlayer.Turn(this);
-        }
-        
-        public void PcGuess(Point[] i_Points)
-        {
-            System.Threading.Thread.Sleep(2000);
-            Cell pick1 = m_Board.GetCellByPoint(i_Points[0].X, i_Points[0].Y);
-            pick1.Visible = true;
-            Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine("PCGUESS");
-            m_Board.Print();
-            pcPlayer.RefreshPcMemory(pick1);
-
-            System.Threading.Thread.Sleep(2000);
-            Cell pick2 = m_Board.GetCellByPoint(i_Points[1].X, i_Points[1].Y);
-            pick2.Visible = true;
-            Ex02.ConsoleUtils.Screen.Clear();
-            m_Board.Print();
-            pcPlayer.RefreshPcMemory(pick2);
-
-            System.Threading.Thread.Sleep(2000);
-
-            if (!MatchingCards(pick1, pick2))
-            {
-                pick1.Visible = false;
-                pick2.Visible = false;
-            }
-            else
-            {
-                pcPlayer.prob[i_Points[0].X, i_Points[0].Y] = 0;
-                pcPlayer.prob[i_Points[1].X, i_Points[1].Y] = 0;
-            }
-        }
-
-        public void PcRandomGuess()
-        {
-            System.Threading.Thread.Sleep(2000);
-            Point pick1 = m_Board.ShowRandomCell();
-            Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine("PCRANDOM");
-            m_Board.Print();
-
-            pcPlayer.RefreshPcMemory(m_Board.GetCellByPoint(pick1.X, pick1.Y));
-
-            System.Threading.Thread.Sleep(2000);
-            Point pick2 = m_Board.ShowRandomCell();
-            Ex02.ConsoleUtils.Screen.Clear();
-            m_Board.Print();
-
-            pcPlayer.RefreshPcMemory(m_Board.GetCellByPoint(pick2.X, pick2.Y));
-            System.Threading.Thread.Sleep(2000);
-
-            if (!MatchingCards(m_Board.GetCellByPoint(pick1.X, pick1.Y), m_Board.GetCellByPoint(pick2.X, pick2.Y)))
-            {
-                m_Board.GetCellByPoint(pick1.X, pick1.Y).Visible = false;
-                m_Board.GetCellByPoint(pick2.X, pick2.Y).Visible = false;
-            }
-            else
-            {
-                pcPlayer.prob[pick1.X, pick1.Y] = 0;
-                pcPlayer.prob[pick2.X, pick2.Y] = 0;
-            }
-        }*/
-
         public bool ValidCard(string i_InputCard)
         {
             return m_Board.ValidCell(i_InputCard);
@@ -169,13 +103,13 @@ namespace B20_EX02
                 HideCards(i_Card1, i_Card2);
             }
 
+            //if (m_GameMode == 'S' && match)
+                //pcPlayer.ResetProbByValue(m_Board.GetCellByString(i_Card1).Letter);
+
             return match;
+
         }
 
-        /*public bool MatchingCardsByCell(Cell i_Pick1, Cell i_Pick2)
-        {
-            return i_Pick1.Letter == i_Pick2.Letter;
-        }*/
 
         public void HideCards(string i_Card1, string i_Card2)
         {
