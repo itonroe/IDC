@@ -66,7 +66,7 @@ namespace B20_EX02
         {
             ResetValues();
             SumProb();
-            return FindPairFromMemoryByValue(BestValue(GetHighestValueByProb()));
+            return FindPairFromMemoryByValue(GetHighestValueByProb());
 
         }
 
@@ -117,31 +117,23 @@ namespace B20_EX02
             return picks;
         }
 
-        public static double GetHighestValueByProb()
+        public static Char GetHighestValueByProb()
         {
             double maxProb = 0;
+            int offset = 0;
 
             for(int i=0; i< values.GetLength(0); i++)
             {
                 if (values[i] > maxProb)
+                {
                     maxProb = values[i];
+                    offset = i;
+                }
             }
 
-            return maxProb;
+            return (char)('A' + offset);
         }
 
-        public static Char BestValue(double maxProb)
-        {
-            int maxValue = 0;
-
-            for (int i = 0; i < values.GetLength(0); i++)
-            {
-                if (values[i] >= maxProb)
-                    maxValue = i;
-            }
-
-            return (char)('A' + maxValue);
-        }
 
         public void RefreshPcMemory(Cell cell)
         {
@@ -213,14 +205,16 @@ namespace B20_EX02
 
         }
 
-        public void UpdateScore()
+        public void UpdateScore() // need to move to game but i dont know how
         {
             if (picks[0].Letter != picks[1].Letter)
             {
                 picks[0].Visible = false;
                 picks[1].Visible = false;
                 Score++;
-                
+            }
+            else
+            {
                 ResetValues();
                 ResetProbByValue(picks[0].Letter);
             }
@@ -236,7 +230,9 @@ namespace B20_EX02
         public void MakeGuessVisible(Cell cell)
         {
             cell.Visible = true;
+            RefreshPcMemory(cell);
         }
 
+        
     }
 }

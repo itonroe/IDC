@@ -90,13 +90,14 @@ namespace B20_EX02
             return m_Board.ValidCell(i_InputCard);
         }
 
-        public bool MatchingCards(string i_Card1, string i_Card2)
+        public bool MatchingCards(string i_Card1, string i_Card2)// for user
         {
             bool match = m_Board.GetCellByString(i_Card1).Letter == m_Board.GetCellByString(i_Card2).Letter;
 
+
             if (match)
             {
-                m_PlayerTurn.Score++;
+                    m_PlayerTurn.Score++;
             }
             else
             {
@@ -110,7 +111,6 @@ namespace B20_EX02
 
         }
 
-
         public void HideCards(string i_Card1, string i_Card2)
         {
             m_Board.HideCell(i_Card1);
@@ -121,13 +121,27 @@ namespace B20_EX02
         {
             string winner = m_P1.Name;
 
-            if (m_P1.Score < m_P2.Score)
+            if (m_GameMode == 'M')
             {
-                winner = m_P2.Name;
+                if (m_P1.Score < m_P2.Score)
+                {
+                    winner = m_P2.Name;
+                }
+                else
+                {
+                    winner = "no one... it's a tie.";
+                }
             }
             else
             {
-                winner = "no one... it's a tie.";
+                if (m_P1.Score < pcPlayer.Score)
+                {
+                    winner = "PC";
+                }
+                else
+                {
+                    winner = "no one... it's a tie.";
+                }
             }
 
             return winner;

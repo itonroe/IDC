@@ -202,11 +202,6 @@ namespace B20_EX02
 
             m_Game.MatchingCards(card1, card2);
 
-            if (m_Game.GameMode == 'S')
-            {
-                m_Game.pcPlayer.RefreshPcMemory(m_Game.m_Board.GetCellByString(card1));
-                m_Game.pcPlayer.RefreshPcMemory(m_Game.m_Board.GetCellByString(card2));
-            }
         }
 
 
@@ -238,8 +233,16 @@ namespace B20_EX02
 
             Console.WriteLine("- THE END - \n");
 
-            Console.WriteLine($"The Score is:\n    {m_Game.Player1_Name} - {m_Game.Player1_Score}\n    {m_Game.Player2_Name} - {m_Game.Player2_Score}");
-            Console.WriteLine($"The winner is {m_Game.GetWinnerName()}");
+            if (m_Game.GameMode == 'M')// NEED ENCAPSULATION
+            {
+                Console.WriteLine($"The Score is:\n    {m_Game.Player1_Name} - {m_Game.Player1_Score}\n    {m_Game.Player2_Name} - {m_Game.Player2_Score}");
+                Console.WriteLine($"The winner is {m_Game.GetWinnerName()}");
+            }
+            else
+            {
+                Console.WriteLine($"The Score is:\n    {m_Game.Player1_Name} - {m_Game.Player1_Score}\n    PC - {m_Game.pcPlayer.Score}");
+                Console.WriteLine($"The winner is {m_Game.GetWinnerName()}");
+            }
         }
 
         public static void ExitGame()
@@ -264,6 +267,9 @@ namespace B20_EX02
             PcInterface();
             m_Game.pcPlayer.UpdateScore();
 
+            if (m_Game.IsEnded())
+                ExitGame();
+
 
 
         }
@@ -274,14 +280,14 @@ namespace B20_EX02
 
             System.Threading.Thread.Sleep(2000);
             m_Game.pcPlayer.MakeGuessVisible(m_Game.pcPlayer.GetPicks()[0]);
-            m_Game.pcPlayer.RefreshPcMemory(m_Game.pcPlayer.GetPicks()[0]);
 
             Console.WriteLine(m_Game);
 
             System.Threading.Thread.Sleep(2000);
 
             m_Game.pcPlayer.MakeGuessVisible(m_Game.pcPlayer.GetPicks()[1]);
-            m_Game.pcPlayer.RefreshPcMemory(m_Game.pcPlayer.GetPicks()[1]);
+
+
         }
     }
 }
