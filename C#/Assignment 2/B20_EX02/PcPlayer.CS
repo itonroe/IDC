@@ -9,11 +9,12 @@ namespace B20_EX02
         public static double[,] prob;
         private static Board m_Board;
         public static double[] values;
-        private Cell[] picks;
 
-        public static int Score;
+        public static Cell[] picks; // need to be private with property 
 
-        const double DIFFICULTY = 0.9;//(easy) [0.7 , 1] (hard)
+        public int Score;
+
+        const double DIFFICULTY = 0.9;//(EASY FOR USER TO WIN) [0.7 , 1] (hard FOR USER TO WIN)
 
         public void InitGame(Board board)
         {
@@ -23,14 +24,14 @@ namespace B20_EX02
             Score = 0;
         }
 
-        public Cell[] Turn()
+        public void TryToRemember()
         {
-            Cell[] picks = new Cell[2];
+            Cell[] tempPicks = new Cell[2];
 
-            if(GetHighestProb() / 2 > 60)
-                picks = GetPicks();
+            if(GetHighestProb() / 2 > 50)
+                tempPicks = Thinking();
 
-            return SortCellArray(picks);
+            picks = SortCellArray(tempPicks);
 
         }
 
@@ -61,7 +62,7 @@ namespace B20_EX02
             return picks;
         }
 
-        public static Cell[] GetPicks()
+        public static Cell[] Thinking()
         {
             ResetValues();
             SumProb();
@@ -159,7 +160,7 @@ namespace B20_EX02
 
         }
 
-        public static void ResetProbByValue(Char c)
+        public void ResetProbByValue(Char c)
         {
             for (int i = 0; i < prob.GetLength(0); i++)
             {
@@ -169,6 +170,66 @@ namespace B20_EX02
                         prob[i, j] = 0;
                 }
             }
+
+            ResetValues();
+        }
+
+        public static Cell SingleRandomGuess()
+        {
+            return m_Board.ShowAndReturnRandomCell();
+        }
+
+        public static bool PcPickIsValid(ref Cell pick)
+        {
+            bool returnValue = true;
+
+            if (pick == null)
+                returnValue = false;
+            else
+            {
+                System.Threading.Thread.Sleep(3000);
+                Console.WriteLine("Pc remember card : ");
+                pick.Visible = true;
+            }
+
+            return returnValue;
+        }
+
+        public void SetCorrectPcGuesses()
+        {
+            if (!PcPickIsValid(ref picks[0]))// if he could not find a pair -> so he is uding Random
+            {
+                picks[0] = SingleRandomGuess();
+                Console.WriteLine("using random method");
+            }
+
+            if (!PcPickIsValid(ref picks[1]))// if he could not find a pair->so he is uding Random
+            {
+                picks[1] = SingleRandomGuess();
+                Console.WriteLine("using random method");
+            }
+
+
+        }
+
+        public void UpdateScore()
+        {
+            if (picks[0].Letter != picks[1].Letter)
+            {
+                picks[0].Visible = false;
+                picks[1].Visible = false;
+                Score++;
+            }
+        }
+
+        public Cell[] GetPicks()
+        {
+            return picks;
+        }
+
+        public void MakeGuessVisible(Cell cell)
+        {
+            cell.Visible = true;
         }
 
     }

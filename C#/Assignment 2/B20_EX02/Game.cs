@@ -103,8 +103,8 @@ namespace B20_EX02
                 HideCards(i_Card1, i_Card2);
             }
 
-            //if (m_GameMode == 'S' && match)
-                //pcPlayer.ResetProbByValue(m_Board.GetCellByString(i_Card1).Letter);
+            if (m_GameMode == 'S' && match)
+                pcPlayer.ResetProbByValue(m_Board.GetCellByString(i_Card1).Letter);
 
             return match;
 

@@ -254,54 +254,34 @@ namespace B20_EX02
             Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Pc is thinking...");
             System.Threading.Thread.Sleep(2000);
+            
+            //computer is looking for pair
+            m_Game.pcPlayer.TryToRemember();
+            m_Game.pcPlayer.SetCorrectPcGuesses();
 
-            Cell[] picks = m_Game.pcPlayer.Turn();
+            System.Threading.Thread.Sleep(1000);
 
-            if (!PcPickIsValid(ref picks[0]))
-                picks[0] = PcRandomGuess();
+            PcInterface();
+            m_Game.pcPlayer.UpdateScore();
 
-            if (!PcPickIsValid(ref picks[1]))
-                picks[1] = PcRandomGuess();
 
-            if(picks[0].Letter != picks[1].Letter)
-            {
-                picks[0].Visible = false;
-                picks[1].Visible = false;
-            }
 
         }
 
-        public static bool PcPickIsValid(ref Cell pick)
-        {
-            bool returnValue = true;
-
-            if (pick == null)
-                returnValue = false;
-            else
-            {
-                System.Threading.Thread.Sleep(3000);
-                Console.WriteLine("Pc remember card : ");
-                pick.Visible = true;
-            }
-
-            return returnValue;
-        }
-
-        public static Cell PcRandomGuess()
+        public static void PcInterface()
         {
             Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine("COMPUTER IS UsingRandomMethod...");
 
             System.Threading.Thread.Sleep(2000);
+            m_Game.pcPlayer.MakeGuessVisible(m_Game.pcPlayer.GetPicks()[0]);
+            m_Game.pcPlayer.RefreshPcMemory(m_Game.pcPlayer.GetPicks()[0]);
 
-            Cell cell = m_Game.m_Board.ShowAndReturnRandomCell();
             Console.WriteLine(m_Game);
 
             System.Threading.Thread.Sleep(2000);
 
-            m_Game.pcPlayer.RefreshPcMemory(cell);
-
-            return cell;
+            m_Game.pcPlayer.MakeGuessVisible(m_Game.pcPlayer.GetPicks()[1]);
+            m_Game.pcPlayer.RefreshPcMemory(m_Game.pcPlayer.GetPicks()[1]);
         }
     }
 }
