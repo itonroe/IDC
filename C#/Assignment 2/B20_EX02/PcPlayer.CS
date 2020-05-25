@@ -172,6 +172,7 @@ namespace B20_EX02
             }
 
             ResetValues();
+            SumProb();
         }
 
         public static Cell SingleRandomGuess()
@@ -219,7 +220,12 @@ namespace B20_EX02
                 picks[0].Visible = false;
                 picks[1].Visible = false;
                 Score++;
+                
+                ResetValues();
+                ResetProbByValue(picks[0].Letter);
             }
+
+            
         }
 
         public Cell[] GetPicks()
