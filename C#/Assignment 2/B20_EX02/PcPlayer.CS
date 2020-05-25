@@ -6,22 +6,18 @@ namespace B20_EX02
 {
     public class PcPlayer
     {
-        public static double[,] prob;
-        private static Board m_Board;
-        public static double[] values;
-
-        public static Cell[] picks; // need to be private with property 
-
-        public int Score;
+        private Board m_Board;
+        private double[,] m_Probs;
+        private double[] m_Values;
+        private static Cell[] m_Picks;
 
         const double DIFFICULTY = 0.9;//(EASY FOR USER TO WIN) [0.7 , 1] (hard FOR USER TO WIN)
 
-        public void InitGame(Board board)
+        public void BuildPlayer(Board i_Board)
         {
-            m_Board = board;
-            prob = new double[board.Width, board.Height];
-            values = new double[board.Width * board.Height / 2];
-            Score = 0;
+            m_Board = i_Board;
+            m_Probs = new double[i_Board.Width, i_Board.Height];
+            m_Values = new double[i_Board.Width * i_Board.Height / 2];
         }
 
         public void TryToRemember()
@@ -31,85 +27,86 @@ namespace B20_EX02
             if(GetHighestProb() / 2 > 50)
                 tempPicks = Thinking();
 
-            picks = SortCellArray(tempPicks);
-
+            m_Picks = SortCellArray(tempPicks);
         }
 
-        public static double GetHighestProb()
+        public double GetHighestProb()
         {
             double maxProb = 0;
 
-            for(int i=0; i< values.GetLength(0); i++)
+            for (int i = 0; i < m_Values.GetLength(0); i++)
             {
-                if (values[i] > maxProb)
-                    maxProb = values[i];
+                if (m_Values[i] > maxProb)
+                    maxProb = m_Values[i];
             }
 
             return maxProb;
         }
-        public Cell[] SortCellArray(Cell[] picks)
+
+        public Cell[] SortCellArray(Cell[] i_Picks)
         {
-            if (picks[0] != null && picks[1] != null)
+            if (i_Picks[0] != null && i_Picks[1] != null)
             {
-                if (prob[picks[0].Point.X, picks[0].Point.Y] < prob[picks[1].Point.X, picks[1].Point.Y])
+                if (m_Probs[i_Picks[0].Point.X, i_Picks[0].Point.Y] < m_Probs[i_Picks[1].Point.X, i_Picks[1].Point.Y])
                 {
-                    Cell TempForSwap = picks[0];
-                    picks[0] = picks[1];
-                    picks[1] = TempForSwap;
+                    Cell TempForSwap = i_Picks[0];
+                    i_Picks[0] = i_Picks[1];
+                    i_Picks[1] = TempForSwap;
                 }
             }
 
-            return picks;
+            return i_Picks;
         }
 
-        public static Cell[] Thinking()
+        public Cell[] Thinking()
         {
             ResetValues();
             SumProb();
             return FindPairFromMemoryByValue(GetHighestValueByProb());
-
         }
 
-        public static void ResetValues()
+        public void ResetValues()
         {
-            for (int i = 0; i < values.GetLength(0); i++)
+            for (int i = 0; i < m_Values.GetLength(0); i++)
             {
-                values[i] = 0;
+                m_Values[i] = 0;
             }
         }
 
-        public static void SumProb()
+        public void SumProb()
         {
-            for (int i = 0; i < prob.GetLength(0); i++)
+            ResetValues();
+
+            for (int i = 0; i < m_Probs.GetLength(0); i++)
             {
-                for (int j = 0; j < prob.GetLength(1); j++)
+                for (int j = 0; j < m_Probs.GetLength(1); j++)
                 {
-                    if (prob[i, j] > 0)
+                    if (m_Probs[i, j] > 0)
                     {
-                        values[m_Board.GetCellByPoint(new Point(i, j)).Letter - 'A'] += prob[i, j];
+                        m_Values[m_Board.GetCell(new Point(i, j)).Letter - 'A'] += m_Probs[i, j];
                     }
                 }
             }
         }
 
-        public static Cell[] FindPairFromMemoryByValue(Char value)
+        public Cell[] FindPairFromMemoryByValue(char i_Letter)
         {
             Cell[] picks = new Cell[2];
             bool firstPick = true;
 
-            for (int i = 0; i < prob.GetLength(0); i++)
+            for (int i = 0; i < m_Probs.GetLength(0); i++)
             {
-                for (int j = 0; j < prob.GetLength(1); j++)
+                for (int j = 0; j < m_Probs.GetLength(1); j++)
                 {
-                    if (m_Board.GetCellByPoint(new Point(i, j)).Letter == value)
+                    if (m_Board.GetCell(new Point(i, j)).Letter == i_Letter)
                     {
                         if (firstPick)
                         {
-                            picks[0] = m_Board.GetCellByPoint(new Point(i, j));
+                            picks[0] = m_Board.GetCell(new Point(i, j));
                             firstPick = false;
                         }
                         else
-                            picks[1] = m_Board.GetCellByPoint(new Point(i, j));
+                            picks[1] = m_Board.GetCell(new Point(i, j));
                     }
                 }
             }
@@ -117,16 +114,16 @@ namespace B20_EX02
             return picks;
         }
 
-        public static Char GetHighestValueByProb()
+        public char GetHighestValueByProb()
         {
             double maxProb = 0;
             int offset = 0;
 
-            for(int i=0; i< values.GetLength(0); i++)
+            for(int i=0; i< m_Values.GetLength(0); i++)
             {
-                if (values[i] > maxProb)
+                if (m_Values[i] > maxProb)
                 {
-                    maxProb = values[i];
+                    maxProb = m_Values[i];
                     offset = i;
                 }
             }
@@ -134,105 +131,68 @@ namespace B20_EX02
             return (char)('A' + offset);
         }
 
-
-        public void RefreshPcMemory(Cell cell)
+        public void RefreshPcMemory(Cell i_Cell)
         {
-            for (int i = 0; i < prob.GetLength(0); i++)
+            for (int i = 0; i < m_Probs.GetLength(0); i++)
             {
-                for (int j = 0; j < prob.GetLength(1); j++)
+                for (int j = 0; j < m_Probs.GetLength(1); j++)
                 {
-                    prob[i, j] *= DIFFICULTY;
+                    m_Probs[i, j] *= DIFFICULTY;
                 }
             }
 
-            prob[cell.Point.X, cell.Point.Y] = 100;
-
-            ResetValues();
-            SumProb();
-
-        }
-
-        public void ResetProbByValue(Char c)
-        {
-            for (int i = 0; i < prob.GetLength(0); i++)
-            {
-                for (int j = 0; j < prob.GetLength(1); j++)
-                {
-                    if (m_Board.GetCellByPoint(new Point(i, j)).Letter == c)
-                        prob[i, j] = 0;
-                }
-            }
+            m_Probs[i_Cell.Point.X, i_Cell.Point.Y] = 100;
 
             ResetValues();
             SumProb();
         }
 
-        public static Cell SingleRandomGuess()
+        public void ResetProbByValue(char i_Letter)
         {
-            return m_Board.ShowAndReturnRandomCell();
-        }
-
-        public static bool PcPickIsValid(ref Cell pick)
-        {
-            bool returnValue = true;
-
-            if (pick == null)
-                returnValue = false;
-            else
+            for (int i = 0; i < m_Probs.GetLength(0); i++)
             {
-                System.Threading.Thread.Sleep(3000);
-                Console.WriteLine("Pc remember card : ");
-                pick.Visible = true;
+                for (int j = 0; j < m_Probs.GetLength(1); j++)
+                {
+                    if (m_Board.GetCell(new Point(i, j)).Letter == i_Letter)
+                    {
+                        m_Probs[i, j] = 0;
+                    }
+                }
             }
 
-            return returnValue;
+            ResetValues();
+            SumProb();
+        }
+
+        public Cell SingleRandomGuess()
+        {
+            return m_Board.GetRandomCell();
         }
 
         public void SetCorrectPcGuesses()
         {
-            if (!PcPickIsValid(ref picks[0]))// if he could not find a pair -> so he is uding Random
+            if (m_Picks[0] == null)// if he could not find a pair -> so he is uding Random
             {
-                picks[0] = SingleRandomGuess();
-                Console.WriteLine("using random method");
+                m_Picks[0] = SingleRandomGuess();
             }
 
-            if (!PcPickIsValid(ref picks[1]))// if he could not find a pair->so he is uding Random
+            if (m_Picks[1] == null)// if he could not find a pair->so he is uding Random
             {
-                picks[1] = SingleRandomGuess();
-                Console.WriteLine("using random method");
+                m_Picks[1] = SingleRandomGuess();
+
+                while (m_Picks[0].Point.X == m_Picks[1].Point.X && m_Picks[0].Point.Y == m_Picks[1].Point.Y)
+                {
+                    m_Picks[1] = SingleRandomGuess();
+                }
             }
-
-
         }
 
-        public void UpdateScore() // need to move to game but i dont know how
+        public Cell[] Picks
         {
-            if (picks[0].Letter != picks[1].Letter)
+            get
             {
-                picks[0].Visible = false;
-                picks[1].Visible = false;
-                Score++;
+                return m_Picks;
             }
-            else
-            {
-                ResetValues();
-                ResetProbByValue(picks[0].Letter);
-            }
-
-            
         }
-
-        public Cell[] GetPicks()
-        {
-            return picks;
-        }
-
-        public void MakeGuessVisible(Cell cell)
-        {
-            cell.Visible = true;
-            RefreshPcMemory(cell);
-        }
-
-        
     }
 }

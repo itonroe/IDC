@@ -9,13 +9,11 @@ namespace B20_EX02
         private string m_Name;
         private int m_Score;
         private bool m_Turn;
-        //private bool humenOrPc;
 
         public Player()
         {
             this.m_Name = "";
             this.m_Score = 0;
-            //this.humenOrPc = true;
         }
 
         public string Name
@@ -29,12 +27,6 @@ namespace B20_EX02
             get { return m_Score; }
             set { m_Score = value; }
         }
-
-        /*public bool HumenOrPc
-        {
-            get { return humenOrPc; }
-            set { humenOrPc = value; }
-        }*/
 
         public bool Turn
         {

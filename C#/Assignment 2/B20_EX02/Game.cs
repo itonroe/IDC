@@ -4,7 +4,7 @@ namespace B20_EX02
 {
     public class Game
     {
-        public PcPlayer pcPlayer = new PcPlayer();
+        public PcPlayer m_PcPlayer;
 
         private const int k_MinWidth = 4;
         private const int k_MaxWidth = 6;
@@ -13,7 +13,7 @@ namespace B20_EX02
 
         private Player m_PlayerTurn;
 
-        public Board m_Board;// changed to public
+        private Board m_Board;
         private Player m_P1;
         private Player m_P2;
         private char m_GameMode;
@@ -24,6 +24,7 @@ namespace B20_EX02
             m_Board = new Board();
             m_P1 = new Player();
             m_P2 = new Player();
+            m_PcPlayer = new PcPlayer();
             m_GameIsOn = false;
         }
 
@@ -33,7 +34,7 @@ namespace B20_EX02
 
             if (m_GameMode == 'S')
             {
-                pcPlayer.InitGame(m_Board);
+                m_PcPlayer.BuildPlayer(m_Board);
             }
 
             ChangeTurn();
@@ -61,11 +62,30 @@ namespace B20_EX02
 
         public void OpenCard(string i_Card)
         {
+            OpenCard(m_Board.GetCell(i_Card));
+        }
+
+        public void OpenCard(Cell i_Card)
+        {
             m_Board.ShowCell(i_Card);
 
             if (m_GameMode == 'S')
             {
-                pcPlayer.RefreshPcMemory(m_Board.GetCellByString(i_Card));
+                m_PcPlayer.RefreshPcMemory(i_Card);
+            }
+        }
+
+        public void PcSelectCards()
+        {
+            m_PcPlayer.TryToRemember();
+            m_PcPlayer.SetCorrectPcGuesses();
+        }
+
+        public void PcOpenCard(int i_CardNumber)
+        {
+            if (i_CardNumber <= 1)
+            {
+                OpenCard(m_Board.GetCell(m_PcPlayer.Picks[i_CardNumber].Point));
             }
         }
 
@@ -90,14 +110,19 @@ namespace B20_EX02
             return m_Board.ValidCell(i_InputCard);
         }
 
-        public bool MatchingCards(string i_Card1, string i_Card2)// for user
+        public bool MatchingCards(string i_Card1, string i_Card2)
         {
-            bool match = m_Board.GetCellByString(i_Card1).Letter == m_Board.GetCellByString(i_Card2).Letter;
+            return MatchingCards(m_Board.GetCell(i_Card1), m_Board.GetCell(i_Card2));
+        }
 
+        public bool MatchingCards(Cell i_Card1, Cell i_Card2)
+        {
+            bool match = i_Card1.Letter == i_Card2.Letter;
 
             if (match)
             {
-                    m_PlayerTurn.Score++;
+                m_PlayerTurn.Score++;
+
             }
             else
             {
@@ -105,13 +130,18 @@ namespace B20_EX02
             }
 
             if (m_GameMode == 'S' && match)
-                pcPlayer.ResetProbByValue(m_Board.GetCellByString(i_Card1).Letter);
+                m_PcPlayer.ResetProbByValue(i_Card1.Letter);
 
             return match;
-
         }
 
-        public void HideCards(string i_Card1, string i_Card2)
+        public bool PcMatchingCards()
+        {
+            return MatchingCards(m_Board.GetCell(m_PcPlayer.Picks[0].Point),
+                                 m_Board.GetCell(m_PcPlayer.Picks[1].Point));
+        }
+
+        public void HideCards(Cell i_Card1, Cell i_Card2)
         {
             m_Board.HideCell(i_Card1);
             m_Board.HideCell(i_Card2);
@@ -121,27 +151,13 @@ namespace B20_EX02
         {
             string winner = m_P1.Name;
 
-            if (m_GameMode == 'M')
+            if (m_P1.Score < m_P2.Score)
             {
-                if (m_P1.Score < m_P2.Score)
-                {
-                    winner = m_P2.Name;
-                }
-                else
-                {
-                    winner = "no one... it's a tie.";
-                }
+                 winner = m_P2.Name;
             }
             else
             {
-                if (m_P1.Score < pcPlayer.Score)
-                {
-                    winner = "PC";
-                }
-                else
-                {
-                    winner = "no one... it's a tie.";
-                }
+                winner = "no one... it's a tie.";
             }
 
             return winner;

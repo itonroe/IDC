@@ -4,7 +4,7 @@ using System.Text;
 
 namespace B20_EX02
 {
-    public class Point
+    public struct Point
     {
         private int m_X;
         public int X

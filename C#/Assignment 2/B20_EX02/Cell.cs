@@ -10,10 +10,11 @@ namespace B20_EX02
         private bool m_Visisble;
         private Point m_Point;
 
-        public Cell(int i_X, int i_Y)
+        public Cell(Point i_Point, char i_Letter)
         {
             m_Visisble = false;
-            m_Point = new Point(i_X, i_Y);
+            m_Point = i_Point;
+            m_Letter = i_Letter;
         }
 
         public bool Visible

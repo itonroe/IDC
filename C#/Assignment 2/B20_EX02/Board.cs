@@ -68,8 +68,7 @@ namespace B20_EX02
             int x = point.X;
             int y = point.Y;
 
-            m_Board[x, y] = new Cell(x, y);
-            m_Board[x, y].Letter = i_Letter;
+            m_Board[x, y] = new Cell(new Point(x, y), i_Letter);
         }
 
         private Point RandCellPoint()
@@ -79,20 +78,18 @@ namespace B20_EX02
             return new Point(random.Next(0, m_Board.GetLength(0)), random.Next(0, m_Board.GetLength(1)));
         }
 
-        public Cell ShowAndReturnRandomCell()
+        public Cell GetRandomCell()
         {
             Point point = RandCellPoint();
-            Cell cell = GetCellByPoint(point);
+            Cell cell = GetCell(point);
 
             while (cell.Visible)
             {
                 point = RandCellPoint();
-                cell = GetCellByPoint(point);
+                cell = GetCell(point);
             }
 
-            cell.Visible = true;
-
-            return GetCellByPoint(point);
+            return GetCell(point);
         }
 
         public bool CellIsVisible(Cell i_Cell)
@@ -102,23 +99,33 @@ namespace B20_EX02
 
         public void ShowCell(string i_Cell)
         {
-            GetCellByString(i_Cell).Visible = true;
+            ShowCell(GetCell(i_Cell));
+        }
+
+        public void ShowCell(Cell i_Cell)
+        {
+            i_Cell.Visible = true;
         }
 
         public void HideCell(string i_Cell)
         {
-            GetCellByString(i_Cell).Visible = false;
+            HideCell(GetCell(i_Cell));
         }
 
-        public Cell GetCellByString(string i_Cell)
+        public void HideCell(Cell i_Cell)
+        {
+            i_Cell.Visible = false;
+        }
+
+        public Cell GetCell(string i_Cell)
         {
             int y = i_Cell[0] - 'A';
             int x = i_Cell[1] - '1';
 
-            return m_Board[x, y];
+            return GetCell(new Point(x, y));
         }
 
-        public Cell GetCellByPoint(Point i_Point)
+        public Cell GetCell(Point i_Point)
         {
             return m_Board[i_Point.X, i_Point.Y];
         }
@@ -136,7 +143,7 @@ namespace B20_EX02
             }
             else
             {
-                if (CellIsVisible(GetCellByString(i_Cell)))
+                if (CellIsVisible(GetCell(i_Cell)))
                 {
                     valid = false;
                 }
@@ -158,7 +165,7 @@ namespace B20_EX02
             {
                 for (int j = 0; j < m_Board.GetLength(1); j++)
                 {
-                    if (!CellIsVisible(GetCellByPoint(new Point(i, j))))
+                    if (!CellIsVisible(GetCell(new Point(i, j))))
                     {
                         isFull = false;
                         break;

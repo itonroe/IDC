@@ -24,6 +24,10 @@ namespace B20_EX02
                 Console.WriteLine("\nEnter second player name:");
                 m_Game.Player2_Name = Console.ReadLine();
             }
+            else
+            {
+                m_Game.Player2_Name = "PC";
+            }
 
             bool keepPlaying = true;
 
@@ -94,16 +98,13 @@ namespace B20_EX02
 
             while (m_Game.GameIsOn)
             {
-                if (m_Game.GameMode == 'M')
-                    MultiPlayerRound();
-                else
-                    SinglePlayerRound();
+                Round();
             }
         }
 
-        public static void MultiPlayerRound()
+        public static void Round()
         {
-            HumenTurn();
+            HumanTurn();
 
             if (m_Game.IsEnded() || !m_Game.GameIsOn)
             {
@@ -112,7 +113,14 @@ namespace B20_EX02
 
             m_Game.ChangeTurn();
 
-            HumenTurn();
+            if (m_Game.GameMode == 'M')
+            {
+                HumanTurn();
+            }
+            else
+            {
+                PcTurn();
+            }
 
             if (m_Game.IsEnded() || !m_Game.GameIsOn)
             {
@@ -122,28 +130,13 @@ namespace B20_EX02
             m_Game.ChangeTurn();
         }
 
-        public static void SinglePlayerRound()
-        {
-            HumenTurn();
-
-            PcTurn();
-        }
-
-        public static void HumenTurn()
+        public static void HumanTurn()
         {
             Ex02.ConsoleUtils.Screen.Clear();
 
             string playerName = m_Game.PlayerTurn_Name;
 
             Pick(playerName);
-
-            if (m_Game.GameIsOn) 
-            { 
-                System.Threading.Thread.Sleep(2000);
-
-                Ex02.ConsoleUtils.Screen.Clear();
-                Console.WriteLine(m_Game);
-            }
         }
 
         public static string ChooseCard(string i_CardNumber)
@@ -173,11 +166,8 @@ namespace B20_EX02
                 ExitGame();
                 return;
             }
-            else
-            {
-                m_Game.OpenCard(card1);
-            }
-
+            
+            m_Game.OpenCard(card1);
             Ex02.ConsoleUtils.Screen.Clear();
 
             Console.WriteLine($"Turn: {i_PlayerName}, second pick\n");
@@ -190,20 +180,15 @@ namespace B20_EX02
                 ExitGame();
                 return;
             }
-            else
-            {
-                m_Game.OpenCard(card2);
-            }
 
+            m_Game.OpenCard(card2);
             Ex02.ConsoleUtils.Screen.Clear();
-
             Console.WriteLine($"Turn: {i_PlayerName}, second pick\n");
             Console.WriteLine(m_Game);
+            System.Threading.Thread.Sleep(2000);
 
             m_Game.MatchingCards(card1, card2);
-
         }
-
 
         public static bool ValidCard(string i_InputCard)
         {
@@ -232,17 +217,8 @@ namespace B20_EX02
             }
 
             Console.WriteLine("- THE END - \n");
-
-            if (m_Game.GameMode == 'M')// NEED ENCAPSULATION
-            {
-                Console.WriteLine($"The Score is:\n    {m_Game.Player1_Name} - {m_Game.Player1_Score}\n    {m_Game.Player2_Name} - {m_Game.Player2_Score}");
-                Console.WriteLine($"The winner is {m_Game.GetWinnerName()}");
-            }
-            else
-            {
-                Console.WriteLine($"The Score is:\n    {m_Game.Player1_Name} - {m_Game.Player1_Score}\n    PC - {m_Game.pcPlayer.Score}");
-                Console.WriteLine($"The winner is {m_Game.GetWinnerName()}");
-            }
+            Console.WriteLine($"The Score is:\n    {m_Game.Player1_Name} - {m_Game.Player1_Score}\n    {m_Game.Player2_Name} - {m_Game.Player2_Score}");
+            Console.WriteLine($"The winner is {m_Game.GetWinnerName()}");
         }
 
         public static void ExitGame()
@@ -255,39 +231,38 @@ namespace B20_EX02
         public static void PcTurn()
         {
             Ex02.ConsoleUtils.Screen.Clear();
-            Console.WriteLine("Pc is thinking...");
-            System.Threading.Thread.Sleep(2000);
-            
+
             //computer is looking for pair
-            m_Game.pcPlayer.TryToRemember();
-            m_Game.pcPlayer.SetCorrectPcGuesses();
+            m_Game.PcSelectCards();
 
-            System.Threading.Thread.Sleep(1000);
-
-            PcInterface();
-            m_Game.pcPlayer.UpdateScore();
-
-            if (m_Game.IsEnded())
-                ExitGame();
-
-
-
+            PcPick(m_Game.PlayerTurn_Name);
         }
 
-        public static void PcInterface()
+        public static void PcPick(string i_PlayerName)
         {
-            Ex02.ConsoleUtils.Screen.Clear();
-
-            System.Threading.Thread.Sleep(2000);
-            m_Game.pcPlayer.MakeGuessVisible(m_Game.pcPlayer.GetPicks()[0]);
-
+            Console.WriteLine($"Turn: {i_PlayerName}, first pick\n");
             Console.WriteLine(m_Game);
 
+            Console.WriteLine("Pc is thinking...");
             System.Threading.Thread.Sleep(2000);
 
-            m_Game.pcPlayer.MakeGuessVisible(m_Game.pcPlayer.GetPicks()[1]);
+            m_Game.PcOpenCard(0);
+            
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine($"Turn: {i_PlayerName}, second pick\n");
+            Console.WriteLine(m_Game);
 
+            Console.WriteLine("Pc is thinking...");
+            System.Threading.Thread.Sleep(2000);
 
+            m_Game.PcOpenCard(1);
+
+            Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine($"Turn: {i_PlayerName}, second pick\n");
+            Console.WriteLine(m_Game);
+            System.Threading.Thread.Sleep(2000);
+
+            m_Game.PcMatchingCards();
         }
     }
 }
