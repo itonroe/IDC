@@ -66,26 +66,49 @@ namespace B20_EX02
             }
 
             m_Game.GameMode = userInput[0];
+
+            if (m_Game.GameMode == 'S')
+            {
+                SetGameDifficulty();
+            }
+        }
+
+        public static void SetGameDifficulty()// new func
+        {
+            int userDifficulty = 2;
+
+            Console.WriteLine("Choose game level :\n1 - Easy\n2 - Medium\n3 - Hard");
+            while (!(Int32.TryParse(Console.ReadLine(), out userDifficulty) && ValidDifficulty(userDifficulty)))
+            {
+                Console.WriteLine("Please try again...\nChoose game level :\n1 - Easy\n2 - Medium\n3 - Hard");
+            }
+
+            m_Game.m_PcPlayer.SetGameDifficulty(userDifficulty);
+        }
+
+        public static bool ValidDifficulty(int i_Difiiculty) //  new func
+        {
+            return i_Difiiculty >= 1 && i_Difiiculty <= 3;
         }
 
         public static void SetSize()
         {
             string width, height;
 
-            Console.WriteLine("\nPlese enter a bord width between 4-6");
+            Console.WriteLine("\nPlese enter a board width between 4-6");
 
             while (!m_Game.ValidWidth(width = Console.ReadLine()))
             {
-                Console.WriteLine("Bord width is not valid, please try again.");
+                Console.WriteLine("Baord width is not valid, please try again.");
             }
 
             m_Game.SetWidth(width);
 
-            Console.WriteLine("Plese enter a bord height between 4-6");
+            Console.WriteLine("Plese enter a baord height between 4-6");
 
             while (!m_Game.ValidHeight(height = Console.ReadLine()))
             {
-                Console.WriteLine("Bord height is not valid, please try again.");
+                Console.WriteLine("Baord height is not valid, please try again.");
             }
 
             m_Game.SetHeight(height);

@@ -11,12 +11,13 @@ namespace B20_EX02
         private double[] m_Values;
         private static Cell[] m_Picks;
 
-        const double DIFFICULTY = 0.9;//(EASY FOR USER TO WIN) [0.7 , 1] (hard FOR USER TO WIN)
+        private double DIFFICULTY = 0.9;//(EASY FOR USER TO WIN) [0.7 ,0.9] (HARD FOR USER TO WIN)
 
         public void BuildPlayer(Board i_Board)
         {
             m_Board = i_Board;
-            m_Probs = new double[i_Board.Width, i_Board.Height];
+            //m_Probs = new double[i_Board.Width, i_Board.Height];
+            m_Probs = new double[i_Board.Height, i_Board.Width];
             m_Values = new double[i_Board.Width * i_Board.Height / 2];
         }
 
@@ -24,7 +25,7 @@ namespace B20_EX02
         {
             Cell[] tempPicks = new Cell[2];
 
-            if(GetHighestProb() / 2 > 50)
+            if(GetHighestProb() / 2 > 52)
                 tempPicks = Thinking();
 
             m_Picks = SortCellArray(tempPicks);
@@ -63,6 +64,16 @@ namespace B20_EX02
             ResetValues();
             SumProb();
             return FindPairFromMemoryByValue(GetHighestValueByProb());
+        }
+
+        public void SetGameDifficulty(int i_difficulty) // new func
+        {
+            if (i_difficulty == 1)
+                DIFFICULTY = 0.7;
+            if (i_difficulty == 2)
+                DIFFICULTY = 0.8;
+            if (i_difficulty == 3)
+                DIFFICULTY = 0.9;
         }
 
         public void ResetValues()
