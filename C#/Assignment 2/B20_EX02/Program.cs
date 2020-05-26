@@ -73,22 +73,24 @@ namespace B20_EX02
             }
         }
 
-        public static void SetGameDifficulty()// new func
+        public static void SetGameDifficulty()
         {
-            int userDifficulty = 2;
+            Console.WriteLine("\nChoose game level:\n1 - Easy\n2 - Medium\n3 - Hard");
 
-            Console.WriteLine("Choose game level :\n1 - Easy\n2 - Medium\n3 - Hard");
-            while (!(Int32.TryParse(Console.ReadLine(), out userDifficulty) && ValidDifficulty(userDifficulty)))
+            string userDifficulty = Console.ReadLine();
+
+            while (!ValidDifficulty(userDifficulty))
             {
                 Console.WriteLine("Please try again...\nChoose game level :\n1 - Easy\n2 - Medium\n3 - Hard");
+                userDifficulty = Console.ReadLine();
             }
 
-            m_Game.m_PcPlayer.SetGameDifficulty(userDifficulty);
+            m_Game.SetDifficulty(userDifficulty);
         }
 
-        public static bool ValidDifficulty(int i_Difiiculty) //  new func
+        public static bool ValidDifficulty(string i_Difficulty)
         {
-            return i_Difiiculty >= 1 && i_Difiiculty <= 3;
+            return int.TryParse(i_Difficulty, out _) && int.Parse(i_Difficulty) >= 1 && int.Parse(i_Difficulty) <= 3;
         }
 
         public static void SetSize()
@@ -249,6 +251,9 @@ namespace B20_EX02
             m_Game.GameIsOn = false;
             Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Thank you for playing our memory game");
+            System.Threading.Thread.Sleep(2000);
+
+            Environment.Exit(0);
         }
 
         public static void PcTurn()

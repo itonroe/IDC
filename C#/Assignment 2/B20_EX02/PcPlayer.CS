@@ -9,14 +9,13 @@ namespace B20_EX02
         private Board m_Board;
         private double[,] m_Probs;
         private double[] m_Values;
-        private static Cell[] m_Picks;
+        private Cell[] m_Picks;
 
-        private double DIFFICULTY = 0.9;//(EASY FOR USER TO WIN) [0.7 ,0.9] (HARD FOR USER TO WIN)
+        private double m_Difficulty = 0.9;//(EASY FOR USER TO WIN) [0.7 ,0.9] (HARD FOR USER TO WIN)
 
         public void BuildPlayer(Board i_Board)
         {
             m_Board = i_Board;
-            //m_Probs = new double[i_Board.Width, i_Board.Height];
             m_Probs = new double[i_Board.Height, i_Board.Width];
             m_Values = new double[i_Board.Width * i_Board.Height / 2];
         }
@@ -66,14 +65,23 @@ namespace B20_EX02
             return FindPairFromMemoryByValue(GetHighestValueByProb());
         }
 
-        public void SetGameDifficulty(int i_difficulty) // new func
+        public void SetGameDifficulty(int i_Difficulty)
         {
-            if (i_difficulty == 1)
-                DIFFICULTY = 0.7;
-            if (i_difficulty == 2)
-                DIFFICULTY = 0.8;
-            if (i_difficulty == 3)
-                DIFFICULTY = 0.9;
+            switch (i_Difficulty)
+            {
+                case 1:
+                    m_Difficulty = 0.7;
+                    break;
+                case 2:
+                    m_Difficulty = 0.8;
+                    break;
+                case 3:
+                    m_Difficulty = 0.9;
+                    break;
+                default:
+                    m_Difficulty = 0.5;
+                    break;
+            }
         }
 
         public void ResetValues()
@@ -148,7 +156,7 @@ namespace B20_EX02
             {
                 for (int j = 0; j < m_Probs.GetLength(1); j++)
                 {
-                    m_Probs[i, j] *= DIFFICULTY;
+                    m_Probs[i, j] *= m_Difficulty;
                 }
             }
 
@@ -187,7 +195,7 @@ namespace B20_EX02
                 m_Picks[0] = SingleRandomGuess();
             }
 
-            if (m_Picks[1] == null)// if he could not find a pair->so he is uding Random
+            if (m_Picks[1] == null)// if he could not find a pair -> so he is uding Random
             {
                 m_Picks[1] = SingleRandomGuess();
 

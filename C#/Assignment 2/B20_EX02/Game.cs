@@ -4,7 +4,7 @@ namespace B20_EX02
 {
     public class Game
     {
-        public PcPlayer m_PcPlayer;
+        private PcPlayer m_PcPlayer;
 
         private const int k_MinWidth = 4;
         private const int k_MaxWidth = 6;
@@ -115,6 +115,11 @@ namespace B20_EX02
             return MatchingCards(m_Board.GetCell(i_Card1), m_Board.GetCell(i_Card2));
         }
 
+        public void SetDifficulty(string i_Difficulty)
+        {
+            m_PcPlayer.SetGameDifficulty(int.Parse(i_Difficulty));
+        }
+
         public bool MatchingCards(Cell i_Card1, Cell i_Card2)
         {
             bool match = i_Card1.Letter == i_Card2.Letter;
@@ -155,7 +160,7 @@ namespace B20_EX02
             {
                  winner = m_P2.Name;
             }
-            else
+            else if (m_P1.Score == m_P2.Score)
             {
                 winner = "no one... it's a tie.";
             }
