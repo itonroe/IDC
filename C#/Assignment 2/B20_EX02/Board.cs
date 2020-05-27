@@ -10,31 +10,32 @@ namespace B20_EX02
         private Cell[,] m_Board;
         private int m_BoardWidth;
         private int m_BoardHeight;
+
         public int Width
         {
             get
             {
                 return m_BoardWidth;
             }
+
             set
             {
                 m_BoardWidth = value;
-            }
+            }  
         }
+
         public int Height
         {
             get
             {
                 return m_BoardHeight;
             }
+
             set
             {
                 m_BoardHeight = value;
             }
         }
-
-        public Board()
-        {}
 
         public void SetSize()
         {
@@ -175,17 +176,18 @@ namespace B20_EX02
 
             return isFull;
         }
+
         public override string ToString()
         {
             StringBuilder boardDisplay = new StringBuilder();
 
             string[] lines = new string[(m_Board.GetLength(0) + 1) * 2];
 
-            //Offset
+            // Offset
             lines[0] = "   ";
             lines[1] = "  =";
 
-            //First and Seconds Lines           
+            // First and Seconds Lines           
             for (int j = 0; j < m_Board.GetLength(1); j++)
             {
                 lines[0] += string.Format(" {0}  ", (char)('A' + j));

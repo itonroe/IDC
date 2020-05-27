@@ -4,9 +4,8 @@ using System.Text;
 
 namespace B20_EX02
 {
-    class Program
+    public class Program
     {
-
         public static Game m_Game;
 
         public static void Main(string[] args)
@@ -260,7 +259,7 @@ namespace B20_EX02
         {
             Ex02.ConsoleUtils.Screen.Clear();
 
-            //computer is looking for pair
+            // computer is looking for pair
             m_Game.PcSelectCards();
 
             PcPick(m_Game.PlayerTurn_Name);

@@ -7,24 +7,29 @@ namespace B20_EX02
     public struct Point
     {
         private int m_X;
+
         public int X
         {
             get
             {
                 return m_X;
             }
+
             set
             {
                 m_X = value;
             }
         }
+
         private int m_Y;
+
         public int Y
         {
             get
             {
                 return m_Y;
             }
+
             set
             {
                 m_Y = value;

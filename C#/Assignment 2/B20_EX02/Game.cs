@@ -4,12 +4,12 @@ namespace B20_EX02
 {
     public class Game
     {
-        private PcPlayer m_PcPlayer;
-
         private const int k_MinWidth = 4;
         private const int k_MaxWidth = 6;
         private const int k_MinHeight = 4;
         private const int k_MaxHeight = 6;
+
+        private PcPlayer m_PcPlayer;
 
         private Player m_PlayerTurn;
 
@@ -57,7 +57,7 @@ namespace B20_EX02
 
         public bool ValidHeight(string i_Height)
         {
-            return int.TryParse(i_Height, out _) && (int.Parse(i_Height) <= k_MaxHeight && int.Parse(i_Height) >= k_MinHeight) && (int.Parse(i_Height) * m_Board.Width % 2 == 0);
+            return (int.TryParse(i_Height, out _) && int.Parse(i_Height) <= k_MaxHeight) && (int.Parse(i_Height) >= k_MinHeight && int.Parse(i_Height) * m_Board.Width % 2 == 0);
         }
 
         public void OpenCard(string i_Card)
@@ -127,7 +127,6 @@ namespace B20_EX02
             if (match)
             {
                 m_PlayerTurn.Score++;
-
             }
             else
             {
@@ -135,14 +134,17 @@ namespace B20_EX02
             }
 
             if (m_GameMode == 'S' && match)
+            {
                 m_PcPlayer.ResetProbByValue(i_Card1.Letter);
+            }
 
             return match;
         }
 
         public bool PcMatchingCards()
         {
-            return MatchingCards(m_Board.GetCell(m_PcPlayer.Picks[0].Point),
+            return MatchingCards(
+                m_Board.GetCell(m_PcPlayer.Picks[0].Point),
                                  m_Board.GetCell(m_PcPlayer.Picks[1].Point));
         }
 
@@ -193,53 +195,63 @@ namespace B20_EX02
         {
             get { return m_PlayerTurn.Name; }
         }
+
         public string Player1_Name
         {
             get
             {
                 return m_P1.Name;
             }
+
             set
             {
                 m_P1.Name = value;
             }
         }
+
         public string Player2_Name
         {
             get
             {
                 return m_P2.Name;
             }
+
             set
             {
                 m_P2.Name = value;
             }
         }
+
         public int Player1_Score
         {
             get { return m_P1.Score; }
         }
+
         public int Player2_Score
         {
             get { return m_P2.Score; }
         }
+
         public char GameMode
         {
             get
             {
                 return m_GameMode;
             }
+
             set
             {
                 m_GameMode = value;
             }
         }
+
         public bool GameIsOn
         {
             get 
             { 
                 return m_GameIsOn; 
             }
+
             set 
             { 
                 m_GameIsOn = value; 

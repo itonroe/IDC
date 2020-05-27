@@ -12,7 +12,7 @@ namespace B20_EX02
 
         public Player()
         {
-            this.m_Name = "";
+            this.m_Name = string.Empty;
             this.m_Score = 0;
         }
 
@@ -39,7 +39,9 @@ namespace B20_EX02
             bool A_isBigger = true;
 
             if (m_Score < i_Player.Score)
+            {
                 A_isBigger = false;
+            }
 
             return A_isBigger;
         }

@@ -6,12 +6,14 @@ namespace B20_EX02
 {
     public class PcPlayer
     {
+        private const int k_MinProbForRemember = 52;
+
         private Board m_Board;
         private double[,] m_Probs;
         private double[] m_Values;
         private Cell[] m_Picks;
 
-        private double m_Difficulty = 0.9;//(EASY FOR USER TO WIN) [0.7 ,0.9] (HARD FOR USER TO WIN)
+        private double m_Difficulty = 0.9; // (EASY FOR USER TO WIN) [0.7 ,0.9] (HARD FOR USER TO WIN)
 
         public void BuildPlayer(Board i_Board)
         {
@@ -24,8 +26,10 @@ namespace B20_EX02
         {
             Cell[] tempPicks = new Cell[2];
 
-            if(GetHighestProb() / 2 > 52)
+            if (GetHighestProb() / 2 > k_MinProbForRemember)
+            {
                 tempPicks = Thinking();
+            }
 
             m_Picks = SortCellArray(tempPicks);
         }
@@ -37,7 +41,9 @@ namespace B20_EX02
             for (int i = 0; i < m_Values.GetLength(0); i++)
             {
                 if (m_Values[i] > maxProb)
+                {
                     maxProb = m_Values[i];
+                }
             }
 
             return maxProb;
@@ -125,7 +131,9 @@ namespace B20_EX02
                             firstPick = false;
                         }
                         else
+                        {
                             picks[1] = m_Board.GetCell(new Point(i, j));
+                        }
                     }
                 }
             }
@@ -138,7 +146,7 @@ namespace B20_EX02
             double maxProb = 0;
             int offset = 0;
 
-            for(int i=0; i< m_Values.GetLength(0); i++)
+            for(int i = 0; i < m_Values.GetLength(0); i++)
             {
                 if (m_Values[i] > maxProb)
                 {
@@ -190,12 +198,14 @@ namespace B20_EX02
 
         public void SetCorrectPcGuesses()
         {
-            if (m_Picks[0] == null)// if he could not find a pair -> so he is uding Random
+            // if he could not find a pair -> so he is uding Random
+            if (m_Picks[0] == null)
             {
                 m_Picks[0] = SingleRandomGuess();
             }
 
-            if (m_Picks[1] == null)// if he could not find a pair -> so he is uding Random
+            // if he could not find a pair -> so he is uding Random
+            if (m_Picks[1] == null)
             {
                 m_Picks[1] = SingleRandomGuess();
 

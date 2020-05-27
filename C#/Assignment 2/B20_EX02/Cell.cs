@@ -23,6 +23,7 @@ namespace B20_EX02
             {
                 return m_Visisble;
             }
+
             set
             {
                 m_Visisble = value;
@@ -34,7 +35,8 @@ namespace B20_EX02
             get
             {
                 return m_Letter;
-            }
+            }    
+
             set
             {
                 m_Letter = value;
