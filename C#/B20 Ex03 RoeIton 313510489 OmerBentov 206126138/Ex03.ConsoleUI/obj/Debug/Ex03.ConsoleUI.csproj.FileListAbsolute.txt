@@ -1,0 +1,9 @@
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CoreCompileInputs.cache
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.exe
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\bin\Debug\Ex03.ConsoleUI.pdb
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csprojAssemblyReference.cache
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.exe
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.pdb
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.dll
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\bin\Debug\Ex03.GarageLogic.pdb
+C:\GitHub\Education\IDC\C#\B20 Ex03 RoeIton 313510489 OmerBentov 206126138\Ex03.ConsoleUI\obj\Debug\Ex03.ConsoleUI.csproj.CopyComplete
