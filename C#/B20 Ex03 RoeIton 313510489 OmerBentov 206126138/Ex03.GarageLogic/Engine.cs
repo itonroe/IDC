@@ -11,6 +11,14 @@ namespace Ex03.GarageLogic
         private float m_CurrentAmount;
         private float m_MaxAmount;
 
+        public float CurrentAmount
+        {
+            get
+            {
+                return m_CurrentAmount / m_MaxAmount;
+            }
+        }
+
         public eEngineTypes EngineType
         {
             get
@@ -33,7 +41,7 @@ namespace Ex03.GarageLogic
             m_CurrentAmount += i_AmountToAdd;
         }
 
-        public abstract Dictionary<string, string[]> PropertiesToDictionary();
+        public abstract Dictionary<Dictionary<string, string>, string[]> PropertiesToDictionary();
 
         public class Electric : Engine
         {
@@ -61,10 +69,13 @@ namespace Ex03.GarageLogic
                 }
             }
 
-            public override Dictionary<string, string[]> PropertiesToDictionary()
+            public override Dictionary<Dictionary<string, string>, string[]> PropertiesToDictionary()
             {
-                Dictionary<string, string[]> properties = new Dictionary<string, string[]>();
-                properties.Add("Battery Duration Left", null);
+                Dictionary<Dictionary<string, string>, string[]> properties = new Dictionary<Dictionary<string, string>, string[]>();
+
+                Dictionary<string, string> batteryDuration = new Dictionary<string, string>();
+                batteryDuration.Add("Battery Duration Left", String.Format("{0:0.00}", m_CurrentAmount));
+                properties.Add(batteryDuration, null);
 
                 return properties;
             }
@@ -117,11 +128,18 @@ namespace Ex03.GarageLogic
                 }
             }
 
-            public override Dictionary<string, string[]> PropertiesToDictionary()
+            public override Dictionary<Dictionary<string, string>, string[]> PropertiesToDictionary()
             {
-                Dictionary<string, string[]> properties = new Dictionary<string, string[]>();
-                properties.Add("Fuel Type", Enum.GetNames(typeof(eFuelTypes)));
-                properties.Add("Current amount of Fuel", null);
+                Dictionary<Dictionary<string, string>, string[]> properties = new Dictionary<Dictionary<string, string>, string[]>();
+
+                Dictionary<string, string> fuelType = new Dictionary<string, string>();
+                fuelType.Add("Fuel Type", m_FuelType.ToString());
+
+                Dictionary<string, string> currentAmount = new Dictionary<string, string>();
+                currentAmount.Add("Current amount of Fuel", String.Format("{0:0.00}", m_CurrentAmount));
+
+                properties.Add(fuelType, Enum.GetNames(typeof(eFuelTypes)));
+                properties.Add(currentAmount, null);
 
                 return properties;
             }

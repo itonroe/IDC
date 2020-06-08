@@ -54,6 +54,15 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public Vehicle Vehicle 
+        {
+            get
+            {
+                return m_Vehicle;
+            }
+        }
+
+
         public GarageVehicle(string i_VehicleType, string i_EngineType, string i_LicenseNumber)
         {
             m_Vehicle = GetVehicle(i_VehicleType, i_EngineType, i_LicenseNumber);
@@ -104,9 +113,17 @@ namespace Ex03.GarageLogic
             return Enum.IsDefined(typeof(eFuelTypes), i_FuelType);
         }
 
-        public Dictionary<string, Dictionary<string, string[]>> PropertiesToDictionary()
+        public int NumOfWheels
         {
-            Dictionary<string, Dictionary<string, string[]>> properties = null;
+            get
+            {
+                return m_Vehicle.NumOfWheels;
+            }
+        }
+
+        public Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> PropertiesToDictionary()
+        {
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> properties = null;
 
             switch (m_Vehicle.GetVehicleType())
             {

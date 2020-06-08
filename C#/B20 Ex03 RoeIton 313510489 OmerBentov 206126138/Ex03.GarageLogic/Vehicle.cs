@@ -27,6 +27,14 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public int NumOfWheels
+        {
+            get
+            {
+                return m_Wheels.Length;
+            }
+        }
+
         public Vehicle (string i_LicenseNumber, eEngineTypes i_Engine)
         {
             m_LicenseNumber = i_LicenseNumber;
@@ -109,6 +117,15 @@ namespace Ex03.GarageLogic
             m_Wheels[i_WheelIndex].InflateTire(i_AirPressureToAdd);
         }
 
+        public void UpdateWheels(string i_Manufacturer, float i_CurrentAirPressure)
+        {
+            for (int i = 0; i < m_Wheels.Length; i++)
+            {
+                m_Wheels[i].Manufacturer = i_Manufacturer;
+                InflateTire(i, i_CurrentAirPressure);
+            }
+        }
+
         public override bool Equals(object obj)
         {
             bool equals = true;
@@ -133,16 +150,25 @@ namespace Ex03.GarageLogic
 
         public abstract eVehiclesTypes GetVehicleType();
 
-        public virtual Dictionary<string, Dictionary<string, string[]>> PropertiesToDictionary()
+        public virtual Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> PropertiesToDictionary()
         {
-            Dictionary<string, string[]> properties_vehicle = new Dictionary<string, string[]>();
-            properties_vehicle.Add("Model Name", null);
+            Dictionary<Dictionary<string, string>, string[]> properties_vehicle = new Dictionary<Dictionary<string, string>, string[]>();
+            Dictionary<string, string> modelName = new Dictionary<string, string>();
+            modelName.Add("Model Name", m_Model);
+            properties_vehicle.Add(modelName, null);
 
-            Dictionary<string, string[]> properties_wheels = new Dictionary<string, string[]>();
-            properties_wheels.Add("Manufacturer Name", null);
-            properties_wheels.Add("Current Wheel Air Pressure Name", null);
+            Dictionary<Dictionary<string, string>, string[]> properties_wheels = new Dictionary<Dictionary<string, string>, string[]>();
 
-            Dictionary<string, Dictionary<string, string[]>> properties = new Dictionary<string, Dictionary<string, string[]>>();
+            Dictionary<string, string> manuFacturerName = new Dictionary<string, string>();
+            manuFacturerName.Add("Manufacturer Name", m_Wheels[0].Manufacturer);
+
+            Dictionary<string, string> currentWhellPressure = new Dictionary<string, string>();
+            currentWhellPressure.Add("Current Wheel Air Pressure", String.Format("{0:0.00}", m_Wheels[0].CurrentAirPressure));
+
+            properties_wheels.Add(manuFacturerName, null);
+            properties_wheels.Add(currentWhellPressure, null);
+
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> properties = new Dictionary<string, Dictionary<Dictionary<string, string>, string[]>>();
 
             properties.Add("Vehicle", properties_vehicle);
             properties.Add("Wheels", properties_wheels);

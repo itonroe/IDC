@@ -16,9 +16,9 @@ namespace Ex03.GarageLogic
         }
 
         //Gets a vehicle to add, if the vehicle is already in the list then print a suitable message and change the status of vehicle to “InProgress”.
-        public Dictionary<string, Dictionary<string, string[]>> AddVehicle(string i_VehicleType, string i_EngineType, string i_LicenseNumber)
+        public Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> AddVehicle(string i_VehicleType, string i_EngineType, string i_LicenseNumber)
         {
-            Dictionary<string, Dictionary<string, string[]>> next_information = null;
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> next_information = null;
 
             if (IsExists(i_LicenseNumber))
             {
@@ -36,7 +36,7 @@ namespace Ex03.GarageLogic
         }
 
         //Checks weather a vehicle is exists using LicenseNumber
-        private bool IsExists(string i_LicenseNumner)
+        public bool IsExists(string i_LicenseNumner)
         {
             return m_Vehicles.FindIndex(vehicle => vehicle.LicenseNumber.Equals(i_LicenseNumner)) >= 0 ? true : false;
         }
@@ -50,7 +50,7 @@ namespace Ex03.GarageLogic
         //Gets the vehicle object by license number
         public GarageVehicle FindVehicle(string i_LicenseNumber)
         {
-            return m_Vehicles.Find(vehicle => vehicle.Equals(i_LicenseNumber));
+            return m_Vehicles.Find(vehicle => vehicle.LicenseNumber.Equals(i_LicenseNumber));
         }
 
         //Filter the List by status
@@ -64,7 +64,7 @@ namespace Ex03.GarageLogic
             List<string> licenseNumbers = new List<string>();
             List<GarageVehicle> filteredVehicles = m_Vehicles;
 
-            if (!i_Status.Equals(string.Empty))
+            if (!i_Status.Equals("None"))
             {
                 filteredVehicles = FilterVehicleByStatus(i_Status);
             }
@@ -111,15 +111,60 @@ namespace Ex03.GarageLogic
                 FindVehicle(i_LicenseNumber).Recharge(i_DurationToAdd);
             }
         }
+        
+        public Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> GetInformation(string i_LicensePlate)
+        {
+            GarageVehicle garageVehicle = FindVehicle(i_LicensePlate);
+
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> vehicle_information = garageVehicle.PropertiesToDictionary();
+
+            Dictionary<Dictionary<string, string>, string[]> properties_owner = new Dictionary<Dictionary<string, string>, string[]>();
+
+            Dictionary<string, string> ownerName = new Dictionary<string, string>();
+            ownerName.Add("Name", garageVehicle.OwnerName);
+
+            Dictionary<string, string> ownerPhoneNumber = new Dictionary<string, string>();
+            ownerPhoneNumber.Add("Phone Number", garageVehicle.OwnerPhoneNumber);
+
+            properties_owner.Add(ownerName, Enum.GetNames(typeof(eCarColor)));
+            properties_owner.Add(ownerPhoneNumber, Enum.GetNames(typeof(eCarNumOfDoors)));
+
+            vehicle_information.Add("Owner", properties_owner);
+
+            return vehicle_information;
+        }
 
         public string[] VehicleTypes()
         {
             return GetVehicleTypes();
         }
 
-        public string[] GarageOperations()
+        public string[] EngineTypes()
         {
-            return new string[] { "Add a vehicle", "Find a vehicle", "Lists"};
+            return GetEngineTypes();
+        }
+
+        public string[] StatusTypes()
+        {
+            return GetStatusTypes();
+        }
+
+        public int GetNumberOfWheelsBy(string i_LicensePlate)
+        {
+            return FindVehicle(i_LicensePlate).NumOfWheels;
+        }
+
+        public void SetVehicleOwner(string i_LicensePlate, string i_OwnerName, string i_PhoneNumber)
+        {
+            FindVehicle(i_LicensePlate).OwnerName = i_OwnerName;
+            FindVehicle(i_LicensePlate).OwnerPhoneNumber = i_PhoneNumber;
+        }
+
+        public bool SetNewVehicleData(string i_LicensePlate, Dictionary<string, Dictionary<string, string>> i_Data)
+        {
+            Vehicle vehicle = m_Vehicles.Find(ve => ve.LicenseNumber.Equals(i_LicensePlate)).Vehicle;
+
+            return UpdateVehicle(ref vehicle, i_Data);
         }
     }
 }

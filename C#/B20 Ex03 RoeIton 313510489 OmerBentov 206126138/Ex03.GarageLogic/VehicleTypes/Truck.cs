@@ -52,13 +52,20 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public override Dictionary<string, Dictionary<string, string[]>> PropertiesToDictionary()
+        public override Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> PropertiesToDictionary()
         {
-            Dictionary<string, Dictionary<string, string[]>> properties = base.PropertiesToDictionary();
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> properties = base.PropertiesToDictionary();
 
-            Dictionary<string, string[]> properties_truck = new Dictionary<string, string[]>();
-            properties_truck.Add("Does it carry dangerous load?", new string[] { "Yes", "No" });
-            properties_truck.Add("Load Volume", null);
+            Dictionary<Dictionary<string, string>, string[]> properties_truck = new Dictionary<Dictionary<string, string>, string[]>();
+
+            Dictionary<string, string> dangerousLoad = new Dictionary<string, string>();
+            dangerousLoad.Add("Does it carry dangerous load?", m_DanagerousLoad.ToString());
+
+            Dictionary<string, string> loadVolume = new Dictionary<string, string>();
+            loadVolume.Add("Load Volume", m_LoadVolume.ToString());
+
+            properties_truck.Add(dangerousLoad, new string[] { "Yes", "No" });
+            properties_truck.Add(loadVolume, null);
 
             properties.Add("Truck", properties_truck);
 

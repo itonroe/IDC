@@ -55,13 +55,20 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public override Dictionary<string, Dictionary<string, string[]>> PropertiesToDictionary()
+        public override Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> PropertiesToDictionary()
         {
-            Dictionary<string, Dictionary<string, string[]>> properties = base.PropertiesToDictionary();
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> properties = base.PropertiesToDictionary();
 
-            Dictionary<string, string[]> properties_car = new Dictionary<string, string[]>();
-            properties_car.Add("Color", Enum.GetNames(typeof(eCarColor)));
-            properties_car.Add("Number of Doors", Enum.GetNames(typeof(eCarNumOfDoors)));
+            Dictionary<Dictionary<string, string>, string[]> properties_car = new Dictionary<Dictionary<string, string>, string[]>();
+
+            Dictionary<string, string> carColor = new Dictionary<string, string>();
+            carColor.Add("Color", m_Color.ToString());
+
+            Dictionary<string, string> numOfDoors = new Dictionary<string, string>();
+            numOfDoors.Add("Number of Doors", m_NumOfDoors.ToString());
+
+            properties_car.Add(carColor, Enum.GetNames(typeof(eCarColor)));
+            properties_car.Add(numOfDoors, Enum.GetNames(typeof(eCarNumOfDoors)));
 
             properties.Add("Car", properties_car);
 

@@ -54,13 +54,20 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public override Dictionary<string, Dictionary<string, string[]>> PropertiesToDictionary()
+        public override Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> PropertiesToDictionary()
         {
-            Dictionary<string, Dictionary<string, string[]>> properties = base.PropertiesToDictionary();
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> properties = base.PropertiesToDictionary();
 
-            Dictionary<string, string[]> properties_motorcycle = new Dictionary<string, string[]>();
-            properties_motorcycle.Add("License Type", Enum.GetNames(typeof(eMotorcycleLicenseTypes)));
-            properties_motorcycle.Add("Engine Capacity", null);
+            Dictionary<Dictionary<string, string>, string[]> properties_motorcycle = new Dictionary<Dictionary<string, string>, string[]>();
+
+            Dictionary<string, string> licenseType = new Dictionary<string, string>();
+            licenseType.Add("License Type", m_LicenseType.ToString());
+
+            Dictionary<string, string> engineCapacity = new Dictionary<string, string>();
+            engineCapacity.Add("Engine Capacity", m_EngineCapacity.ToString());
+
+            properties_motorcycle.Add(licenseType, Enum.GetNames(typeof(eMotorcycleLicenseTypes)));
+            properties_motorcycle.Add(engineCapacity, null);
 
             properties.Add("Motorcycle", properties_motorcycle);
 

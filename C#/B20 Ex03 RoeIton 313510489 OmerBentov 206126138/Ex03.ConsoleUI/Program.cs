@@ -9,17 +9,9 @@ namespace Ex03.ConsoleUI
     {
         public static void Main(string[] args)
         {
-            Garage garageLogic = new Garage();
+            GarageUI garageUI = new GarageUI();
 
-            //PrintArray("Car Type", garageLogic.VehicleTypes());
-
-            Dictionary<string, Dictionary<string, string[]>> information = garageLogic.AddVehicle("Car", "Fuel", "4006312");
-
-
-            if (information != null)
-            {
-                PrintDictionary(information);
-            }
+            garageUI.StartApplication();
 
             CloseApplication();
         }
