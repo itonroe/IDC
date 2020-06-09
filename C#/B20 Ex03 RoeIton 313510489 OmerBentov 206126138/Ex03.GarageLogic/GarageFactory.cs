@@ -102,141 +102,204 @@ namespace Ex03.GarageLogic
 			((Electric)i_Vehicle.Engine).Recharge(batteryDurationLeft);
 		}
 
-		public static bool UpdateVehicle(ref Vehicle i_Vehicle, Dictionary<string, Dictionary<string, string>> i_Data)
+		public static Dictionary<string, Dictionary<string, string>> UpdateVehicle(ref Vehicle i_Vehicle, ref Dictionary<string, Dictionary<string, string>> i_Data)
 		{
-			bool success = true;
-			try
+			Dictionary<string, Dictionary<string, string>> responseData = new Dictionary<string, Dictionary<string, string>>();
+
+			StringBuilder errorMessage = new StringBuilder();
+
+			foreach (var field in i_Data)
 			{
-				foreach (var field in i_Data)
+				switch (field.Key)
 				{
-					switch (field.Key)
-					{
-						case "Vehicle":
-							string modelName = string.Empty;
+					case "Vehicle":
+						string modelName = string.Empty;
 
-							foreach (var property in field.Value)
-							{
-								modelName = property.Value;
-							}
+						foreach (var property in field.Value)
+						{
+							modelName = property.Value;
+						}
 
+						try
+						{
 							UpdateVehicle(ref i_Vehicle, modelName);
-							break;
-						case "Wheels":
-							string manufacturer = string.Empty;
-							string currentAirPressure = string.Empty;
+							responseData.Add("Vehicle", field.Value);
+						}
+						catch (Exception e)
+						{
+							errorMessage.AppendLine(e.Message);
+						}
+						break;
+					case "Wheels":
+						string manufacturer = string.Empty;
+						string currentAirPressure = string.Empty;
 
-							foreach (var property in field.Value)
+						foreach (var property in field.Value)
+						{
+							if (property.Key.ToLower().Contains("manufacturer"))
 							{
-								if (property.Key.ToLower().Contains("manufacturer"))
-								{
-									manufacturer = property.Value;
-								}
-								else
-								{
-									currentAirPressure = property.Value;
-								}
+								manufacturer = property.Value;
 							}
+							else
+							{
+								currentAirPressure = property.Value;
+							}
+						}
 
+						try
+						{
 							UpdateWheels(ref i_Vehicle, manufacturer, currentAirPressure);
-							break;
-						case "Engine":
+							responseData.Add("Wheels", field.Value);
+						}
+						catch (Exception e)
+						{
+							errorMessage.AppendLine(e.Message);
+						}
+						break;
+					case "Engine":
 
-							switch (i_Vehicle.Engine.EngineType)
-							{
-								case eEngineTypes.Electric:
-									string batteryDurationaLeft = string.Empty;
+						switch (i_Vehicle.Engine.EngineType)
+						{
+							case eEngineTypes.Electric:
+								string batteryDurationaLeft = string.Empty;
 
-									foreach (var property in field.Value)
-									{
-										batteryDurationaLeft = property.Value;
-									}
+								foreach (var property in field.Value)
+								{
+									batteryDurationaLeft = property.Value;
+								}
 
+								try
+								{
 									UpdateElectricEngine(ref i_Vehicle, batteryDurationaLeft);
-									break;
-								case eEngineTypes.Fuel:
-									string fuelType = string.Empty;
-									string currentAmount = string.Empty;
+									responseData.Add("Engine", field.Value);
+								}
+								catch (Exception e)
+								{
+									errorMessage.AppendLine(e.Message);
+								}
+								break;
+							case eEngineTypes.Fuel:
+								string fuelType = string.Empty;
+								string currentAmount = string.Empty;
 
-									foreach (var property in field.Value)
+								foreach (var property in field.Value)
+								{
+									if (property.Key.ToLower().Contains("type"))
 									{
-										if (property.Key.ToLower().Contains("type"))
-										{
-											fuelType = property.Value;
-										}
-										else
-										{
-											currentAmount = property.Value;
-										}
+										fuelType = property.Value;
+									}
+									else
+									{
+										currentAmount = property.Value;
 									}
 
+								}
+
+								try
+								{
 									UpdateFuelEngine(ref i_Vehicle, fuelType, currentAmount);
-									break;
-							}
- 							break;
-						case "Car":
-							string color = string.Empty;
-							string numOfDoors = string.Empty;
+									responseData.Add("Engine", field.Value);
+								}
+								catch (Exception e)
+								{
+									errorMessage.AppendLine(e.Message);
+								}
+								break;
+						}
+						break;
+					case "Car":
+						string color = string.Empty;
+						string numOfDoors = string.Empty;
 
-							foreach (var property in field.Value)
+						foreach (var property in field.Value)
+						{
+							if (property.Key.ToLower().Contains("color"))
 							{
-								if (property.Key.ToLower().Contains("color"))
-								{
-									color = property.Value;
-								}
-								else
-								{
-									numOfDoors = property.Value;
-								}
+								color = property.Value;
 							}
+							else
+							{
+								numOfDoors = property.Value;
+							}
+						}
 
+						try
+						{
 							UpdateCar(ref i_Vehicle, color, numOfDoors);
-							break;
-						case "Truck":
-							string dangerousLoad = string.Empty;
-							string loadVolume = string.Empty;
+							responseData.Add("Car", field.Value);
+						}
+						catch (Exception e)
+						{
+							errorMessage.AppendLine(e.Message);
+						}
+						break;
+					case "Truck":
+						string dangerousLoad = string.Empty;
+						string loadVolume = string.Empty;
 
-							foreach (var property in field.Value)
+						foreach (var property in field.Value)
+						{
+							if (property.Key.ToLower().Contains("volume"))
 							{
-								if (property.Key.ToLower().Contains("volume"))
-								{
-									loadVolume = property.Value;
-								}
-								else
-								{
-									dangerousLoad = property.Value;
-								}
+								loadVolume = property.Value;
 							}
+							else
+							{
+								dangerousLoad = property.Value;
+							}
+						}
 
+						try
+						{
 							UpdateTruck(ref i_Vehicle, dangerousLoad, loadVolume);
-							break;
-						case "Motorcycle":
-							string licenseType = string.Empty;
-							string engineCapacity = string.Empty;
+							responseData.Add("Truck", field.Value);
+						}
+						catch (Exception e)
+						{
+							errorMessage.AppendLine(e.Message);
+						}
 
-							foreach (var property in field.Value)
+						break;
+					case "Motorcycle":
+						string licenseType = string.Empty;
+						string engineCapacity = string.Empty;
+
+						foreach (var property in field.Value)
+						{
+							if (property.Key.ToLower().Contains("license"))
 							{
-								if (property.Key.ToLower().Contains("license"))
-								{
-									licenseType = property.Value;
-								}
-								else
-								{
-									engineCapacity = property.Value;
-								}
+								licenseType = property.Value;
 							}
+							else
+							{
+								engineCapacity = property.Value;
+							}
+						}
 
+						try
+						{
 							UpdateMotorcycle(ref i_Vehicle, licenseType, engineCapacity);
-							break;
-					}
+							responseData.Add("Motorcycle", field.Value);
+						}
+						catch (Exception e)
+						{
+							errorMessage.AppendLine(e.Message);
+						}
+
+						break;
 				}
 			}
-			catch (FormatException e)
+
+			i_Data = responseData;
+
+
+			if (errorMessage.Length != 0)
 			{
-				Console.WriteLine(e.InnerException);
-				success = false;
+				Console.WriteLine($"Errors:\n{errorMessage.ToString()}");
+				throw new Exception("Adding vehicle has Failed");
 			}
 
-			return success;
+			return responseData;
 		}
 
 		public static string[] GetVehicleTypes()
@@ -254,6 +317,10 @@ namespace Ex03.GarageLogic
 			return Enum.GetNames(typeof(eVehicleStatus));
 		}
 
+		public static string[] GetFuelTypes()
+		{
+			return Enum.GetNames(typeof(eFuelTypes));
+		}
 		private static bool IsVehicleValid(string i_VehicleType, string i_EngineType)
 		{
 			return IsValueTypeValid(new eVehiclesTypes(), i_VehicleType) && IsValueTypeValid(new eEngineTypes(), i_EngineType);

@@ -118,6 +118,22 @@ namespace Ex03.GarageLogic
 
             Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> vehicle_information = garageVehicle.PropertiesToDictionary();
 
+
+
+
+            Dictionary<string, string> vehicleType = new Dictionary<string, string>();
+            vehicleType.Add("Type", $"{garageVehicle.Vehicle.Engine.EngineType} {garageVehicle.Vehicle.GetVehicleType()}");
+
+            Dictionary<string, string> vehicleLicensePlate = new Dictionary<string, string>();
+            vehicleLicensePlate.Add("License Plate", garageVehicle.Vehicle.LicenseNumber);
+
+            Dictionary<string, string> vehicleStatus = new Dictionary<string, string>();
+            vehicleType.Add("Status", garageVehicle.Status.ToString());
+
+            vehicle_information["Vehicle"].Add(vehicleType, null);
+            vehicle_information["Vehicle"].Add(vehicleLicensePlate, null);
+            vehicle_information["Vehicle"].Add(vehicleStatus, null);
+
             Dictionary<Dictionary<string, string>, string[]> properties_owner = new Dictionary<Dictionary<string, string>, string[]>();
 
             Dictionary<string, string> ownerName = new Dictionary<string, string>();
@@ -149,6 +165,10 @@ namespace Ex03.GarageLogic
             return GetStatusTypes();
         }
 
+        public string[] FuelTypes()
+        {
+            return GetFuelTypes();
+        }
         public int GetNumberOfWheelsBy(string i_LicensePlate)
         {
             return FindVehicle(i_LicensePlate).NumOfWheels;
@@ -160,11 +180,11 @@ namespace Ex03.GarageLogic
             FindVehicle(i_LicensePlate).OwnerPhoneNumber = i_PhoneNumber;
         }
 
-        public bool SetNewVehicleData(string i_LicensePlate, Dictionary<string, Dictionary<string, string>> i_Data)
+        public Dictionary<string, Dictionary<string, string>> SetNewVehicleData(string i_LicensePlate, ref Dictionary<string, Dictionary<string, string>> i_Data)
         {
             Vehicle vehicle = m_Vehicles.Find(ve => ve.LicenseNumber.Equals(i_LicensePlate)).Vehicle;
 
-            return UpdateVehicle(ref vehicle, i_Data);
+            return UpdateVehicle(ref vehicle, ref i_Data);
         }
     }
 }

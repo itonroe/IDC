@@ -120,7 +120,7 @@ namespace Ex03.ConsoleUI
 
                 PrintVehicleInformation(licensePlate);
 
-                Console.WriteLine("\nJust letting you know, vehicle's status change to 'In Progress'.");
+                Console.WriteLine("\nJust letting you know, vehicle's status changed to 'In Progress'.");
             }
             else
             {
@@ -143,47 +143,68 @@ namespace Ex03.ConsoleUI
 
                 m_Garage.SetVehicleOwner(licensePlate, ownerName, ownerPhoneNumber);
 
-                try
-                {
-                    foreach (var generalProperty in nextInfo)
+                bool wantToAddVehicle = true;
+
+                while (wantToAddVehicle) {
+                    try
                     {
-                        Console.WriteLine($"\n{generalProperty.Key}:");
-
-                        Dictionary<string, string> newAnswerProperty = new Dictionary<string, string>();
-
-                        foreach (var subProperty in generalProperty.Value)
+                        foreach (var generalProperty in nextInfo)
                         {
+                            Console.WriteLine($"\n{generalProperty.Key}:");
 
-                            foreach (var oneQuestion in subProperty.Key)
+                            Dictionary<string, string> newAnswerProperty = new Dictionary<string, string>();
+
+                            foreach (var subProperty in generalProperty.Value)
                             {
-                                string question = oneQuestion.Key;
-                                string answer;
-                                if (subProperty.Value == null)
+
+                                foreach (var oneQuestion in subProperty.Key)
                                 {
-                                    //That's a free writing
-                                    answer = GetFreeInputOf(question);
-                                }
-                                else
-                                {
-                                    //We have some options to select from
-                                    answer = GetSelectionOf(question, subProperty.Value, 1);
+                                    string question = oneQuestion.Key;
+                                    string answer;
+
+                                    if (nextInfo_answers.TryGetValue(generalProperty.Key, out _))
+                                    {
+                                        Console.WriteLine($"\t{oneQuestion.Key}: {nextInfo_answers[generalProperty.Key][question]}");
+                                    }
+                                    else
+                                    {
+                                        if (subProperty.Value == null)
+                                        {
+                                            //That's a free writing
+                                            answer = GetFreeInputOf(question);
+                                        }
+                                        else
+                                        {
+                                            //We have some options to select from
+                                            answer = GetSelectionOf(question, subProperty.Value, 1);
+                                        }
+
+                                        newAnswerProperty.Add(question, answer);
+                                    }
                                 }
 
-                                newAnswerProperty.Add(question, answer);
                             }
 
+                            if (!nextInfo_answers.TryGetValue(generalProperty.Key, out _))
+                            {
+                                nextInfo_answers.Add(generalProperty.Key, newAnswerProperty);
+                            }
+                            else
+                            {
+                                nextInfo_answers.Remove(generalProperty.Key);
+                            }
                         }
 
-                        nextInfo_answers.Add(generalProperty.Key, newAnswerProperty);
+                        m_Garage.SetNewVehicleData(licensePlate, ref nextInfo_answers);
+
+                        Console.WriteLine("Vehicle added successfully");
+                        wantToAddVehicle = false;
                     }
-
-                    m_Garage.SetNewVehicleData(licensePlate, nextInfo_answers);
-
-                    Console.WriteLine("Vehicle added successfully");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Adding vehicle has failed\nError: {e.Message}");
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        wantToAddVehicle = AgainOrBack("Try again to add this vehicle");
+                    }
                 }
 
             }
@@ -259,7 +280,7 @@ namespace Ex03.ConsoleUI
 
             if (m_Garage.IsExists(licensePlate))
             {
-                string fuelType = GetSelectionOf("Fuel type", m_Garage.StatusTypes(), 0);
+                string fuelType = GetSelectionOf("Fuel type", m_Garage.FuelTypes(), 0);
                 float fuelAmount = GetFreeInputFloat("amount of fuel (in liters)");
 
                 m_Garage.Refule(licensePlate, fuelType, fuelAmount);
