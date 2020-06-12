@@ -11,19 +11,20 @@ namespace Ex03.ConsoleUI
         private enum eViews
         {
             Menu = 0,
-
-            AddVehicle = 1,
-            ListVehicles = 1,
-            ChangeVehicleStatus = 1,
-            InflateVehicleTires = 1,
-            RefuleVehicle = 1,
-            RechargeVehicle = 1,
-            VehicleInfo = 1,
+            Add = 1,
+            List = 2,
+            Status = 3,
+            InflateMax = 4,
+            Refule = 5,
+            Recharge = 6,
+            Information = 7,
+            Exit = 8
         }
 
         private static Garage m_Garage;
-        private static int m_LevelOperation;
         private static bool m_ApplicationRunning;
+        private static eViews m_CurrentView;
+
 
         public GarageUI()
         {
@@ -32,7 +33,6 @@ namespace Ex03.ConsoleUI
 
         public void StartApplication()
         {
-            m_LevelOperation = 0;
             m_ApplicationRunning = true;
 
             while (m_ApplicationRunning)
@@ -66,45 +66,17 @@ namespace Ex03.ConsoleUI
 
         private static void ManageMenuOperations()
         {
+            m_CurrentView = eViews.Menu;
+
             string[] opertaions =  new string[] { "Add a vehicle", 
                 "Get a list of vehicles in the garage", "Change a vehicle status", 
                 "Inflate vehicle's tires to max", "Refule vehicle", "Recharge vehicle", "Vehicle Information", "Exit"};
 
-            PrintOpertaions("Menu", opertaions, (int)eViews.Menu, ':');
-
-            int operationSelected = ReadUserSelection(opertaions.Length);
+            m_CurrentView = (eViews)(Array.IndexOf(opertaions, GetSelectionOf("Menu", opertaions, 0)) + 1);
 
             Console.Clear();
 
-            switch (operationSelected)
-            {
-                case 1:
-                    while (ManageAddVehicle()) ;
-                    break;
-                case 2:
-                    while (ManageListVehicles());
-                    break;
-                case 3:
-                    while (ManageChangeStatus()) ;
-                    break;
-                case 4:
-                    while (ManageInflateToMax()) ;
-                    break;
-                case 5:
-                    while (ManageRefule()) ;
-                    break;
-                case 6:
-                    while (ManageRecharge()) ;
-                    break;
-                case 7:
-                    while (ManageInformation()) ;
-                    break;
-                default:
-                    Environment.Exit(0);
-                    break;
-            }
-
-
+            ManageViewForm();
         }
 
         private static bool ManageAddVehicle()
@@ -139,7 +111,7 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine($"\nOwner:");
                 string ownerName = GetFreeInputOf("Vehicle's Owner Name");
                 Console.WriteLine();
-                string ownerPhoneNumber = GetPhoneNumber();
+                string ownerPhoneNumber = GetFreeInputOf("Phone Number: (XXX-XXXXXXX)", "phone");
 
                 m_Garage.SetVehicleOwner(licensePlate, ownerName, ownerPhoneNumber);
 
@@ -220,14 +192,14 @@ namespace Ex03.ConsoleUI
 
             string filter = GetSelectionOf("Filter by current status", filters, 0);
 
-            List<string> licensePlates = m_Garage.ListOfLicenseNumbers(filter);
+            List<string> licensePlates = m_Garage.ListOfLicensePlates(filter);
 
             if (licensePlates.Count == 0)
             {
                 Console.WriteLine("Sorry, there are no vehicles in here.");
             }
 
-            foreach (string licensePlayer in m_Garage.ListOfLicenseNumbers(filter))
+            foreach (string licensePlayer in m_Garage.ListOfLicensePlates(filter))
             {
                 Console.WriteLine(licensePlayer);
             }
@@ -280,19 +252,26 @@ namespace Ex03.ConsoleUI
 
             if (m_Garage.IsExists(licensePlate))
             {
-                string fuelType = GetSelectionOf("Fuel type", m_Garage.FuelTypes(), 0);
-                float fuelAmount = GetFreeInputFloat("amount of fuel (in liters)");
+                try
+                {
+                    string fuelType = GetSelectionOf("Fuel type", m_Garage.FuelTypes(), 0);
+                    float fuelAmount = float.Parse(GetFreeInputOf("amount of fuel (in liters)", "float"));
 
-                m_Garage.Refule(licensePlate, fuelType, fuelAmount);
+                    m_Garage.Refule(licensePlate, fuelType, fuelAmount);
 
-                Console.WriteLine("Refuled successfully.");
+                    Console.WriteLine("Refuled successfully.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
                 Console.WriteLine("Vehicle is not exist.");
             }
 
-            return AgainOrBack("Refule a different vehicle");
+            return AgainOrBack("Refule a vehicle");
         }
 
         private static bool ManageRecharge()
@@ -302,18 +281,56 @@ namespace Ex03.ConsoleUI
 
             if (m_Garage.IsExists(licensePlate))
             {
-                float batteryDuration = GetFreeInputFloat("how many hours to add to the battery");
+                try
+                {
+                    float batteryDuration = float.Parse(GetFreeInputOf("how many hours to add to the battery", "float"));
 
-                m_Garage.Recharge(licensePlate, batteryDuration);
+                    m_Garage.Recharge(licensePlate, batteryDuration);
 
-                Console.WriteLine("Recharged successfully.");
+                    Console.WriteLine("Recharged successfully.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
                 Console.WriteLine("Vehicle is not exist.");
             }
 
-            return AgainOrBack("Refule a different vehicle");
+            return AgainOrBack("Recharge a vehicle");
+        }
+
+        private static void ManageViewForm()
+        {
+            switch (m_CurrentView)
+            {
+                case eViews.Add:
+                    while (ManageAddVehicle()) ;
+                    break;
+                case eViews.List:
+                    while (ManageListVehicles()) ;
+                    break;
+                case eViews.Status:
+                    while (ManageChangeStatus()) ;
+                    break;
+                case eViews.InflateMax:
+                    while (ManageInflateToMax()) ;
+                    break;
+                case eViews.Refule:
+                    while (ManageRefule()) ;
+                    break;
+                case eViews.Recharge:
+                    while (ManageRecharge()) ;
+                    break;
+                case eViews.Information:
+                    while (ManageInformation()) ;
+                    break;
+                default:
+                    Environment.Exit(0);
+                    break;
+            }
         }
 
         private static bool ManageInformation()
@@ -372,36 +389,63 @@ namespace Ex03.ConsoleUI
 
         private static string GetFreeInputOf(string i_Title)
         {
+            return GetFreeInputOf(i_Title, String.Empty);
+        }
+
+        private static string GetFreeInputOf(string i_Title, string i_ValueType)
+        {
             Console.WriteLine($"\tEnter {i_Title}:");
             Console.Write("\t");
-            string userInput = Console.ReadLine();
 
-            while (Regex.Matches(userInput, @"[0-9a-zA-Z]").Count == 0)
+            string userInput = Console.ReadLine();
+            bool inputValid = InputValidation(i_ValueType, userInput);
+
+            while (!inputValid)
             {
-                Console.WriteLine("Please enter some value.");
+                string userAgainMessage;
+
+                switch (i_ValueType)
+                {
+                    case "float":
+                        userAgainMessage = "numbers only";
+                        break;
+                    case "phone":
+                        userAgainMessage = "check your phone number again.";
+                        break;
+                    default:
+                        userAgainMessage = "Please enter some value.";
+                        break;
+                }
+
+                Console.WriteLine($"Input invalid {userAgainMessage}");
                 Console.Write("\t");
                 userInput = Console.ReadLine();
+                inputValid = InputValidation(i_ValueType, userInput);
             }
 
             return userInput;
         }
 
-        private static string GetPhoneNumber()
+        private static bool InputValidation(string i_ValueType, string i_Value)
         {
-            Console.WriteLine($"\tEnter Phone Number: (XXX-XXXXXXX)");
-            Console.Write("\t");
-            string userInput = Console.ReadLine();
+            bool isValid = true;
 
-            Regex phoneNumberRegex = new Regex(@"[0-9]{3}-[0-9]{7}");
-
-            while (!phoneNumberRegex.Match(userInput).Success)
+            switch (i_ValueType.ToLower())
             {
-                Console.WriteLine("Input invalid, check your phone number again.");
-                Console.Write("\t");
-                userInput = Console.ReadLine();
+                case "float":
+                    isValid = float.TryParse(i_Value, out _);
+                    break;
+                case "phone":
+                    Regex phoneNumberRegex = new Regex(@"[0-9]{3}-[0-9]{7}");
+
+                    isValid = phoneNumberRegex.Match(i_Value).Success;
+                    break;
+                default:
+                    isValid = Regex.Matches(i_Value, @"[0-9a-zA-Z]").Count != 0;
+                    break;
             }
 
-            return userInput;
+            return isValid;
         }
 
         private static string GetSelectionOf(string i_Title, string[] i_Selections, int i_Tabs)
@@ -415,7 +459,7 @@ namespace Ex03.ConsoleUI
             Console.Write("\nSelect Opertaion, ");
 
             char keyEntered = Console.ReadKey().KeyChar;
-            while (!InputOptionIsValid(keyEntered, i_MaxOption)) 
+            while (!InputOptionIsValid(keyEntered, i_MaxOption))
             {
                 Console.WriteLine("\nWrong operation input, please try again...\n(look at the values next to the wanted operation)");
                 keyEntered = Console.ReadKey().KeyChar;
@@ -424,27 +468,6 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("\n");
 
             return int.Parse(keyEntered.ToString());
-        }
-
-        private static float GetFreeInputFloat(string i_Title)
-        {
-            Console.WriteLine($"\tEnter {i_Title}:");
-            Console.Write("\t");
-            string userInput = Console.ReadLine();
-
-            while (!float.TryParse(userInput, out _))
-            {
-                Console.WriteLine("Input is not valid, please try again.");
-                Console.Write("\t");
-                userInput = Console.ReadLine();
-            }
-
-            return float.Parse(userInput);
-        }
-
-        private static bool InputOptionIsValid(char i_KeyEntered, int i_MaxOption)
-        {
-            return int.TryParse(i_KeyEntered.ToString(), out _) && int.Parse(i_KeyEntered.ToString()) >= 1 && int.Parse(i_KeyEntered.ToString()) <= i_MaxOption;
         }
 
         public static void PrintOpertaions(string i_Title, string[] i_Operations, int i_CountOfTabs, char i_Seperator)
@@ -462,17 +485,9 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static void PrintDictionary(Dictionary<string, Dictionary<string, string[]>> i_Dictionary)
+        private static bool InputOptionIsValid(char i_KeyEntered, int i_MaxOption)
         {
-            foreach (var item in i_Dictionary)
-            {
-                Console.WriteLine("\n" + item.Key + ":");
-
-                foreach (var item2 in item.Value)
-                {
-                    //PrintOpertaions(item2.Key, item2.Value);
-                }
-            }
+            return int.TryParse(i_KeyEntered.ToString(), out _) && int.Parse(i_KeyEntered.ToString()) >= 1 && int.Parse(i_KeyEntered.ToString()) <= i_MaxOption;
         }
     }
 }

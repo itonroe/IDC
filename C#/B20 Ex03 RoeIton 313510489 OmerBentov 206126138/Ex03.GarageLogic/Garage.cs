@@ -16,17 +16,17 @@ namespace Ex03.GarageLogic
         }
 
         //Gets a vehicle to add, if the vehicle is already in the list then print a suitable message and change the status of vehicle to “InProgress”.
-        public Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> AddVehicle(string i_VehicleType, string i_EngineType, string i_LicenseNumber)
+        public Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> AddVehicle(string i_VehicleType, string i_EngineType, string i_LicensePlate)
         {
             Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> next_information = null;
 
-            if (IsExists(i_LicenseNumber))
+            if (IsExists(i_LicensePlate))
             {
-                ChangeStatus(i_LicenseNumber, eVehicleStatus.InProgress.ToString());
+                ChangeStatus(i_LicensePlate, eVehicleStatus.InProgress.ToString());
             }
             else
             {
-                GarageVehicle garageVehicle = new GarageVehicle(i_VehicleType, i_EngineType, i_LicenseNumber);
+                GarageVehicle garageVehicle = new GarageVehicle(i_VehicleType, i_EngineType, i_LicensePlate);
                 next_information = garageVehicle.PropertiesToDictionary();
 
                 m_Vehicles.Add(garageVehicle);
@@ -35,10 +35,10 @@ namespace Ex03.GarageLogic
             return next_information;
         }
 
-        //Checks weather a vehicle is exists using LicenseNumber
+        //Checks weather a vehicle is exists using LicensePlate
         public bool IsExists(string i_LicenseNumner)
         {
-            return m_Vehicles.FindIndex(vehicle => vehicle.LicenseNumber.Equals(i_LicenseNumner)) >= 0 ? true : false;
+            return m_Vehicles.FindIndex(vehicle => vehicle.LicensePlate.Equals(i_LicenseNumner)) >= 0 ? true : false;
         }
 
         /*//Checks whether a vehicle is exists in the garage already.
@@ -48,9 +48,9 @@ namespace Ex03.GarageLogic
         }*/
 
         //Gets the vehicle object by license number
-        public GarageVehicle FindVehicle(string i_LicenseNumber)
+        public GarageVehicle FindVehicle(string i_LicensePlate)
         {
-            return m_Vehicles.Find(vehicle => vehicle.LicenseNumber.Equals(i_LicenseNumber));
+            return m_Vehicles.Find(vehicle => vehicle.LicensePlate.Equals(i_LicensePlate));
         }
 
         //Filter the List by status
@@ -59,7 +59,7 @@ namespace Ex03.GarageLogic
             return m_Vehicles.FindAll(vehicle => vehicle.Status.Equals((eVehicleStatus)Enum.Parse(typeof(eVehicleStatus), i_Status)));
         }
 
-        public List<string> ListOfLicenseNumbers(string i_Status)
+        public List<string> ListOfLicensePlates(string i_Status)
         {
             List<string> licenseNumbers = new List<string>();
             List<GarageVehicle> filteredVehicles = m_Vehicles;
@@ -71,44 +71,44 @@ namespace Ex03.GarageLogic
 
             foreach (var garageVehicle in filteredVehicles)
             {
-                licenseNumbers.Add(garageVehicle.LicenseNumber);
+                licenseNumbers.Add(garageVehicle.LicensePlate);
             }
 
             return licenseNumbers;
         }
 
-        public void ChangeStatus(string i_LicenseNumber, string i_Status)
+        public void ChangeStatus(string i_LicensePlate, string i_Status)
         {
-            if (IsExists(i_LicenseNumber))
+            if (IsExists(i_LicensePlate))
             {
-                FindVehicle(i_LicenseNumber).SetVehicleStatus(i_Status);
+                FindVehicle(i_LicensePlate).SetVehicleStatus(i_Status);
             }
         }
 
         //Change the vehicle’s air pressure to maximum
-        public void InflateTiresToMax(string i_LicenseNumber)
+        public void InflateTiresToMax(string i_LicensePlate)
         {
-            if (IsExists(i_LicenseNumber))
+            if (IsExists(i_LicensePlate))
             {
-                FindVehicle(i_LicenseNumber).InflateToMax();
+                FindVehicle(i_LicensePlate).InflateToMax();
             }
         }
 
         //Refuel vehicle that runs on fuel
-        public void Refule(string i_LicenseNumber, string i_FuelType, float i_FuleToAdd)
+        public void Refule(string i_LicensePlate, string i_FuelType, float i_FuleToAdd)
         {
-            if (IsExists(i_LicenseNumber))
+            if (IsExists(i_LicensePlate))
             {
-                FindVehicle(i_LicenseNumber).Refule(i_FuleToAdd, i_FuelType);
+                FindVehicle(i_LicensePlate).Refule(i_FuleToAdd, i_FuelType);
             }
         }
 
         //Recharge vehicle that runs on electric
-        public void Recharge(string i_LicenseNumber, float i_DurationToAdd)
+        public void Recharge(string i_LicensePlate, float i_DurationToAdd)
         {
-            if (IsExists(i_LicenseNumber))
+            if (IsExists(i_LicensePlate))
             {
-                FindVehicle(i_LicenseNumber).Recharge(i_DurationToAdd);
+                FindVehicle(i_LicensePlate).Recharge(i_DurationToAdd);
             }
         }
         
@@ -118,14 +118,11 @@ namespace Ex03.GarageLogic
 
             Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> vehicle_information = garageVehicle.PropertiesToDictionary();
 
-
-
-
             Dictionary<string, string> vehicleType = new Dictionary<string, string>();
             vehicleType.Add("Type", $"{garageVehicle.Vehicle.Engine.EngineType} {garageVehicle.Vehicle.GetVehicleType()}");
 
             Dictionary<string, string> vehicleLicensePlate = new Dictionary<string, string>();
-            vehicleLicensePlate.Add("License Plate", garageVehicle.Vehicle.LicenseNumber);
+            vehicleLicensePlate.Add("License Plate", garageVehicle.Vehicle.LicensePlate);
 
             Dictionary<string, string> vehicleStatus = new Dictionary<string, string>();
             vehicleType.Add("Status", garageVehicle.Status.ToString());
@@ -152,23 +149,24 @@ namespace Ex03.GarageLogic
 
         public string[] VehicleTypes()
         {
-            return GetVehicleTypes();
+            return GetEnumTypes(new eVehiclesTypes());
         }
 
         public string[] EngineTypes()
         {
-            return GetEngineTypes();
+            return GetEnumTypes(new eEngineTypes());
         }
 
         public string[] StatusTypes()
         {
-            return GetStatusTypes();
+            return GetEnumTypes(new eVehicleStatus());
         }
 
         public string[] FuelTypes()
         {
-            return GetFuelTypes();
+            return GetEnumTypes(new eFuelTypes());
         }
+
         public int GetNumberOfWheelsBy(string i_LicensePlate)
         {
             return FindVehicle(i_LicensePlate).NumOfWheels;
@@ -182,7 +180,7 @@ namespace Ex03.GarageLogic
 
         public Dictionary<string, Dictionary<string, string>> SetNewVehicleData(string i_LicensePlate, ref Dictionary<string, Dictionary<string, string>> i_Data)
         {
-            Vehicle vehicle = m_Vehicles.Find(ve => ve.LicenseNumber.Equals(i_LicensePlate)).Vehicle;
+            Vehicle vehicle = m_Vehicles.Find(tempVehicle => tempVehicle.LicensePlate.Equals(i_LicensePlate)).Vehicle;
 
             return UpdateVehicle(ref vehicle, ref i_Data);
         }

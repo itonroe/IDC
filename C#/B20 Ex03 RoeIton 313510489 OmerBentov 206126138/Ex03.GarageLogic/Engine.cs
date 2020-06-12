@@ -152,8 +152,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    //Change Error Message
-                    throw new ArgumentException("Fuel type is wrong.");
+                    throw new ArgumentException("This car don't use this kind of fuel, Be aware...");
                 }
             }
         }

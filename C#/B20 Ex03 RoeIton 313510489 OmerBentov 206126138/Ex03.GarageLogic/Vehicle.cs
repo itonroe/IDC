@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
      public abstract class Vehicle
      {
         private string m_Model;
-        private string m_LicenseNumber;
+        private string m_LicensePlate;
         private float m_EnergyLeft;
         private Wheel[] m_Wheels;
         private Engine m_Engine;
@@ -35,9 +35,9 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public Vehicle (string i_LicenseNumber, eEngineTypes i_Engine)
+        public Vehicle (string i_LicensePlate, eEngineTypes i_Engine)
         {
-            m_LicenseNumber = i_LicenseNumber;
+            m_LicensePlate = i_LicensePlate;
 
             if (i_Engine.Equals(eEngineTypes.Fuel))
             {
@@ -64,16 +64,16 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string LicenseNumber
+        public string LicensePlate
         {
             get
             {
-                return m_LicenseNumber;
+                return m_LicensePlate;
             }
 
             set
             {
-                m_LicenseNumber = value;
+                m_LicensePlate = value;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Ex03.GarageLogic
             else
             {
                 Vehicle vehicle = (Vehicle)obj;
-                equals = (m_LicenseNumber.Equals(vehicle.LicenseNumber));
+                equals = (m_LicensePlate.Equals(vehicle.LicensePlate));
             }
 
             return equals;

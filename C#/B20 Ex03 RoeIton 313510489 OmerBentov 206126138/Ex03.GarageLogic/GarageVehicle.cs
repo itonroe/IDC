@@ -46,11 +46,11 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string LicenseNumber
+        public string LicensePlate
         {
             get
             {
-                return m_Vehicle.LicenseNumber;
+                return m_Vehicle.LicensePlate;
             }
         }
 
@@ -62,25 +62,19 @@ namespace Ex03.GarageLogic
             }
         }
 
-
-        public GarageVehicle(string i_VehicleType, string i_EngineType, string i_LicenseNumber)
+        public GarageVehicle(string i_VehicleType, string i_EngineType, string i_LicensePlate)
         {
-            m_Vehicle = GetVehicle(i_VehicleType, i_EngineType, i_LicenseNumber);
+            m_Vehicle = GetVehicle(i_VehicleType, i_EngineType, i_LicensePlate);
             m_Status = eVehicleStatus.InProgress;
         }
 
         public void SetVehicleStatus(string i_Status)
         {
-            if (IsVehicleStatusTypeValid(i_Status))
+            if (IsValueTypeValid(new eVehicleStatus(), i_Status))
             {
                 eVehicleStatus vehicleStatus = (eVehicleStatus)Enum.Parse(typeof(eVehicleStatus), i_Status);
                 m_Status = vehicleStatus;
             }
-        }
-
-        private bool IsVehicleStatusTypeValid(string i_VehicleStatus)
-        {
-            return Enum.IsDefined(typeof(eVehicleStatus), i_VehicleStatus);
         }
 
         public void InflateToMax()
@@ -92,11 +86,15 @@ namespace Ex03.GarageLogic
         {
             if (m_Vehicle.Engine.EngineType.Equals(eEngineTypes.Fuel))
             {
-                if (IsFuelTypeValid(i_FuelType))
+                if (IsValueTypeValid(new eFuelTypes(), i_FuelType))
                 {
                     eFuelTypes fuelType = (eFuelTypes)Enum.Parse(typeof(eFuelTypes), i_FuelType);
                     ((Fuel)m_Vehicle.Engine).Refule(i_FuelToAdd, fuelType);
                 }
+            }
+            else
+            {
+                throw new ArgumentException("It is a vehicle that runs on batteries...");
             }
         }
 
@@ -106,11 +104,10 @@ namespace Ex03.GarageLogic
             {
                 ((Electric)m_Vehicle.Engine).Recharge(i_DurationToAdd);
             }
-        }
-
-        private bool IsFuelTypeValid(string i_FuelType)
-        {
-            return Enum.IsDefined(typeof(eFuelTypes), i_FuelType);
+            else
+            {
+                throw new ArgumentException("It is a vehicle that runs on fuel...");
+            }
         }
 
         public int NumOfWheels

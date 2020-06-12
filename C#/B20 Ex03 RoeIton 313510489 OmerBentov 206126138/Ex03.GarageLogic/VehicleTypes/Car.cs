@@ -35,8 +35,8 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public Car(string i_LicenseNumber, eEngineTypes i_EngineType) :
-            base(i_LicenseNumber, i_EngineType)
+        public Car(string i_LicensePlate, eEngineTypes i_EngineType) :
+            base(i_LicensePlate, i_EngineType)
         {
 
             switch (i_EngineType)

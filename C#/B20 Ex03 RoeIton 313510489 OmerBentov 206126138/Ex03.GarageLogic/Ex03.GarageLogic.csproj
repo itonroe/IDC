@@ -36,7 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine.cs" />
-    <Compile Include="EnumsModel.cs" />
     <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="VehicleTypes\Car.cs" />
     <Compile Include="Garage.cs" />
