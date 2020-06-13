@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
         //Gets a vehicle to add, if the vehicle is already in the list then print a suitable message and change the status of vehicle to “InProgress”.
         public Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> AddVehicle(string i_VehicleType, string i_EngineType, string i_LicensePlate)
         {
-            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> next_information = null;
+            Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> nextInformation = null;
 
             if (IsExists(i_LicensePlate))
             {
@@ -27,12 +27,12 @@ namespace Ex03.GarageLogic
             else
             {
                 GarageVehicle garageVehicle = new GarageVehicle(i_VehicleType, i_EngineType, i_LicensePlate);
-                next_information = garageVehicle.PropertiesToDictionary();
+                nextInformation = garageVehicle.PropertiesToDictionary();
 
                 m_Vehicles.Add(garageVehicle);
             }
 
-            return next_information;
+            return nextInformation;
         }
 
         //Checks weather a vehicle is exists using LicensePlate

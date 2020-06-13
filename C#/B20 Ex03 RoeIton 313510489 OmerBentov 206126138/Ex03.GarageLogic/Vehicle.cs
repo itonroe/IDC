@@ -35,22 +35,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public Vehicle (string i_LicensePlate, eEngineTypes i_Engine)
-        {
-            m_LicensePlate = i_LicensePlate;
-
-            if (i_Engine.Equals(eEngineTypes.Fuel))
-            {
-                m_Engine = new Fuel();
-                m_Engine.EngineType = eEngineTypes.Fuel;
-            }
-            else
-            {
-                m_Engine = new Electric();
-                m_Engine.EngineType = eEngineTypes.Electric;
-            }
-        }
-
         public string Model
         {
             get
@@ -87,6 +71,22 @@ namespace Ex03.GarageLogic
             set
             {
                 m_EnergyLeft = value;
+            }
+        }
+
+        public Vehicle(string i_LicensePlate, eEngineTypes i_Engine)
+        {
+            m_LicensePlate = i_LicensePlate;
+
+            if (i_Engine.Equals(eEngineTypes.Fuel))
+            {
+                m_Engine = new Fuel();
+                m_Engine.EngineType = eEngineTypes.Fuel;
+            }
+            else
+            {
+                m_Engine = new Electric();
+                m_Engine.EngineType = eEngineTypes.Electric;
             }
         }
 

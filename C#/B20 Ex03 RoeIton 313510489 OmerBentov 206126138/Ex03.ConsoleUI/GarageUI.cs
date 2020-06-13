@@ -22,9 +22,7 @@ namespace Ex03.ConsoleUI
         }
 
         private static Garage m_Garage;
-        private static bool m_ApplicationRunning;
         private static eViews m_CurrentView;
-
 
         public GarageUI()
         {
@@ -33,9 +31,7 @@ namespace Ex03.ConsoleUI
 
         public void StartApplication()
         {
-            m_ApplicationRunning = true;
-
-            while (m_ApplicationRunning)
+            while (true)
             {
                 ManageMenuOperations();
             }
@@ -360,7 +356,6 @@ namespace Ex03.ConsoleUI
 
                 foreach (var subProperty in generalProperty.Value)
                 {
-
                     foreach (var oneQuestion in subProperty.Key)
                     {
                         Console.WriteLine($"\t{oneQuestion.Key}: {oneQuestion.Value}");

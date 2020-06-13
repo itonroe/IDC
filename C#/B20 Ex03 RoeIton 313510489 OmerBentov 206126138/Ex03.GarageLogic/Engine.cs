@@ -45,6 +45,7 @@ namespace Ex03.GarageLogic
 
         public class Electric : Engine
         {
+            //It's the same thing like Current amount
             public float BatteryDurationLeft
             {
                 get
@@ -88,6 +89,7 @@ namespace Ex03.GarageLogic
 
         public class Fuel : Engine
         {
+            //It's the same thing like Current amount
             public float CurrentFuelTank
             {
                 get

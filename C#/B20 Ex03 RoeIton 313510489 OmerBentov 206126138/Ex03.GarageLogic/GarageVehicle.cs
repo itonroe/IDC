@@ -54,6 +54,14 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public int NumOfWheels
+        {
+            get
+            {
+                return m_Vehicle.NumOfWheels;
+            }
+        }
+
         public Vehicle Vehicle 
         {
             get
@@ -72,8 +80,7 @@ namespace Ex03.GarageLogic
         {
             if (IsValueTypeValid(new eVehicleStatus(), i_Status))
             {
-                eVehicleStatus vehicleStatus = (eVehicleStatus)Enum.Parse(typeof(eVehicleStatus), i_Status);
-                m_Status = vehicleStatus;
+                m_Status = (eVehicleStatus)Enum.Parse(typeof(eVehicleStatus), i_Status);
             }
         }
 
@@ -107,14 +114,6 @@ namespace Ex03.GarageLogic
             else
             {
                 throw new ArgumentException("It is a vehicle that runs on fuel...");
-            }
-        }
-
-        public int NumOfWheels
-        {
-            get
-            {
-                return m_Vehicle.NumOfWheels;
             }
         }
 
