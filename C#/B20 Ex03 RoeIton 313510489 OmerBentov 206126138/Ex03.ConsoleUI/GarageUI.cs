@@ -6,7 +6,7 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    class GarageUI
+    public class GarageUI
     {
         private enum eViews
         {
@@ -23,6 +23,21 @@ namespace Ex03.ConsoleUI
 
         private static Garage m_Garage;
         private static eViews m_CurrentView;
+
+        public static void PrintOpertaions(string i_Title, string[] i_Operations, int i_CountOfTabs, char i_Seperator)
+        {
+            string tabsStart = new string('\t', i_CountOfTabs);
+
+            Console.WriteLine($"{tabsStart}{i_Title}{i_Seperator}");
+
+            if (i_Operations != null)
+            {
+                for (int i = 0; i < i_Operations.Length; i++)
+                {
+                    Console.WriteLine($"{tabsStart}\t{i + 1}. {i_Operations[i]}");
+                }
+            }
+        }
 
         public GarageUI()
         {
@@ -64,9 +79,12 @@ namespace Ex03.ConsoleUI
         {
             m_CurrentView = eViews.Menu;
 
-            string[] opertaions =  new string[] { "Add a vehicle", 
+            string[] opertaions = new string[] 
+            { 
+                "Add a vehicle", 
                 "Get a list of vehicles in the garage", "Change a vehicle status", 
-                "Inflate vehicle's tires to max", "Refule vehicle", "Recharge vehicle", "Vehicle Information", "Exit"};
+                "Inflate vehicle's tires to max", "Refule vehicle", "Recharge vehicle", "Vehicle Information", "Exit" 
+            };
 
             m_CurrentView = (eViews)(Array.IndexOf(opertaions, GetSelectionOf("Menu", opertaions, 0)) + 1);
 
@@ -113,7 +131,8 @@ namespace Ex03.ConsoleUI
 
                 bool wantToAddVehicle = true;
 
-                while (wantToAddVehicle) {
+                while (wantToAddVehicle) 
+                {
                     try
                     {
                         foreach (var generalProperty in nextInfo)
@@ -124,7 +143,6 @@ namespace Ex03.ConsoleUI
 
                             foreach (var subProperty in generalProperty.Value)
                             {
-
                                 foreach (var oneQuestion in subProperty.Key)
                                 {
                                     string question = oneQuestion.Key;
@@ -138,19 +156,18 @@ namespace Ex03.ConsoleUI
                                     {
                                         if (subProperty.Value == null)
                                         {
-                                            //That's a free writing
+                                            // That's a free writing
                                             answer = GetFreeInputOf(question);
                                         }
                                         else
                                         {
-                                            //We have some options to select from
+                                            // We have some options to select from
                                             answer = GetSelectionOf(question, subProperty.Value, 1);
                                         }
 
                                         newAnswerProperty.Add(question, answer);
                                     }
                                 }
-
                             }
 
                             if (!nextInfo_answers.TryGetValue(generalProperty.Key, out _))
@@ -174,7 +191,6 @@ namespace Ex03.ConsoleUI
                         wantToAddVehicle = AgainOrBack("Try again to add this vehicle");
                     }
                 }
-
             }
 
             return AgainOrBack("Add a different vehicle");
@@ -303,25 +319,25 @@ namespace Ex03.ConsoleUI
             switch (m_CurrentView)
             {
                 case eViews.Add:
-                    while (ManageAddVehicle()) ;
+                    while (ManageAddVehicle());
                     break;
                 case eViews.List:
-                    while (ManageListVehicles()) ;
+                    while (ManageListVehicles());
                     break;
                 case eViews.Status:
-                    while (ManageChangeStatus()) ;
+                    while (ManageChangeStatus());
                     break;
                 case eViews.InflateMax:
-                    while (ManageInflateToMax()) ;
+                    while (ManageInflateToMax());
                     break;
                 case eViews.Refule:
-                    while (ManageRefule()) ;
+                    while (ManageRefule());
                     break;
                 case eViews.Recharge:
-                    while (ManageRecharge()) ;
+                    while (ManageRecharge());
                     break;
                 case eViews.Information:
-                    while (ManageInformation()) ;
+                    while (ManageInformation());
                     break;
                 default:
                     Environment.Exit(0);
@@ -463,21 +479,6 @@ namespace Ex03.ConsoleUI
             Console.WriteLine("\n");
 
             return int.Parse(keyEntered.ToString());
-        }
-
-        public static void PrintOpertaions(string i_Title, string[] i_Operations, int i_CountOfTabs, char i_Seperator)
-        {
-            string tabsStart = new string('\t', i_CountOfTabs);
-
-            Console.WriteLine($"{tabsStart}{i_Title}{i_Seperator}");
-
-            if (i_Operations != null)
-            {
-                for (int i = 0; i < i_Operations.Length; i++)
-                {
-                    Console.WriteLine($"{tabsStart}\t{i + 1}. {i_Operations[i]}");
-                }
-            }
         }
 
         private static bool InputOptionIsValid(char i_KeyEntered, int i_MaxOption)

@@ -20,6 +20,7 @@ namespace Ex03.GarageLogic
             { 
                 return m_OwnerName; 
             }
+
             set
             {
                 m_OwnerName = value;
@@ -32,6 +33,7 @@ namespace Ex03.GarageLogic
             {
                 return m_PhoneNumber;
             }
+
             set
             {
                 m_PhoneNumber = value;

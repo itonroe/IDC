@@ -21,6 +21,7 @@ namespace Ex03.GarageLogic
             {
                 return m_Engine;
             }
+
             set
             {
                 m_Engine = value;
@@ -137,7 +138,7 @@ namespace Ex03.GarageLogic
             else
             {
                 Vehicle vehicle = (Vehicle)obj;
-                equals = (m_LicensePlate.Equals(vehicle.LicensePlate));
+                equals = m_LicensePlate.Equals(vehicle.LicensePlate);
             }
 
             return equals;

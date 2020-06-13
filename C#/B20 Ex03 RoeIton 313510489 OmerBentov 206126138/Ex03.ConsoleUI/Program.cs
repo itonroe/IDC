@@ -5,7 +5,7 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {

@@ -17,6 +17,7 @@ namespace Ex03.GarageLogic
             {
                 return m_DanagerousLoad;
             }
+
             set
             {
                 m_DanagerousLoad = value;
@@ -39,7 +40,6 @@ namespace Ex03.GarageLogic
         public Truck(string i_LicensePlate, eEngineTypes i_EngineType) :
             base(i_LicensePlate, i_EngineType)
         {
-
             switch (i_EngineType)
             {
                 case eEngineTypes.Fuel:
