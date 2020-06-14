@@ -22,6 +22,7 @@ namespace Ex03.GarageLogic
                 m_Manufacturer = value;
             }
         }
+
         public float CurrentAirPressure
         {
             get
@@ -34,6 +35,7 @@ namespace Ex03.GarageLogic
                 m_CurrentAirPressure = value;
             }
         }
+
         public float MaxAirPressure
         {
             get

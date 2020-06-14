@@ -17,6 +17,7 @@ namespace Ex03.GarageLogic
             {
                 return m_Color;
             }
+
             set
             {
                 m_Color = value;
@@ -29,6 +30,7 @@ namespace Ex03.GarageLogic
             {
                 return m_NumOfDoors;
             }
+
             set
             {
                 m_NumOfDoors = value;
@@ -38,7 +40,6 @@ namespace Ex03.GarageLogic
         public Car(string i_LicensePlate, eEngineTypes i_EngineType) :
             base(i_LicensePlate, i_EngineType)
         {
-
             switch (i_EngineType)
             {
                 case eEngineTypes.Fuel:

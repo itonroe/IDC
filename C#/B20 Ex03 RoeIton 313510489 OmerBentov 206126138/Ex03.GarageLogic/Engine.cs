@@ -25,6 +25,7 @@ namespace Ex03.GarageLogic
             {
                 return m_EngineType;
             }
+
             set
             {
                 m_EngineType = value;
@@ -45,13 +46,14 @@ namespace Ex03.GarageLogic
 
         public class Electric : Engine
         {
-            //It's the same thing like Current amount
+            // It's the same thing like Current amount
             public float BatteryDurationLeft
             {
                 get
                 {
                     return m_CurrentAmount;
                 }
+
                 set
                 {
                     m_CurrentAmount = value;
@@ -64,6 +66,7 @@ namespace Ex03.GarageLogic
                 {
                     return m_MaxAmount;
                 }
+
                 set
                 {
                     m_MaxAmount = value;
@@ -89,13 +92,14 @@ namespace Ex03.GarageLogic
 
         public class Fuel : Engine
         {
-            //It's the same thing like Current amount
+            // It's the same thing like Current amount
             public float CurrentFuelTank
             {
                 get
                 {
                     return m_CurrentAmount;
                 }
+
                 set
                 {
                     m_CurrentAmount = value;
@@ -108,12 +112,12 @@ namespace Ex03.GarageLogic
                 {
                     return m_MaxAmount;
                 }
+
                 set
                 {
                     m_MaxAmount = value;
                 }
             }
-
 
             private eFuelTypes m_FuelType;
 
@@ -160,4 +164,3 @@ namespace Ex03.GarageLogic
         }
     }
 }
-

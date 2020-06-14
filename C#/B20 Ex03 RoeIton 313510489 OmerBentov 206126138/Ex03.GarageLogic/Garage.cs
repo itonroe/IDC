@@ -15,7 +15,7 @@ namespace Ex03.GarageLogic
             m_Vehicles = new List<GarageVehicle>();
         }
 
-        //Gets a vehicle to add, if the vehicle is already in the list then print a suitable message and change the status of vehicle to “InProgress”.
+        // Gets a vehicle to add, if the vehicle is already in the list then print a suitable message and change the status of vehicle to “InProgress”.
         public Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> AddVehicle(string i_VehicleType, string i_EngineType, string i_LicensePlate)
         {
             Dictionary<string, Dictionary<Dictionary<string, string>, string[]>> nextInformation = null;
@@ -35,7 +35,7 @@ namespace Ex03.GarageLogic
             return nextInformation;
         }
 
-        //Checks weather a vehicle is exists using LicensePlate
+        // Checks weather a vehicle is exists using LicensePlate
         public bool IsExists(string i_LicenseNumner)
         {
             return m_Vehicles.FindIndex(vehicle => vehicle.LicensePlate.Equals(i_LicenseNumner)) >= 0 ? true : false;
@@ -47,13 +47,13 @@ namespace Ex03.GarageLogic
             return m_Vehicles.FindIndex(vehicle => vehicle.Equals(i_Vehicle)) >= 0 ? true : false;
         }*/
 
-        //Gets the vehicle object by license number
+        // Gets the vehicle object by license number
         public GarageVehicle FindVehicle(string i_LicensePlate)
         {
             return m_Vehicles.Find(vehicle => vehicle.LicensePlate.Equals(i_LicensePlate));
         }
 
-        //Filter the List by status
+        // Filter the List by status
         public List<GarageVehicle> FilterVehicleByStatus(string i_Status)
         {
             return m_Vehicles.FindAll(vehicle => vehicle.Status.Equals((eVehicleStatus)Enum.Parse(typeof(eVehicleStatus), i_Status)));
@@ -85,7 +85,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //Change the vehicle’s air pressure to maximum
+        // Change the vehicle’s air pressure to maximum
         public void InflateTiresToMax(string i_LicensePlate)
         {
             if (IsExists(i_LicensePlate))
@@ -94,7 +94,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //Refuel vehicle that runs on fuel
+        // Refuel vehicle that runs on fuel
         public void Refule(string i_LicensePlate, string i_FuelType, float i_FuleToAdd)
         {
             if (IsExists(i_LicensePlate))
@@ -103,7 +103,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //Recharge vehicle that runs on electric
+        // Recharge vehicle that runs on electric
         public void Recharge(string i_LicensePlate, float i_DurationToAdd)
         {
             if (IsExists(i_LicensePlate))

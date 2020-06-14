@@ -17,17 +17,20 @@ namespace Ex03.GarageLogic
             {
                 return m_LicenseType;
             }
+
             set
             {
                 m_LicenseType = value;
             }
         }
+
         public int EngineCapacity 
         {
             get
             {
                 return m_EngineCapacity;
             }
+
             set
             {
                 m_EngineCapacity = value;
@@ -37,7 +40,6 @@ namespace Ex03.GarageLogic
         public Motorcycle(string i_LicensePlate, eEngineTypes i_EngineType) :
             base(i_LicensePlate, i_EngineType)
         {
-
             switch (i_EngineType)
             {
                 case eEngineTypes.Fuel:
@@ -73,7 +75,6 @@ namespace Ex03.GarageLogic
 
             return properties;
         }
-
 
         public override eVehiclesTypes GetVehicleType()
         {
