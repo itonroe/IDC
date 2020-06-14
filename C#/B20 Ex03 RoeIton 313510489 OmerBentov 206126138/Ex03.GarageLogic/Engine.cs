@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic
 
         private void Refill(string i_Value, float i_AmountToAdd)
         {
-            if (i_AmountToAdd + m_CurrentAmount > m_MaxAmount)
+            if (i_AmountToAdd + m_CurrentAmount > m_MaxAmount || i_AmountToAdd < 0)
             {
                 throw new ValueOutOfRangeException(0, m_MaxAmount - m_CurrentAmount, i_Value);
             }

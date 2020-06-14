@@ -9,6 +9,12 @@ namespace Ex03.GarageLogic
         private float m_MinValue;
         private float m_MaxValue;
 
+        public ValueOutOfRangeException(string i_Value) :
+            base(string.Format("{0}", i_Value))
+        {
+
+        }
+
         public ValueOutOfRangeException(float i_MinValue, float i_MaxValue, string i_Value) : 
             base (string.Format("The {0} is out of range!\nPlease you make sure you've entered a number between {1} to {2}", i_Value, i_MinValue, i_MaxValue))
         {

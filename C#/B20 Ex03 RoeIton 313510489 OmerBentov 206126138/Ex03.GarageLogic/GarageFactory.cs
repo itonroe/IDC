@@ -160,6 +160,11 @@ namespace Ex03.GarageLogic
 			eMotorcycleLicenseTypes motorcycleLicenseType = (eMotorcycleLicenseTypes)Enum.Parse(typeof(eMotorcycleLicenseTypes), i_LicenseType);
 			int engineCapacity = int.Parse(i_EngineCapacity);
 
+			if (engineCapacity < 0)
+			{
+				throw new ValueOutOfRangeException("Engine capacity can't be negative.");
+			}
+
 			((Motorcycle)i_Vehicle).LicenseType = motorcycleLicenseType;
 			((Motorcycle)i_Vehicle).EngineCapacity = engineCapacity;
 		}
@@ -230,12 +235,7 @@ namespace Ex03.GarageLogic
 				switch (field.Key)
 				{
 					case "Vehicle":
-						string modelName = string.Empty;
-
-						foreach (var property in field.Value)
-						{
-							modelName = property.Value;
-						}
+						string modelName = field.Value["Model Name"];
 
 						try
 						{
@@ -248,21 +248,8 @@ namespace Ex03.GarageLogic
 						}
 						break;
 					case "Wheels":
-						string manufacturer = string.Empty;
-						string currentAirPressure = string.Empty;
-
-						foreach (var property in field.Value)
-						{
-							if (property.Key.ToLower().Contains("manufacturer"))
-							{
-								manufacturer = property.Value;
-							}
-							else
-							{
-								currentAirPressure = property.Value;
-							}
-						}
-
+						string manufacturer = field.Value["Manufacturer Name"];
+						string currentAirPressure = field.Value["Current Wheel Air Pressure"];
 						try
 						{
 							UpdateWheels(ref i_Vehicle, manufacturer, currentAirPressure);
@@ -274,71 +261,33 @@ namespace Ex03.GarageLogic
 						}
 						break;
 					case "Engine":
-
-						switch (i_Vehicle.Engine.EngineType)
+						try
 						{
-							case eEngineTypes.Electric:
-								string batteryDurationaLeft = string.Empty;
+							switch (i_Vehicle.Engine.EngineType)
+							{
+								case eEngineTypes.Electric:
+									string batteryDurationaLeft = field.Value["Battery Duration Left"];
 
-								foreach (var property in field.Value)
-								{
-									batteryDurationaLeft = property.Value;
-								}
-
-								try
-								{
 									UpdateElectricEngine(ref i_Vehicle, batteryDurationaLeft);
 									responseData.Add("Engine", field.Value);
-								}
-								catch (Exception e)
-								{
-									errorMessage.AppendLine(e.Message);
-								}
-								break;
-							case eEngineTypes.Fuel:
-								string fuelType = string.Empty;
-								string currentAmount = string.Empty;
+									break;
+								case eEngineTypes.Fuel:
+									string fuelType = field.Value["Fuel Type"];
+									string currentAmount = field.Value["Current amount of Fuel"];
 
-								foreach (var property in field.Value)
-								{
-									if (property.Key.ToLower().Contains("type"))
-									{
-										fuelType = property.Value;
-									}
-									else
-									{
-										currentAmount = property.Value;
-									}
-
-								}
-
-								try
-								{
 									UpdateFuelEngine(ref i_Vehicle, fuelType, currentAmount);
 									responseData.Add("Engine", field.Value);
-								}
-								catch (Exception e)
-								{
-									errorMessage.AppendLine(e.Message);
-								}
-								break;
+									break;
+							}
+						}
+						catch (Exception e)
+						{
+							errorMessage.AppendLine(e.Message);
 						}
 						break;
 					case "Car":
-						string color = string.Empty;
-						string numOfDoors = string.Empty;
-
-						foreach (var property in field.Value)
-						{
-							if (property.Key.ToLower().Contains("color"))
-							{
-								color = property.Value;
-							}
-							else
-							{
-								numOfDoors = property.Value;
-							}
-						}
+						string color = field.Value["Color"];
+						string numOfDoors = field.Value["Number of Doors"];
 
 						try
 						{
@@ -351,23 +300,8 @@ namespace Ex03.GarageLogic
 						}
 						break;
 					case "Truck":
-						bool dangerousLoad = true;
-						string loadVolume = string.Empty;
-
-						foreach (var property in field.Value)
-						{
-							if (property.Key.ToLower().Contains("volume"))
-							{
-								loadVolume = property.Value;
-							}
-							else
-							{
-								if (property.Value.Equals("No"))
-								{
-									dangerousLoad = false;
-								}
-							}
-						}
+						bool dangerousLoad = field.Value["Does it carry dangerous load?"].Equals("Yes") ? true : false;
+						string loadVolume = field.Value["Load Volume"];
 
 						try
 						{
@@ -381,20 +315,8 @@ namespace Ex03.GarageLogic
 
 						break;
 					case "Motorcycle":
-						string licenseType = string.Empty;
-						string engineCapacity = string.Empty;
-
-						foreach (var property in field.Value)
-						{
-							if (property.Key.ToLower().Contains("license"))
-							{
-								licenseType = property.Value;
-							}
-							else
-							{
-								engineCapacity = property.Value;
-							}
-						}
+						string licenseType = field.Value["License Type"];
+						string engineCapacity = field.Value["Engine Capacity"];
 
 						try
 						{
