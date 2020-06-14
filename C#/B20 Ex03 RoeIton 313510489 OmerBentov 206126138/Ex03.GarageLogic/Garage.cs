@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static Ex03.GarageLogic.EnumsModel;
 using static Ex03.GarageLogic.GarageFactory;
+using static Ex03.GarageLogic.GarageFactory.EnumsModel;
 
 namespace Ex03.GarageLogic
 {
     public class Garage
     {
-        private readonly List<GarageVehicle> m_Vehicles;
+        private readonly List<GarageVehicle> r_GarageVehicles;
 
         public Garage()
         {
-            m_Vehicles = new List<GarageVehicle>();
+            r_GarageVehicles = new List<GarageVehicle>();
         }
 
         // Gets a vehicle to add, if the vehicle is already in the list then print a suitable message and change the status of vehicle to “InProgress”.
@@ -29,7 +29,7 @@ namespace Ex03.GarageLogic
                 GarageVehicle garageVehicle = new GarageVehicle(i_VehicleType, i_EngineType, i_LicensePlate);
                 nextInformation = garageVehicle.PropertiesToDictionary();
 
-                m_Vehicles.Add(garageVehicle);
+                r_GarageVehicles.Add(garageVehicle);
             }
 
             return nextInformation;
@@ -38,31 +38,31 @@ namespace Ex03.GarageLogic
         // Checks weather a vehicle is exists using LicensePlate
         public bool IsExists(string i_LicenseNumner)
         {
-            return m_Vehicles.FindIndex(vehicle => vehicle.LicensePlate.Equals(i_LicenseNumner)) >= 0 ? true : false;
+            return r_GarageVehicles.FindIndex(vehicle => vehicle.LicensePlate.Equals(i_LicenseNumner)) >= 0 ? true : false;
         }
 
         /*//Checks whether a vehicle is exists in the garage already.
         private static bool IsExists(Vehicle i_Vehicle)
         {
-            return m_Vehicles.FindIndex(vehicle => vehicle.Equals(i_Vehicle)) >= 0 ? true : false;
+            return r_GarageVehicles.FindIndex(vehicle => vehicle.Equals(i_Vehicle)) >= 0 ? true : false;
         }*/
 
         // Gets the vehicle object by license number
         public GarageVehicle FindVehicle(string i_LicensePlate)
         {
-            return m_Vehicles.Find(vehicle => vehicle.LicensePlate.Equals(i_LicensePlate));
+            return r_GarageVehicles.Find(vehicle => vehicle.LicensePlate.Equals(i_LicensePlate));
         }
 
         // Filter the List by status
         public List<GarageVehicle> FilterVehicleByStatus(string i_Status)
         {
-            return m_Vehicles.FindAll(vehicle => vehicle.Status.Equals((eVehicleStatus)Enum.Parse(typeof(eVehicleStatus), i_Status)));
+            return r_GarageVehicles.FindAll(vehicle => vehicle.Status.Equals((eVehicleStatus)Enum.Parse(typeof(eVehicleStatus), i_Status)));
         }
 
         public List<string> ListOfLicensePlates(string i_Status)
         {
             List<string> licenseNumbers = new List<string>();
-            List<GarageVehicle> filteredVehicles = m_Vehicles;
+            List<GarageVehicle> filteredVehicles = r_GarageVehicles;
 
             if (!i_Status.Equals("None"))
             {
@@ -180,9 +180,9 @@ namespace Ex03.GarageLogic
 
         public Dictionary<string, Dictionary<string, string>> SetNewVehicleData(string i_LicensePlate, ref Dictionary<string, Dictionary<string, string>> i_Data)
         {
-            Vehicle vehicle = m_Vehicles.Find(tempVehicle => tempVehicle.LicensePlate.Equals(i_LicensePlate)).Vehicle;
+            Vehicle vehicle = r_GarageVehicles.Find(tempVehicle => tempVehicle.LicensePlate.Equals(i_LicensePlate)).Vehicle;
 
-            return UpdateVehicle(ref vehicle, ref i_Data);
+            return UpdateVehicleData(ref vehicle, ref i_Data);
         }
     }
 }

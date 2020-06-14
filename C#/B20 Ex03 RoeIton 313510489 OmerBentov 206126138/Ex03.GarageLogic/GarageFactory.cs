@@ -2,12 +2,106 @@
 using System.Collections.Generic;
 using System.Text;
 using static Ex03.GarageLogic.Engine;
-using static Ex03.GarageLogic.EnumsModel;
+using static Ex03.GarageLogic.GarageFactory.EnumsModel;
 
 namespace Ex03.GarageLogic
 {
 	public static class GarageFactory
 	{
+		public class EnumsModel
+		{
+			public enum eVehiclesTypes
+			{
+				Car,
+				Motorcycle,
+				Truck
+			}
+
+			public enum eEngineTypes
+			{
+				Fuel,
+				Electric
+			}
+
+			public enum eVehicleStatus
+			{
+				InProgress,
+				Fixed,
+				Payed
+			}
+
+			public enum eFuelTypes
+			{
+				Octan95,
+				Octan98,
+				Octan96,
+				Soler
+			}
+
+			public enum eFuelMotorcycle
+			{
+				Wheels = 2,
+				MaxAirPressure = 30,
+				FuelType = eFuelTypes.Octan95,
+				FuelCapacity = 7,
+			}
+
+			public enum eElectricMotorcycle
+			{
+				Wheels = 2,
+				MaxAirPressure = 30,
+				MaxBatteryDuration = 72,
+			}
+
+			public enum eFuelCar
+			{
+				Wheels = 4,
+				MaxAirPressure = 32,
+				FuelType = eFuelTypes.Octan96,
+				FuelCapacity = 60,
+			}
+
+			public enum eElectricCar
+			{
+				Wheels = 2,
+				MaxAirPressure = 32,
+				MaxBatteryDuration = 126,
+			}
+
+			public enum eRegularTruck
+			{
+				Wheels = 16,
+				MaxAirPressure = 28,
+				FuelType = eFuelTypes.Soler,
+				FuelCapacity = 120,
+			}
+
+			public enum eCarColor
+			{
+				Red,
+				White,
+				Black,
+				Silver
+			}
+
+			public enum eCarNumOfDoors
+			{
+				Two = 2,
+				Three = 3,
+				Four = 4,
+				Five = 5
+			}
+
+			public enum eMotorcycleLicenseTypes
+			{
+				A,
+				A1,
+				AA,
+				B
+			}
+
+		}
+
 		public static Vehicle GetVehicle(string i_VehicleType, string i_EngineType, string i_LicensePlate)
 		{
 			Vehicle vehicle = null;
@@ -78,7 +172,7 @@ namespace Ex03.GarageLogic
 		}
 
 		public static void UpdateTruck(ref Vehicle i_Vehicle, bool i_DangerousLoad, string i_LoadVolume)
-		{ 
+		{
 			ParserValidator("float", "Load volume needs to be a number.", i_LoadVolume);
 
 			float loadVolume = float.Parse(i_LoadVolume);
@@ -135,7 +229,7 @@ namespace Ex03.GarageLogic
 			}
 		}
 
-		public static Dictionary<string, Dictionary<string, string>> UpdateVehicle(ref Vehicle i_Vehicle, ref Dictionary<string, Dictionary<string, string>> i_Data)
+		public static Dictionary<string, Dictionary<string, string>> UpdateVehicleData(ref Vehicle i_Vehicle, ref Dictionary<string, Dictionary<string, string>> i_Data)
 		{
 			Dictionary<string, Dictionary<string, string>> responseData = new Dictionary<string, Dictionary<string, string>>();
 
@@ -183,7 +277,7 @@ namespace Ex03.GarageLogic
 
 									UpdateElectricEngine(ref i_Vehicle, batteryDurationaLeft);
 									responseData.Add("Engine", field.Value);
-<<<<<<< HEAD
+
 									break;
 								case eEngineTypes.Fuel:
 									string fuelType = field.Value["Fuel Type"];
@@ -195,50 +289,6 @@ namespace Ex03.GarageLogic
 							}
 						}
 						catch (Exception e)
-=======
-								}
-								catch (Exception e)
-								{
-									errorMessage.AppendLine(e.Message);
-								}
-
-								break;
-							case eEngineTypes.Fuel:
-								string fuelType = string.Empty;
-								string currentAmount = string.Empty;
-
-								foreach (var property in field.Value)
-								{
-									if (property.Key.ToLower().Contains("type"))
-									{
-										fuelType = property.Value;
-									}
-									else
-									{
-										currentAmount = property.Value;
-									}
-								}
-
-								try
-								{
-									UpdateFuelEngine(ref i_Vehicle, fuelType, currentAmount);
-									responseData.Add("Engine", field.Value);
-								}
-								catch (Exception e)
-								{
-									errorMessage.AppendLine(e.Message);
-								}
-
-								break;
-						}
-
-						break;
-					case "Car":
-						string color = string.Empty;
-						string numOfDoors = string.Empty;
-
-						foreach (var property in field.Value)
->>>>>>> 30d6996d19c762860c5e5061ff7a8cef68c22e3a
 						{
 							errorMessage.AppendLine(e.Message);
 						}
@@ -300,99 +350,6 @@ namespace Ex03.GarageLogic
 			}
 
 			return responseData;
-		}
-	}
-
-	public class EnumsModel
-	{
-		public enum eVehiclesTypes
-		{
-			Car,
-			Motorcycle,
-			Truck
-		}
-
-		public enum eEngineTypes
-		{
-			Fuel,
-			Electric
-		}
-
-		public enum eVehicleStatus
-		{
-			InProgress,
-			Fixed,
-			Payed
-		}
-
-		public enum eFuelTypes
-		{
-			Octan95,
-			Octan98,
-			Octan96,
-			Soler
-		}
-
-		public enum eFuelMotorcycle
-		{
-			Wheels = 2,
-			MaxAirPressure = 30,
-			FuelType = eFuelTypes.Octan95,
-			FuelCapacity = 7,
-		}
-
-		public enum eElectricMotorcycle
-		{
-			Wheels = 2,
-			MaxAirPressure = 30,
-			MaxBatteryDuration = 72,
-		}
-
-		public enum eFuelCar
-		{
-			Wheels = 4,
-			MaxAirPressure = 32,
-			FuelType = eFuelTypes.Octan96,
-			FuelCapacity = 60,
-		}
-
-		public enum eElectricCar
-		{
-			Wheels = 2,
-			MaxAirPressure = 32,
-			MaxBatteryDuration = 126,
-		}
-
-		public enum eRegularTruck
-		{
-			Wheels = 16,
-			MaxAirPressure = 28,
-			FuelType = eFuelTypes.Soler,
-			FuelCapacity = 120,
-		}
-
-		public enum eCarColor
-		{
-			Red,
-			White,
-			Black,
-			Silver
-		}
-
-		public enum eCarNumOfDoors
-		{
-			Two = 2,
-			Three = 3,
-			Four = 4,
-			Five = 5
-		}
-
-		public enum eMotorcycleLicenseTypes
-		{
-			A,
-			A1,
-			AA,
-			B
 		}
 	}
 }
