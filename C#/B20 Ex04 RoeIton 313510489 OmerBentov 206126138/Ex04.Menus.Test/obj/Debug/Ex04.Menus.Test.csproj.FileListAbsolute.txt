@@ -1,0 +1,11 @@
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\obj\Debug\Ex04.Menus.Test.csproj.CoreCompileInputs.cache
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\obj\Debug\Ex04.Menus.Test.csprojAssemblyReference.cache
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\bin\Debug\Ex04.Menus.Test.exe
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\bin\Debug\Ex04.Menus.Test.pdb
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\bin\Debug\Ex04.Menus.Delegates.dll
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\bin\Debug\Ex04.Menus.Interfaces.dll
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\bin\Debug\Ex04.Menus.Delegates.pdb
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\bin\Debug\Ex04.Menus.Interfaces.pdb
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\obj\Debug\Ex04.Menus.Test.csproj.CopyComplete
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\obj\Debug\Ex04.Menus.Test.exe
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Test\obj\Debug\Ex04.Menus.Test.pdb

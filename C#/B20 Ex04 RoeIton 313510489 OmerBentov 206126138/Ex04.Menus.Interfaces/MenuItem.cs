@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ex4
+namespace Ex04.Menus.Delegates
 {
-    class Menu
+    class MenuItem
     {
     }
 }

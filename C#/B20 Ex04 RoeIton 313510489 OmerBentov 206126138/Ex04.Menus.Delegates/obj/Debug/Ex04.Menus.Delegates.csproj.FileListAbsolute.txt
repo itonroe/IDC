@@ -1,0 +1,6 @@
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Delegates\obj\Debug\Ex04.Menus.Delegates.csproj.CoreCompileInputs.cache
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Delegates\bin\Debug\Ex04.Menus.Delegates.dll
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Delegates\bin\Debug\Ex04.Menus.Delegates.pdb
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Delegates\obj\Debug\Ex04.Menus.Delegates.csprojAssemblyReference.cache
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Delegates\obj\Debug\Ex04.Menus.Delegates.dll
+C:\Users\Roe Iton\Source\Repos\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Delegates\obj\Debug\Ex04.Menus.Delegates.pdb

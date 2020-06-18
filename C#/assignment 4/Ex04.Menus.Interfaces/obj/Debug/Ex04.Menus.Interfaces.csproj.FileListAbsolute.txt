@@ -1,0 +1,2 @@
+C:\GitHub\Education\IDC\C#\assignment 4\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.csprojAssemblyReference.cache
+C:\GitHub\Education\IDC\C#\assignment 4\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.csproj.CoreCompileInputs.cache

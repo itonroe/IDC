@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex4", "Ex4.csproj", "{95421C71-A00F-46FA-B372-363C75E52CA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ex4", "Ex4.csproj", "{95421C71-A00F-46FA-B372-363C75E52CA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex04.Menus.Interfaces", "..\Ex04.Menus.Interfaces\Ex04.Menus.Interfaces.csproj", "{83C910F3-E2BC-40B3-98AB-CF0DCB7BEB8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex04.Menus.Test", "..\Ex04.Menus.Test\Ex04.Menus.Test.csproj", "{A833D3F1-BB52-42E4-A9A7-7D2EB533F869}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{95421C71-A00F-46FA-B372-363C75E52CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95421C71-A00F-46FA-B372-363C75E52CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95421C71-A00F-46FA-B372-363C75E52CA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C910F3-E2BC-40B3-98AB-CF0DCB7BEB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C910F3-E2BC-40B3-98AB-CF0DCB7BEB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C910F3-E2BC-40B3-98AB-CF0DCB7BEB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C910F3-E2BC-40B3-98AB-CF0DCB7BEB8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A833D3F1-BB52-42E4-A9A7-7D2EB533F869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A833D3F1-BB52-42E4-A9A7-7D2EB533F869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A833D3F1-BB52-42E4-A9A7-7D2EB533F869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A833D3F1-BB52-42E4-A9A7-7D2EB533F869}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
