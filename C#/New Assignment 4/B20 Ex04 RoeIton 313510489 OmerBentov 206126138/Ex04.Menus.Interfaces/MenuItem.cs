@@ -16,8 +16,8 @@ namespace Ex04.Menus.Interfaces
 
     public class MenuItem
     {
-        private IActionObserver m_ActionObserver;
-        private IShowMenuObserver m_OnClickObserver;
+        private readonly List<IActionObserver> r_ActionObservers = new List<IActionObserver>();
+        private readonly List<IShowMenuObserver> r_OnClickObservers = new List<IShowMenuObserver>();
 
         public List<MenuItem> m_MenuItems;
         private MainMenu m_MainMenu;
@@ -36,21 +36,27 @@ namespace Ex04.Menus.Interfaces
         {
             get
             {
-                return m_ActionObserver != null ? true : false;
+                return r_ActionObservers.Count != 0 ? true : false;
             }
         }
 
-        public IActionObserver ActionObserver 
+        public void AttachActionObserver(IActionObserver i_ActionObserver)
         {
-            get
-            {
-                return m_ActionObserver;
-            }
+            r_ActionObservers.Add(i_ActionObserver);
+        }
 
-            set
-            {
-                m_ActionObserver = value;
-            }
+        public void DetachActionObserver(IActionObserver i_ActionObserver)
+        {
+            r_ActionObservers.Remove(i_ActionObserver);
+        }
+
+        public void AttachShowMenuObserver(IShowMenuObserver i_ShowMenuObserver)
+        {
+            r_OnClickObservers.Add(i_ShowMenuObserver);
+        }
+        public void DetachShowMenuObserver(IShowMenuObserver i_ShowMenuObserver)
+        {
+            r_OnClickObservers.Remove(i_ShowMenuObserver);
         }
 
 
@@ -65,7 +71,7 @@ namespace Ex04.Menus.Interfaces
         {
             if (m_MenuItems.Count == 0)
             {
-                m_OnClickObserver = m_MainMenu as IShowMenuObserver;
+                AttachShowMenuObserver(m_MainMenu as IShowMenuObserver);
 
                 addBackMenuItem();
             }
@@ -78,14 +84,14 @@ namespace Ex04.Menus.Interfaces
         {
             AddSubMenu(i_Title);
 
-            m_MenuItems.Find(menuItem => menuItem.Title.Equals(i_Title)).m_ActionObserver = i_ActionObserver;
+            m_MenuItems.Find(menuItem => menuItem.Title.Equals(i_Title)).AttachActionObserver(i_ActionObserver);
         }
 
         private void addBackMenuItem()
         {
             MenuItem backItem = new MenuItem(m_MainMenu, "Back");
             backItem.m_Parent = m_Parent;
-            backItem.m_OnClickObserver = new Back();
+            backItem.AttachShowMenuObserver(new Back());
             m_MenuItems.Add(backItem);
         }
 
@@ -98,11 +104,17 @@ namespace Ex04.Menus.Interfaces
         {
             if (IsAction)
             {
-                m_ActionObserver.Action();
+                foreach (IActionObserver observer in r_ActionObservers)
+                {
+                    observer.Action();
+                }
             }
             else
             {
-                m_OnClickObserver.Show(this);
+                foreach (IShowMenuObserver observer in r_OnClickObservers)
+                {
+                    observer.Show(this);
+                }
             }
         }
 
