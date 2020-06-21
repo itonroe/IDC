@@ -62,7 +62,6 @@ namespace Ex04.Menus.Interfaces
 
             Console.WriteLine($"\t0. {i_Items[0].Title}");
 
-
             int pick = pickFromOptions(i_Items.Count);
 
             if (pick == 0 && i_Items[0].Title.Equals("Exit"))
@@ -115,9 +114,9 @@ namespace Ex04.Menus.Interfaces
 
             StringBuilder line = new StringBuilder();
 
-            line.Append(new String('-', countOfHyphenSide));
+            line.Append(new string('-', countOfHyphenSide));
             line.Append($" {i_HeadLine} ");
-            line.Append(new String('-', countOfHyphenSide));
+            line.Append(new string('-', countOfHyphenSide));
             line.Append("\n");
 
             Console.WriteLine(line.ToString());

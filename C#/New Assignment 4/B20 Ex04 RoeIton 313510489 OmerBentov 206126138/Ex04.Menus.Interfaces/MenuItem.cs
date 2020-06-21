@@ -54,11 +54,11 @@ namespace Ex04.Menus.Interfaces
         {
             r_OnClickObservers.Add(i_ShowMenuObserver);
         }
+
         public void DetachShowMenuObserver(IShowMenuObserver i_ShowMenuObserver)
         {
             r_OnClickObservers.Remove(i_ShowMenuObserver);
         }
-
 
         public MenuItem(MainMenu i_MainMenu, string i_Title)
         {

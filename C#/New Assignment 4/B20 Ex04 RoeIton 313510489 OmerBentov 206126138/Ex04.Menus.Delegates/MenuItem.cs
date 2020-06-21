@@ -10,6 +10,7 @@ namespace Ex04.Menus.Delegates
         public delegate void Action();
 
         private event Action m_Action;
+
         private event Action<MenuItem> m_ReportMenuItemClicked;
 
         public List<MenuItem> m_MenuItems;
@@ -39,6 +40,7 @@ namespace Ex04.Menus.Delegates
             {
                 return m_Action;
             }
+
             set
             {
                 m_Action += value;
@@ -83,7 +85,7 @@ namespace Ex04.Menus.Delegates
 
         private void backClicked(MenuItem i_MenuItem)
         {
-            if (i_MenuItem.m_Parent!= null)
+            if (i_MenuItem.m_Parent != null)
             {
                 i_MenuItem.m_Parent.OnClick();
             }

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static Ex04.Menus.Test.MenuMethods;
 using Ex04.Menus.Delegates;
 using Ex04.Menus.Interfaces;
+using static Ex04.Menus.Test.MenuMethods;
 
 namespace Ex04.Menus.Test
 {
-    class Program
+    public class Program
     {
         private static Delegates.MainMenu m_MainMenuDelegate;
         private static Interfaces.MainMenu m_MainMenuInterface;
