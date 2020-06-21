@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static Ex03.GarageLogic.EnumsModel;
+using static Ex03.GarageLogic.GarageFactory;
+using static Ex03.GarageLogic.GarageFactory.EnumsModel;
 
 namespace Ex03.GarageLogic
 {
@@ -34,7 +35,7 @@ namespace Ex03.GarageLogic
 
         private void Refill(string i_Value, float i_AmountToAdd)
         {
-            if (i_AmountToAdd + m_CurrentAmount > m_MaxAmount)
+            if (i_AmountToAdd + m_CurrentAmount > m_MaxAmount || i_AmountToAdd < 0)
             {
                 throw new ValueOutOfRangeException(0, m_MaxAmount - m_CurrentAmount, i_Value);
             }
@@ -46,20 +47,6 @@ namespace Ex03.GarageLogic
 
         public class Electric : Engine
         {
-            // It's the same thing like Current amount
-            public float BatteryDurationLeft
-            {
-                get
-                {
-                    return m_CurrentAmount;
-                }
-
-                set
-                {
-                    m_CurrentAmount = value;
-                }
-            }
-
             public float MaxBatteryDuration
             {
                 get
@@ -78,7 +65,7 @@ namespace Ex03.GarageLogic
                 Dictionary<Dictionary<string, string>, string[]> properties = new Dictionary<Dictionary<string, string>, string[]>();
 
                 Dictionary<string, string> batteryDuration = new Dictionary<string, string>();
-                batteryDuration.Add("Battery Duration Left", String.Format("{0:0.00}", m_CurrentAmount));
+                batteryDuration.Add("Battery Duration Left", String.Format("{0:P2}", CurrentAmount));
                 properties.Add(batteryDuration, null);
 
                 return properties;
@@ -86,26 +73,12 @@ namespace Ex03.GarageLogic
 
             public void Recharge(float i_DurationToAdd)
             {
-                base.Refill("Amount of Time to add", i_DurationToAdd);
+                base.Refill("Amount of Time", i_DurationToAdd);
             }
         }
 
         public class Fuel : Engine
         {
-            // It's the same thing like Current amount
-            public float CurrentFuelTank
-            {
-                get
-                {
-                    return m_CurrentAmount;
-                }
-
-                set
-                {
-                    m_CurrentAmount = value;
-                }
-            }
-
             public float MaxFuelTank
             {
                 get
@@ -142,7 +115,7 @@ namespace Ex03.GarageLogic
                 fuelType.Add("Fuel Type", m_FuelType.ToString());
 
                 Dictionary<string, string> currentAmount = new Dictionary<string, string>();
-                currentAmount.Add("Current amount of Fuel", String.Format("{0:0.00}", m_CurrentAmount));
+                currentAmount.Add("Current amount of Fuel", String.Format("{0:P2}", CurrentAmount));
 
                 properties.Add(fuelType, Enum.GetNames(typeof(eFuelTypes)));
                 properties.Add(currentAmount, null);
@@ -154,7 +127,7 @@ namespace Ex03.GarageLogic
             {
                 if (i_FuelType.Equals(m_FuelType))
                 {
-                    base.Refill("Amount of Fuel to add", i_FuelToAdd);
+                    base.Refill("Amount of Fuel", i_FuelToAdd);
                 }
                 else
                 {

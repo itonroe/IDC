@@ -51,7 +51,7 @@ namespace Ex03.GarageLogic
 
         public void InflateTire(float i_AirPressureToAdd)
         {
-            if (i_AirPressureToAdd + m_CurrentAirPressure > m_MaxAirPressure)
+            if (i_AirPressureToAdd + m_CurrentAirPressure > m_MaxAirPressure || i_AirPressureToAdd < 0)
             {
                 throw new ValueOutOfRangeException(0, m_MaxAirPressure - m_CurrentAirPressure, "Amount of Pressure to add");
             }

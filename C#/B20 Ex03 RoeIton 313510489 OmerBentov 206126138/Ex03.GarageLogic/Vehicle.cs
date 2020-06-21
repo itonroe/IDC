@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using static Ex03.GarageLogic.Engine;
-using static Ex03.GarageLogic.EnumsModel;
+using static Ex03.GarageLogic.GarageFactory;
+using static Ex03.GarageLogic.GarageFactory.EnumsModel;
 
 namespace Ex03.GarageLogic
 {

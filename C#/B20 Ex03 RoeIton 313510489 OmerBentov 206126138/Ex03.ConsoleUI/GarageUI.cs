@@ -24,21 +24,6 @@ namespace Ex03.ConsoleUI
         private static Garage m_Garage;
         private static eViews m_CurrentView;
 
-        public static void PrintOpertaions(string i_Title, string[] i_Operations, int i_CountOfTabs, char i_Seperator)
-        {
-            string tabsStart = new string('\t', i_CountOfTabs);
-
-            Console.WriteLine($"{tabsStart}{i_Title}{i_Seperator}");
-
-            if (i_Operations != null)
-            {
-                for (int i = 0; i < i_Operations.Length; i++)
-                {
-                    Console.WriteLine($"{tabsStart}\t{i + 1}. {i_Operations[i]}");
-                }
-            }
-        }
-
         public GarageUI()
         {
             m_Garage = new Garage();
@@ -93,6 +78,37 @@ namespace Ex03.ConsoleUI
             ManageViewForm();
         }
 
+        private static void ManageViewForm()
+        {
+            switch (m_CurrentView)
+            {
+                case eViews.Add:
+                    while (ManageAddVehicle()) ;
+                    break;
+                case eViews.List:
+                    while (ManageListVehicles()) ;
+                    break;
+                case eViews.Status:
+                    while (ManageChangeStatus()) ;
+                    break;
+                case eViews.InflateMax:
+                    while (ManageInflateToMax()) ;
+                    break;
+                case eViews.Refule:
+                    while (ManageRefule()) ;
+                    break;
+                case eViews.Recharge:
+                    while (ManageRecharge()) ;
+                    break;
+                case eViews.Information:
+                    while (ManageInformation()) ;
+                    break;
+                default:
+                    Environment.Exit(0);
+                    break;
+            }
+        }
+
         private static bool ManageAddVehicle()
         {
             Console.WriteLine("Vehicle's License Plate:");
@@ -125,7 +141,7 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine($"\nOwner:");
                 string ownerName = GetFreeInputOf("Vehicle's Owner Name");
                 Console.WriteLine();
-                string ownerPhoneNumber = GetFreeInputOf("Phone Number: (XXX-XXXXXXX)", "phone");
+                string ownerPhoneNumber = GetFreeInputOf("Phone Number: (05X-XXXXXXX)", "phone");
 
                 m_Garage.SetVehicleOwner(licensePlate, ownerName, ownerPhoneNumber);
 
@@ -219,39 +235,45 @@ namespace Ex03.ConsoleUI
             return AgainOrBack("Get a different list of vehicles");
         }
 
-        private static bool ManageChangeStatus()
+        private static string ManageVehicleLicense()
         {
-            Console.WriteLine("Vehicle License:");
+            Console.WriteLine("Vehicle's License Plate:");
             string licensePlate = Console.ReadLine();
 
-            if (m_Garage.IsExists(licensePlate))
+            bool canContinue = true;
+
+            if (!m_Garage.IsExists(licensePlate))
+            {
+                Console.WriteLine("Vehicle is not exist.");
+                canContinue = false;
+            }
+
+            return canContinue ? licensePlate : null;
+        }
+
+        private static bool ManageChangeStatus()
+        {
+            string licensePlate;
+
+            if ((licensePlate = ManageVehicleLicense()) != null)
             {
                 m_Garage.ChangeStatus(licensePlate, GetSelectionOf("Change status to", m_Garage.StatusTypes(), 0));
 
                 Console.WriteLine("Changed vehicle status successfully.");
             }
-            else
-            {
-                Console.WriteLine("Vehicle is not exist.");
-            }
 
-            return AgainOrBack("Change the status the a different vehicle");
+            return AgainOrBack("Change the status of a different vehicle");
         }
 
         private static bool ManageInflateToMax()
         {
-            Console.WriteLine("Vehicle License:");
-            string licensePlate = Console.ReadLine();
+            string licensePlate;
 
-            if (m_Garage.IsExists(licensePlate))
+            if ((licensePlate = ManageVehicleLicense()) != null)
             {
                 m_Garage.InflateTiresToMax(licensePlate);
 
                 Console.WriteLine("Seted the tires pressure to maximum successfully.");
-            }
-            else
-            {
-                Console.WriteLine("Vehicle is not exist.");
             }
 
             return AgainOrBack("Set tire's pressure to max in a different vehicle");
@@ -259,28 +281,16 @@ namespace Ex03.ConsoleUI
         
         private static bool ManageRefule()
         {
-            Console.WriteLine("Vehicle License:");
-            string licensePlate = Console.ReadLine();
+            string licensePlate;
 
-            if (m_Garage.IsExists(licensePlate))
+            if ((licensePlate = ManageVehicleLicense()) != null)
             {
-                try
-                {
-                    string fuelType = GetSelectionOf("Fuel type", m_Garage.FuelTypes(), 0);
-                    float fuelAmount = float.Parse(GetFreeInputOf("amount of fuel (in liters)", "float"));
+                string fuelType = GetSelectionOf("Fuel type", m_Garage.FuelTypes(), 0);
+                float fuelAmount = float.Parse(GetFreeInputOf("amount of fuel (in liters)", "float"));
 
-                    m_Garage.Refule(licensePlate, fuelType, fuelAmount);
+                m_Garage.Refule(licensePlate, fuelType, fuelAmount);
 
-                    Console.WriteLine("Refuled successfully.");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Vehicle is not exist.");
+                Console.WriteLine("Refuled successfully.");
             }
 
             return AgainOrBack("Refule a vehicle");
@@ -288,80 +298,32 @@ namespace Ex03.ConsoleUI
 
         private static bool ManageRecharge()
         {
-            Console.WriteLine("Vehicle License:");
-            string licensePlate = Console.ReadLine();
+            string licensePlate;
 
-            if (m_Garage.IsExists(licensePlate))
+            if ((licensePlate = ManageVehicleLicense()) != null)
             {
-                try
-                {
-                    float batteryDuration = float.Parse(GetFreeInputOf("how many hours to add to the battery", "float"));
+                float batteryDuration = float.Parse(GetFreeInputOf("how many hours to add to the battery", "float"));
 
-                    m_Garage.Recharge(licensePlate, batteryDuration);
+                m_Garage.Recharge(licensePlate, batteryDuration);
 
-                    Console.WriteLine("Recharged successfully.");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Vehicle is not exist.");
+                Console.WriteLine("Recharged successfully.");
             }
 
             return AgainOrBack("Recharge a vehicle");
         }
 
-        private static void ManageViewForm()
-        {
-            switch (m_CurrentView)
-            {
-                case eViews.Add:
-                    while (ManageAddVehicle());
-                    break;
-                case eViews.List:
-                    while (ManageListVehicles());
-                    break;
-                case eViews.Status:
-                    while (ManageChangeStatus());
-                    break;
-                case eViews.InflateMax:
-                    while (ManageInflateToMax());
-                    break;
-                case eViews.Refule:
-                    while (ManageRefule());
-                    break;
-                case eViews.Recharge:
-                    while (ManageRecharge());
-                    break;
-                case eViews.Information:
-                    while (ManageInformation());
-                    break;
-                default:
-                    Environment.Exit(0);
-                    break;
-            }
-        }
-
         private static bool ManageInformation()
         {
-            Console.WriteLine("Vehicle License:");
-            string licensePlate = Console.ReadLine();
+            string licensePlate;
 
-            if (m_Garage.IsExists(licensePlate))
+            if ((licensePlate = ManageVehicleLicense()) != null)
             {
                 PrintVehicleInformation(licensePlate);
 
                 Console.WriteLine("\nDisplayed information successfully.");
             }
-            else
-            {
-                Console.WriteLine("Vehicle is not exist.");
-            }
 
-            return AgainOrBack("Refule a different vehicle");
+            return AgainOrBack("Display information of a different vehicle");
         }
 
         private static void PrintVehicleInformation(string i_LicensePlate)
@@ -447,7 +409,7 @@ namespace Ex03.ConsoleUI
                     isValid = float.TryParse(i_Value, out _);
                     break;
                 case "phone":
-                    Regex phoneNumberRegex = new Regex(@"[0-9]{3}-[0-9]{7}");
+                    Regex phoneNumberRegex = new Regex(@"05[0-9]{1}-[0-9]{7}");
 
                     isValid = phoneNumberRegex.Match(i_Value).Success;
                     break;
@@ -484,6 +446,21 @@ namespace Ex03.ConsoleUI
         private static bool InputOptionIsValid(char i_KeyEntered, int i_MaxOption)
         {
             return int.TryParse(i_KeyEntered.ToString(), out _) && int.Parse(i_KeyEntered.ToString()) >= 1 && int.Parse(i_KeyEntered.ToString()) <= i_MaxOption;
+        }
+
+        private static void PrintOpertaions(string i_Title, string[] i_Operations, int i_CountOfTabs, char i_Seperator)
+        {
+            string tabsStart = new string('\t', i_CountOfTabs);
+
+            Console.WriteLine($"{tabsStart}{i_Title}{i_Seperator}");
+
+            if (i_Operations != null)
+            {
+                for (int i = 0; i < i_Operations.Length; i++)
+                {
+                    Console.WriteLine($"{tabsStart}\t{i + 1}. {i_Operations[i]}");
+                }
+            }
         }
     }
 }
