@@ -55,13 +55,13 @@ namespace Ex04.Menus.Interfaces
 
             printHeadLine($"{i_Title} {titleMenu}");
 
-            int indexSelection = 0;
-
-            foreach (MenuItem menuItem in i_Items)
+            for (int i = 1; i < i_Items.Count; i++)
             {
-                Console.WriteLine($"\t{indexSelection}. {menuItem.Title}");
-                indexSelection++;
+                Console.WriteLine($"\t{i}. {i_Items[i].Title}");
             }
+
+            Console.WriteLine($"\t0. {i_Items[0].Title}");
+
 
             int pick = pickFromOptions(i_Items.Count);
 
@@ -96,6 +96,11 @@ namespace Ex04.Menus.Interfaces
 
         public void AddSubMenu(string i_Title)
         {
+            if (r_MenuItems.Count == 0)
+            {
+                r_MenuItems.Add(new MenuItem(this, "Exit"));
+            }
+
             MenuItem menuItem = new MenuItem(this, i_Title);
 
             r_MenuItems.Add(menuItem);

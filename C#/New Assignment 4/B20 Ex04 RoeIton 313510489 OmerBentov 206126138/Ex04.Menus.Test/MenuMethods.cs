@@ -49,7 +49,7 @@ namespace Ex04.Menus.Test
             internal static void ShowDate()
             {
                 Console.Clear();
-                Console.WriteLine($"Current date is: {DateTime.Now.ToShortDateString()}");
+                Console.WriteLine($"Current date is: {DateTime.Now.ToString("dd/MM/yyyy")}");
                 Freeze(3000);
             }
         }

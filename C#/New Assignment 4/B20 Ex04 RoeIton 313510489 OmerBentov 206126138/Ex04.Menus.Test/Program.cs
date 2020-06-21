@@ -25,7 +25,6 @@ namespace Ex04.Menus.Test
         {
             m_MainMenuDelegate = new Delegates.MainMenu(i_Title);
 
-            m_MainMenuDelegate.AddSubMenu("Exit");
             m_MainMenuDelegate.AddSubMenu("Version and Captials");
             m_MainMenuDelegate.AddSubMenu("Show Date/Time");
 
@@ -39,7 +38,6 @@ namespace Ex04.Menus.Test
         {
             m_MainMenuInterface = new Interfaces.MainMenu(i_Title);
 
-            m_MainMenuInterface.AddSubMenu("Exit");
             m_MainMenuInterface.AddSubMenu("Version and Captials");
             m_MainMenuInterface.AddSubMenu("Show Date/Time");
 

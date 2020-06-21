@@ -1,6 +1,6 @@
-C:\GitHub\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\bin\Debug\Ex04.Menus.Interfaces.dll
-C:\GitHub\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\bin\Debug\Ex04.Menus.Interfaces.pdb
-C:\GitHub\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.csprojAssemblyReference.cache
-C:\GitHub\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.csproj.CoreCompileInputs.cache
-C:\GitHub\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.dll
-C:\GitHub\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.pdb
+C:\GitHub\Education\IDC\C#\New Assignment 4\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\bin\Debug\Ex04.Menus.Interfaces.dll
+C:\GitHub\Education\IDC\C#\New Assignment 4\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\bin\Debug\Ex04.Menus.Interfaces.pdb
+C:\GitHub\Education\IDC\C#\New Assignment 4\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.csprojAssemblyReference.cache
+C:\GitHub\Education\IDC\C#\New Assignment 4\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.csproj.CoreCompileInputs.cache
+C:\GitHub\Education\IDC\C#\New Assignment 4\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.dll
+C:\GitHub\Education\IDC\C#\New Assignment 4\B20 Ex04 RoeIton 313510489 OmerBentov 206126138\Ex04.Menus.Interfaces\obj\Debug\Ex04.Menus.Interfaces.pdb
