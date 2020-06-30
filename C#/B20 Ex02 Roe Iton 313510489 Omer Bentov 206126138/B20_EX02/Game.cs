@@ -81,12 +81,17 @@ namespace B20_EX02
             m_PcPlayer.SetCorrectPcGuesses();
         }
 
-        public void PcOpenCard(int i_CardNumber)
+        public int[] PcOpenCard(int i_CardNumber)
         {
-            if (i_CardNumber <= 1)
+            int[] pointOnBoard = null;
+
+            if (i_CardNumber <= 2 && i_CardNumber >= 1)
             {
-                OpenCard(m_Board.GetCell(m_PcPlayer.Picks[i_CardNumber].Point));
+                OpenCard(m_Board.GetCell(m_PcPlayer.Picks[i_CardNumber - 1].Point));
+                pointOnBoard = new int[] { m_PcPlayer.Picks[i_CardNumber - 1].Point.X, m_PcPlayer.Picks[i_CardNumber - 1].Point.Y };
             }
+
+            return pointOnBoard;
         }
 
         public void ChangeTurn()
@@ -184,6 +189,11 @@ namespace B20_EX02
             }
 
             return isEnded;
+        }
+
+        public char GetCardValueByIndexes(int i_I, int i_J)
+        {
+            return m_Board.GetCell(new Point(i_J, i_I)).Letter;
         }
 
         public override string ToString()
