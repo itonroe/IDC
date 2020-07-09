@@ -1,0 +1,1 @@
+C:\GitHub\Education\IDC\C#\assignment 4\Ex04.Menus.Test\obj\Debug\Ex04.Menus.Test.csproj.CoreCompileInputs.cache
