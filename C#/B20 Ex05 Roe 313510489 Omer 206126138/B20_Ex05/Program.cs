@@ -76,7 +76,7 @@ namespace B20_Ex05
         {
             const int marginBorders = 12;
 
-            //Label - Player 1 Name
+            // Label - Player 1 Name
             m_LabelPlayerName1 = new Label();
             m_LabelPlayerName1.Text = "First Player Name:";
             m_LabelPlayerName1.ForeColor = Color.Black;
@@ -85,7 +85,7 @@ namespace B20_Ex05
             m_LabelPlayerName1.Top = marginBorders;
             this.Controls.Add(m_LabelPlayerName1);
 
-            //Label - Player 2 Name
+            // Label - Player 2 Name
             m_LabelPlayerName2 = new Label();
             m_LabelPlayerName2.Text = "Second Player Name:";
             m_LabelPlayerName2.ForeColor = Color.Black;
@@ -94,7 +94,7 @@ namespace B20_Ex05
             m_LabelPlayerName2.Top = marginBorders + m_LabelPlayerName1.Bottom;
             this.Controls.Add(m_LabelPlayerName2);
 
-            //Label - Board Size
+            // Label - Board Size
             m_LabelBoardSize = new Label();
             m_LabelBoardSize.Text = "Board Size:";
             m_LabelBoardSize.ForeColor = Color.Black;
@@ -103,7 +103,7 @@ namespace B20_Ex05
             m_LabelBoardSize.Top = marginBorders + m_LabelPlayerName2.Bottom + 4;
             this.Controls.Add(m_LabelBoardSize);
 
-            //TextBox - Player 1 Name
+            // TextBox - Player 1 Name
             m_TextBoxPlayerName1 = new TextBox();
             m_TextBoxPlayerName1.ForeColor = Color.Black;
             m_TextBoxPlayerName1.AutoSize = true;
@@ -111,7 +111,7 @@ namespace B20_Ex05
             m_TextBoxPlayerName1.Top = marginBorders;
             this.Controls.Add(m_TextBoxPlayerName1);
 
-            //TextBox - Player 2 Name
+            // TextBox - Player 2 Name
             m_TextBoxPlayerName2 = new TextBox();
             m_TextBoxPlayerName2.Text = "- computer -";
             m_TextBoxPlayerName2.ForeColor = Color.Black;
@@ -121,7 +121,7 @@ namespace B20_Ex05
             m_TextBoxPlayerName2.Enabled = false;
             this.Controls.Add(m_TextBoxPlayerName2);
 
-            //Button - Against a Friend
+            // Button - Against a Friend
             m_ButtonAgainstFriend = new Button();
             m_ButtonAgainstFriend.Text = "Against a Friend";
             m_ButtonAgainstFriend.FlatStyle = FlatStyle.Standard;
@@ -131,7 +131,7 @@ namespace B20_Ex05
             m_ButtonAgainstFriend.Click += new EventHandler(againstFriend_Click);
             this.Controls.Add(m_ButtonAgainstFriend);
 
-            //Button - Board Size
+            // Button - Board Size
             m_ButtonBoardSize = new Button();
             m_ButtonBoardSize.Text = m_ListBoardSizes[m_IndexBoardSize];
             m_ButtonBoardSize.BackColor = Color.FromArgb(191, 191, 255);
@@ -142,7 +142,7 @@ namespace B20_Ex05
             m_ButtonBoardSize.Click += new EventHandler(boardSize_Click);
             this.Controls.Add(m_ButtonBoardSize);
 
-            //Button - Start
+            // Button - Start
             m_ButtonStart = new Button();
             m_ButtonStart.Text = "Start!";
             m_ButtonStart.BackColor = Color.FromArgb(0, 192, 0);
@@ -152,7 +152,7 @@ namespace B20_Ex05
             m_ButtonStart.Click += new EventHandler(start_Click);
             this.Controls.Add(m_ButtonStart);
 
-            //Form - This
+            // Form - This
             this.Text = "Memory Game - Settings";
             this.ClientSize = new Size(m_ButtonAgainstFriend.Right + marginBorders, m_ButtonBoardSize.Bottom + marginBorders);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -182,7 +182,7 @@ namespace B20_Ex05
         void againstFriend_Click(object sender, EventArgs e)
         {
             m_TextBoxPlayerName2.Enabled = !m_TextBoxPlayerName2.Enabled;
-            m_TextBoxPlayerName2.Text = m_TextBoxPlayerName2.Enabled ? "" : "- computer -";
+            m_TextBoxPlayerName2.Text = m_TextBoxPlayerName2.Enabled ? string.Empty : "- computer -";
             m_ButtonAgainstFriend.Text = m_TextBoxPlayerName2.Enabled ? "Against Computer" : "Against a Friend";
         }
 
@@ -220,20 +220,20 @@ namespace B20_Ex05
 
         public FormGame(string i_Player1Name, string i_Player2Name, string i_BoardSize, char i_GameMode)
         {
-            //Init Internet Connection
+            // Init Internet Connection
             m_InternetConnection = true;
 
-            //Init Timer
+            // Init Timer
             m_TimerSleep = new Timer();
             m_TimerSleep.Interval = 1000;
             m_TimerSleep.Tick += timer_Tick;
             m_SecondsSleep = 0;
 
-            //Init Colors
+            // Init Colors
             m_Player1Color = Color.FromArgb(192, 255, 192);
             m_Player2Color = Color.FromArgb(191, 191, 255);
 
-            //Init Cards
+            // Init Cards
             m_ButtonCards = new Card[int.Parse(i_BoardSize[0].ToString()), int.Parse(i_BoardSize[4].ToString())];
 
             initializeGame(i_Player1Name, i_Player2Name, i_BoardSize, i_GameMode);
@@ -261,7 +261,7 @@ namespace B20_Ex05
             const int marginBorders = 12;
             const int squareCardSize = 100;
 
-            //Button - Cards
+            // Button - Cards
             Dictionary<char, Image> cardImages = new Dictionary<char, Image>();
 
             for (int i = 0; i < m_ButtonCards.GetLength(0); i++)
@@ -293,7 +293,7 @@ namespace B20_Ex05
                 }
             }
 
-            //Label - Current Player
+            // Label - Current Player
             m_LabelCurrentPlayer = new Label();
             m_LabelCurrentPlayer.Text = $"Current Player: {m_Game.PlayerTurn_Name}";
             m_LabelCurrentPlayer.BackColor = m_Game.PlayerTurn_Name.Equals(m_Game.Player1_Name) ? m_Player1Color : m_Player2Color;
@@ -303,7 +303,7 @@ namespace B20_Ex05
             m_LabelCurrentPlayer.Top = m_ButtonCards[0, m_ButtonCards.GetLength(1) - 1].Bottom + marginBorders;
             this.Controls.Add(m_LabelCurrentPlayer);
 
-            //Label - Player 1 Score
+            // Label - Player 1 Score
             m_LabelPlayer1Score = new Label();
             m_LabelPlayer1Score.Text = $"{m_Game.Player1_Name}: {m_Game.Player1_Score} Pairs";
             m_LabelPlayer1Score.BackColor = m_Player1Color;
@@ -313,7 +313,7 @@ namespace B20_Ex05
             m_LabelPlayer1Score.Top = m_LabelCurrentPlayer.Bottom + marginBorders;
             this.Controls.Add(m_LabelPlayer1Score);
 
-            //Label - Player 2 Score
+            // Label - Player 2 Score
             m_LabelPlayer2Score = new Label();
             m_LabelPlayer2Score.Text = $"{m_Game.Player2_Name}: {m_Game.Player2_Score} Pairs";
             m_LabelPlayer2Score.BackColor = m_Player2Color;
@@ -323,7 +323,7 @@ namespace B20_Ex05
             m_LabelPlayer2Score.Top = m_LabelPlayer1Score.Bottom + marginBorders;
             this.Controls.Add(m_LabelPlayer2Score);
 
-            //Form - This
+            // Form - This
             this.Text = "Memory Game";
             this.ClientSize = new Size(m_ButtonCards[m_ButtonCards.GetLength(0) - 1, m_ButtonCards.GetLength(1) - 1].Right + marginBorders, m_LabelPlayer2Score.Bottom + marginBorders);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -401,8 +401,8 @@ namespace B20_Ex05
                     m_ButtonCards[card1_x, card1_y].BackgroundImage = null;
                     m_ButtonCards[card2_x, card2_y].BackgroundImage = null;
 
-                    m_ButtonCards[card1_x, card1_y].Text = "";
-                    m_ButtonCards[card2_x, card2_y].Text = "";
+                    m_ButtonCards[card1_x, card1_y].Text = string.Empty;
+                    m_ButtonCards[card2_x, card2_y].Text = string.Empty;
 
                     m_ButtonCards[card1_x, card1_y].BackColor = Color.Empty;
                     m_ButtonCards[card2_x, card2_y].BackColor = Color.Empty;
@@ -530,18 +530,20 @@ namespace B20_Ex05
             {
                 return m_X;
             }
+
             set
             {
                 m_X = value;
             }
         }
+
         public int Y
         {
             get
             {
-
                 return m_Y;
             }
+
             set
             {
                 m_Y = value;
@@ -554,6 +556,7 @@ namespace B20_Ex05
             {
                 return m_Image;
             }
+
             set
             {
                 m_Image = value;
@@ -566,6 +569,7 @@ namespace B20_Ex05
             {
                 return m_Symbol;
             }
+
             set
             {
                 m_Symbol = value;

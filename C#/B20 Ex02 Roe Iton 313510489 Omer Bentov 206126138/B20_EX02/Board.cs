@@ -1,10 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-
 namespace B20_EX02
 {
+
     public class Board
     {
         private Cell[,] m_Board;

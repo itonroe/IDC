@@ -8,3 +8,12 @@ C:\GitHub\Education\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\De
 C:\GitHub\Education\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\Debug\Ex02.ConsoleUtils.dll
 C:\GitHub\Education\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\Debug\B20_EX02.pdb
 C:\GitHub\Education\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\obj\Debug\B20_Ex05.csproj.CopyComplete
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\Debug\B20_Ex05.exe
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\Debug\B20_Ex05.pdb
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\Debug\B20_EX02.exe
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\Debug\Ex02.ConsoleUtils.dll
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\bin\Debug\B20_EX02.pdb
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\obj\Debug\B20_Ex05.csprojAssemblyReference.cache
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\obj\Debug\B20_Ex05.csproj.CopyComplete
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\obj\Debug\B20_Ex05.exe
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\C#\B20 Ex05 Roe 313510489 Omer 206126138\B20_Ex05\obj\Debug\B20_Ex05.pdb
