@@ -335,7 +335,7 @@ namespace B20_Ex05
             this.FormClosing += formGame_FormClosing;
         }
 
-        void buttonCard_Click(object sender, EventArgs e)
+        private void buttonCard_Click(object sender, EventArgs e)
         {
             if (m_FirstCard != null && m_SecondCard != null)
             {
@@ -460,6 +460,29 @@ namespace B20_Ex05
 
         private void formGame_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!m_Game.IsEnded())
+            {
+                string alertTitle = "Sudden Exit";
+                string alertMessage = "The game is not ended yet, are you sure you want to end it?";
+
+                DialogResult exitResult = MessageBox.Show(alertMessage, alertTitle, MessageBoxButtons.YesNo);
+
+                if (exitResult == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            if (askForRematch() == DialogResult.No)
+            {
+                MessageBox.Show("Thank you for playing, hope to see you soon!");
+                Environment.Exit(0);
+            }
+        }
+
+        private DialogResult askForRematch()
+        {
             string scoreTitle = "Game Ended";
 
             StringBuilder scoreMessage = new StringBuilder();
@@ -472,15 +495,7 @@ namespace B20_Ex05
             MessageBoxButtons scoreBox = MessageBoxButtons.YesNo;
             DialogResult rematchResult = MessageBox.Show(scoreMessage.ToString(), scoreTitle, scoreBox);
 
-            if (rematchResult == DialogResult.No)
-            {
-                MessageBox.Show("Thank you for playing, hope to see you soon!");
-                Environment.Exit(0);
-            }
-            else
-            {
-                e.Cancel = true;
-            }
+            return rematchResult;
         }
 
         private Image downloadImageFromUrl(string i_ImageUrl)
