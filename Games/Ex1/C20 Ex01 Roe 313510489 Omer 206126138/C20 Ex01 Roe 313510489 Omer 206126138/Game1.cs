@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Invaders.Classes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -17,6 +18,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         Vector2 m_PositionBackground;
         Color m_TintBackground = Color.White;
 
+        Ship m_Ship;
+
+        KeyboardState m_PrevKbState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -30,6 +35,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             {
                 initEnemies();
             }
+
+            m_Ship = new Ship();
 
             base.Initialize();
         }
@@ -66,6 +73,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
+            m_Ship.LoadContent(Content);
 
             InitPositions();
         }
@@ -73,6 +81,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void InitPositions()
         {
             m_PositionBackground = Vector2.Zero;
+
+            m_Ship.InitPosition(GraphicsDevice);
 
             //create an alpah channel for background:
             Vector4 bgTint = Vector4.One;
@@ -85,7 +95,11 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            ShipMovement();
+            NewShot();
+            UpdateBullets();
+
+            m_PrevKbState = Keyboard.GetState();
 
             updateEnemies(gameTime);
 
@@ -115,6 +129,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
 
             drawEnemies(gameTime);
+            m_Ship.Draw(spriteBatch);
 
             spriteBatch.End();
 
@@ -130,6 +145,32 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                     m_Enemies[i, j].Draw(gameTime, spriteBatch);
                 }
             }
+        }
+        private void ShipMovement()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                m_Ship.MoveRight(5, GraphicsDevice);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                m_Ship.MoveLeft(5);
+            }
+        }
+
+        private void NewShot()
+        {
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && !m_PrevKbState.IsKeyDown(Keys.Space))
+            {
+                m_Ship.Shot();
+            }
+        }
+
+        private void UpdateBullets()
+        {
+            m_Ship.Bullet1.Update();
+            m_Ship.Bullet2.Update();
         }
     }
 }

@@ -9,29 +9,60 @@ namespace Invaders.Classes
 {
     class Bullet
     {
-        private GraphicsDeviceManager m_graphicsManager;
-        private SpriteBatch m_spriteBatch;
-        private GraphicsDevice m_graphicDevice;
+        private readonly string m_texturePath = @"Sprites\Bullet";
 
         Texture2D m_bulletTexture;
         Vector2 m_bulletPosition;
 
-        public Bullet(Vector2 i_bulletPosition, GraphicsDeviceManager i_graphicsManager, SpriteBatch i_spriteBatch, GraphicsDevice i_graphicsDevice)
+        private bool m_Active;
+
+        public Bullet()
         {
-            m_graphicsManager = i_graphicsManager;
-            m_spriteBatch = i_spriteBatch;
-            m_bulletPosition = i_bulletPosition;
-            m_graphicDevice = i_graphicsDevice;
+            m_Active = false;
         }
 
-        protected void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
+        public Vector2 Position { get { return m_bulletPosition; } set { m_bulletPosition = value; } }
+
+        public Texture2D Texture { get { return m_bulletTexture; } set { m_bulletTexture = value; } }
+
+        public bool IsActive { get { return m_Active; } set { m_Active = value; } }
+
+        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
         {
-            m_bulletTexture = i_contentManager.Load<Texture2D>(@"sprites\Bullet");
+            m_bulletTexture = i_contentManager.Load<Texture2D>(m_texturePath);
         }
 
         public void MoveUp()
         {
             m_bulletPosition.Y -= 1;
+        }
+
+        public void Update()
+        {
+            if(m_Active)
+            {
+                this.MoveUp();
+                if (m_bulletPosition.Y <= 0) 
+                {
+                    m_Active = false;
+                }
+            }
+        }
+
+        public void ChangedToActive(Vector2 i_shipPosition)
+        {
+            m_Active = true;
+            Position = i_shipPosition;
+        }
+
+        public void ChangeToNotActive()
+        {
+            m_Active = false;
+        }
+
+        public void Draw(SpriteBatch i_spriteBatch)
+        {
+            i_spriteBatch.Draw(m_bulletTexture, m_bulletPosition, Color.White);
         }
     }
 }

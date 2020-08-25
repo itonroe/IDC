@@ -9,12 +9,8 @@ namespace Invaders.Classes
 {
     class Ship
     {
-        private GraphicsDeviceManager m_graphicsManager;
-        private SpriteBatch m_spriteBatch;
-        private GraphicsDevice m_graphicDevice;
-        private Microsoft.Xna.Framework.Content.ContentManager m_contentManager;
 
-        private readonly string m_texturePath = "Ship01_32x32";
+        private readonly string m_texturePath = @"Sprites\Ship01_32x32";
 
         Texture2D m_shipTexture;
         Vector2 m_shipPosition;
@@ -22,31 +18,39 @@ namespace Invaders.Classes
         Bullet m_bullet1;
         Bullet m_bullet2;
 
-        public Ship(Vector2 i_shipPosition, GraphicsDeviceManager i_graphicsManager, SpriteBatch i_spriteBatch, GraphicsDevice i_graphicsDevice, Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
+        public Ship()
         {
-            m_graphicsManager = i_graphicsManager;
-            m_spriteBatch = i_spriteBatch;
-            m_shipPosition = i_shipPosition;
-            m_graphicDevice = i_graphicsDevice;
-            m_contentManager = i_contentManager;
+            m_shipPosition = new Vector2(0, 0);
+            m_bullet1 = new Bullet();
+            m_bullet2 = new Bullet();
         }
 
-        protected void LoadContent()
+        public Vector2 Position { get { return m_shipPosition; } set { m_shipPosition = value; } }
+        public Texture2D Texture { get { return m_shipTexture; } set { m_shipTexture = value; } }
+
+        public Bullet Bullet1 { get { return m_bullet1; } set { m_bullet1 = value; } }
+
+        public Bullet Bullet2 { get { return m_bullet2; } set { m_bullet2 = value; } }
+
+        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
         {
-            m_shipTexture = m_contentManager.Load<Texture2D>(@"sprites\" + m_texturePath);
-            m_bullet1 = new Bullet(m_shipPosition, m_graphicsManager, m_spriteBatch, m_graphicDevice);
-            m_bullet2 = new Bullet(m_shipPosition, m_graphicsManager, m_spriteBatch, m_graphicDevice);
+            m_shipTexture = i_contentManager.Load<Texture2D>(m_texturePath);
+            m_bullet1.LoadContent(i_contentManager);
+            m_bullet2.LoadContent(i_contentManager);
+
         }
 
-        private void InitPosition()
+        public void InitPosition(GraphicsDevice i_graphicDevice)
         {
-            float x = (float)m_graphicDevice.Viewport.Width / 2;
-            float y = (float)m_graphicDevice.Viewport.Height;
+            // Get the bottom and center:
+            float x = (float)i_graphicDevice.Viewport.Width / 2;
+            float y = (float)i_graphicDevice.Viewport.Height - 50 ;
+            m_shipPosition = new Vector2(x, y);
         }
 
-        public void MoveRight(int i_distance)
+        public void MoveRight(int i_distance, GraphicsDevice i_graphicDevice)
         {
-            if(m_shipPosition.X < (float)m_graphicDevice.Viewport.Width)
+            if(m_shipPosition.X < (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width)
                 m_shipPosition.X += i_distance;
         }
 
@@ -55,6 +59,41 @@ namespace Invaders.Classes
             if(m_shipPosition.X > 0)
                 m_shipPosition.X -= i_distance;
         }
+
+        public void Shot()
+        {
+            if(!m_bullet1.IsActive)
+            {
+                m_bullet1.ChangedToActive(new Vector2(m_shipPosition.X + (m_shipTexture.Width/2) ,m_shipPosition.Y));
+
+                return;
+            }
+
+            if (!m_bullet2.IsActive)
+            {
+                m_bullet2.ChangedToActive(new Vector2(m_shipPosition.X + (m_shipTexture.Width / 2), m_shipPosition.Y));
+            }
+        }
+
+        public void Draw(SpriteBatch i_spriteBatch)
+        {
+            //Ship draw
+            i_spriteBatch.Draw(m_shipTexture, m_shipPosition,Color.White);
+
+            // BulletDraw
+            if(m_bullet1.IsActive)
+            {
+                m_bullet1.Draw(i_spriteBatch);
+            }
+
+            if (m_bullet2.IsActive)
+            {
+                m_bullet2.Draw(i_spriteBatch);
+            }
+
+        }
+
+
     }
 
 }
