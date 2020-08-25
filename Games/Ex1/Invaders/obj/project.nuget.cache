@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "szeIZKBJ5Y/RpIBIG3BEDDre4RG/JxA323FjbgDlniK5O62NYAe/SqKnw2wGfAQBQ4VMSzDSrpM/eRhm8/Ew0Q==",
+  "success": true,
+  "projectFilePath": "C:\\GitHub\\Education\\IDC\\Games\\Ex1\\Invaders\\Invaders.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Roe Iton\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
+    "C:\\Users\\Roe Iton\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+  ],
+  "logs": []
+}

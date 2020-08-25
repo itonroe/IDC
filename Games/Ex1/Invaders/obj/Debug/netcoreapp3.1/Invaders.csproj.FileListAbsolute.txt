@@ -19,3 +19,33 @@ C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\
 C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.csproj.CopyComplete
 C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.dll
 C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.pdb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\Bullet.xnb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\Enemy0101_32x32.xnb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\Enemy0201_32x32.xnb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\Enemy0301_32x32.xnb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\MotherShip_32x120.xnb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\Ship01_32x32.xnb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Invaders.exe
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Invaders.deps.json
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Invaders.runtimeconfig.json
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Invaders.runtimeconfig.dev.json
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Invaders.dll
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Invaders.pdb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\MonoGame.Framework.dll
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libSDL2-2.0.so.0
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libopenal.so.1
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\osx\native\libSDL2-2.0.0.dylib
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\osx\native\libopenal.1.dylib
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\SDL2.dll
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\soft_oal.dll
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\SDL2.dll
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\soft_oal.dll
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.csprojAssemblyReference.cache
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.AssemblyInfoInputs.cache
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.AssemblyInfo.cs
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.csproj.CoreCompileInputs.cache
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.csproj.CopyComplete
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.dll
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.pdb
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\obj\Debug\netcoreapp3.1\Invaders.genruntimeconfig.cache
+C:\GitHub\Education\IDC\Games\Ex1\Invaders\bin\Debug\netcoreapp3.1\Content\Sprites\BG_Space01_1024x768.xnb
