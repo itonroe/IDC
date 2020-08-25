@@ -9,10 +9,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        private Enemy[,] m_Enemies;
+        private bool m_LeftToRight;
+
+        //Background Properties
         Texture2D m_TextureBackground;
-
         Vector2 m_PositionBackground;
-
         Color m_TintBackground = Color.White;
 
         public Game1()
@@ -24,16 +26,45 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            if (m_Enemies == null)
+            {
+                initEnemies();
+            }
 
             base.Initialize();
+        }
+
+        private void initEnemies()
+        {
+            m_Enemies = new Enemy[5, 9];
+            m_LeftToRight = true;
+
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    m_Enemies[i, j] = new Enemy();
+
+                    string model = "Pink";
+
+                    if (i == 1 || i == 2)
+                    {
+                        model = "Blue";
+                    }
+                    else if (i != 0)
+                    {
+                        model = "White";
+                    }
+
+                    m_Enemies[i, j].Initialize(this.Content, this.GraphicsDevice, model, j, i);
+                }
+            }
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
 
             InitPositions();
@@ -41,18 +72,11 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void InitPositions()
         {
-            // 1. init the ship position
-            // Get the bottom and center:
-            float x = (float)GraphicsDevice.Viewport.Width / 2;
-            float y = (float)GraphicsDevice.Viewport.Height;
-
-
-            // 3. Init the bg position:
             m_PositionBackground = Vector2.Zero;
 
             //create an alpah channel for background:
             Vector4 bgTint = Vector4.One;
-            bgTint.W = 0.4f; // set the alpha component to 0.2
+            bgTint.W = 0f; // set the alpha component to 0.2
             m_TintBackground = new Color(bgTint);
         }
 
@@ -63,7 +87,23 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             // TODO: Add your update logic here
 
+            updateEnemies(gameTime);
+
             base.Update(gameTime);
+        }
+
+        private void updateEnemies(GameTime gameTime)
+        {
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    if (m_Enemies[i, j].Update(gameTime, m_LeftToRight, (float)GraphicsDevice.Viewport.Width))
+                    {
+                        m_LeftToRight = !m_LeftToRight;
+                    }
+                }
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -73,11 +113,23 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
-            //spriteBatch.Draw(m_TextureEnemy, m_PositionEnemy, Color.LightPink); // purple ship
-            //spriteBatch.Draw(m_TextureShip, m_PositionShip, Color.White); //no tinting
+
+            drawEnemies(gameTime);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void drawEnemies(GameTime gameTime)
+        {
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    m_Enemies[i, j].Draw(gameTime, spriteBatch);
+                }
+            }
         }
     }
 }
