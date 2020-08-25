@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C20 Ex01 Roe 313510489 Omer 206126138", "C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138.csproj", "{B9BEA10D-1ABF-4586-9522-7E62B2F669BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9BEA10D-1ABF-4586-9522-7E62B2F669BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9BEA10D-1ABF-4586-9522-7E62B2F669BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9BEA10D-1ABF-4586-9522-7E62B2F669BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9BEA10D-1ABF-4586-9522-7E62B2F669BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {376AF37A-9184-48C6-8A0B-8AB5356D9F82}
+	EndGlobalSection
+EndGlobal

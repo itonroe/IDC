@@ -37,6 +37,7 @@ namespace Invaders
         protected override void LoadContent()
         {
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
+
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
         }
 
