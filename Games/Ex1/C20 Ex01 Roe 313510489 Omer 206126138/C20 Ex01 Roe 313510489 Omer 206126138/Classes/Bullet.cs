@@ -16,9 +16,12 @@ namespace Invaders.Classes
 
         private bool m_Active;
 
-        public Bullet()
+        Color m_bulletColor;
+
+        public Bullet(Color i_color)
         {
             m_Active = false;
+            m_bulletColor = i_color;
         }
 
         public Vector2 Position { get { return m_bulletPosition; } set { m_bulletPosition = value; } }
@@ -37,12 +40,29 @@ namespace Invaders.Classes
             m_bulletPosition.Y -= 1;
         }
 
-        public void Update()
+        public void MoveDown()
+        {
+            m_bulletPosition.Y += 1;
+        }
+
+        public void UpdateForShip()
         {
             if(m_Active)
             {
                 this.MoveUp();
                 if (m_bulletPosition.Y <= 0) 
+                {
+                    m_Active = false;
+                }
+            }
+        }
+
+        public void UpdateForEnemy(GraphicsDevice i_graphicDevice)
+        {
+            if (m_Active)
+            {
+                this.MoveDown();
+                if (m_bulletPosition.Y >= i_graphicDevice.Viewport.Height)
                 {
                     m_Active = false;
                 }
@@ -62,7 +82,7 @@ namespace Invaders.Classes
 
         public void Draw(SpriteBatch i_spriteBatch)
         {
-            i_spriteBatch.Draw(m_bulletTexture, m_bulletPosition, Color.White);
+            i_spriteBatch.Draw(m_bulletTexture, m_bulletPosition, m_bulletColor);
         }
     }
 }

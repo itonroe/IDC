@@ -37,18 +37,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             base.Initialize();
         }
 
-
-        protected override void LoadContent()
-        {
-            m_spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
-            m_enemies.InitAndLoad(Content, GraphicsDevice);
-            m_Ship.LoadContent(Content);
-
-            InitPositions();
-        }
-
         private void InitPositions()
         {
             m_PositionBackground = Vector2.Zero;
@@ -61,37 +49,52 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_TintBackground = new Color(bgTint);
         }
 
+        protected override void LoadContent()
+        {
+            m_spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
+            m_enemies.InitAndLoad(Content, GraphicsDevice);
+            m_Ship.LoadContent(Content);
+
+            InitPositions();
+        }
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             UpdateShip();
-            NewShot();
-            UpdateBullets();
-            m_enemies.UpdateEnemies(gameTime, GraphicsDevice);
-            m_enemies.EnemyIsDown(m_Ship);
+            UpdateEnemies(gameTime, GraphicsDevice, m_Ship);
 
             m_PrevKbState = Keyboard.GetState();
-
             base.Update(gameTime);
         }
 
-
-        protected override void Draw(GameTime gameTime)
+        private void UpdateEnemies(GameTime gameTime, GraphicsDevice i_GraphicDevice, Ship i_ship)
         {
-            GraphicsDevice.Clear(Color.Black);
-            m_spriteBatch.Begin();
-
-            m_spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
-            m_enemies.Draw(gameTime, m_spriteBatch);
-            m_Ship.Draw(m_spriteBatch);
-
-            m_spriteBatch.End();
-            base.Draw(gameTime);
+            m_enemies.Update(gameTime, GraphicsDevice, m_Ship);
+            //if (m_enemies.IsEndOfGame(i_GraphicDevice))
+                //Exit();
         }
 
         private void UpdateShip()
+        {
+            ShipStillAlive();
+            ShipMoveByKB();
+            UpdateBulletsForShip();
+            NewShot();
+            UpdateShipLifes();
+        }
+
+        private void ShipStillAlive()
+        {
+            if (m_Ship.Lifes == 0)
+                Exit();
+        }
+
+        private void ShipMoveByKB()
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
@@ -104,6 +107,20 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
         }
 
+        private void UpdateShipLifes()
+        {
+            for (int i = 0; i< m_enemies.Table.GetLength(0); i++)
+            {
+                for (int j = 0; j< m_enemies.Table.GetLength(1); j++)
+                {
+                    if(m_enemies.GetEnemy(i,j).Bullet.IsActive)
+                    {
+                        m_Ship.BulletIntersectsShip(m_enemies.GetEnemy(i, j).Bullet);
+                    }
+                }
+            }
+        }
+
         private void NewShot()
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Space) && !m_PrevKbState.IsKeyDown(Keys.Space))
@@ -112,10 +129,23 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
         }
 
-        private void UpdateBullets()
+        private void UpdateBulletsForShip()
         {
-            m_Ship.Bullet1.Update();
-            m_Ship.Bullet2.Update();
+            m_Ship.Bullet1.UpdateForShip();
+            m_Ship.Bullet2.UpdateForShip();
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Black);
+            m_spriteBatch.Begin();
+
+            m_spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
+            m_enemies.Draw(gameTime, m_spriteBatch);
+            m_Ship.Draw(m_spriteBatch);
+
+            m_spriteBatch.End();
+            base.Draw(gameTime);
         }
     }
 }

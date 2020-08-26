@@ -18,11 +18,14 @@ namespace Invaders.Classes
         Bullet m_bullet1;
         Bullet m_bullet2;
 
+        private int m_lifes;
+
         public Ship()
         {
             m_shipPosition = new Vector2(0, 0);
-            m_bullet1 = new Bullet();
-            m_bullet2 = new Bullet();
+            m_bullet1 = new Bullet(Color.Red);
+            m_bullet2 = new Bullet(Color.Red);
+            m_lifes = 2;
         }
 
         public Vector2 Position { get { return m_shipPosition; } set { m_shipPosition = value; } }
@@ -31,6 +34,8 @@ namespace Invaders.Classes
         public Bullet Bullet1 { get { return m_bullet1; } set { m_bullet1 = value; } }
 
         public Bullet Bullet2 { get { return m_bullet2; } set { m_bullet2 = value; } }
+
+        public int Lifes { get { return m_lifes; } set { m_lifes = value; } }
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
         {
@@ -50,14 +55,12 @@ namespace Invaders.Classes
 
         public void MoveRight(int i_distance, GraphicsDevice i_graphicDevice)
         {
-            if(m_shipPosition.X < (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width)
-                m_shipPosition.X += i_distance;
+            m_shipPosition.X = Math.Clamp((m_shipPosition.X + i_distance), 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
         }
 
         public void MoveLeft(int i_distance)
         {
-            if(m_shipPosition.X > 0)
-                m_shipPosition.X -= i_distance;
+            m_shipPosition.X = Math.Clamp((m_shipPosition.X - i_distance), 0, m_shipPosition.X);
         }
 
         public void Shot()
@@ -73,6 +76,23 @@ namespace Invaders.Classes
             {
                 m_bullet2.ChangedToActive(new Vector2(m_shipPosition.X + (m_shipTexture.Width / 2), m_shipPosition.Y));
             }
+        }
+
+        public void BulletIntersectsShip(Bullet i_bullet)
+        {
+            Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
+            Rectangle shipRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
+
+            if (bulletRectangle.Intersects(shipRectangle))
+            {
+                this.Hit();
+                i_bullet.IsActive = false;
+            }
+        }
+
+        private void Hit()
+        {
+            m_lifes--;
         }
 
         public void Draw(SpriteBatch i_spriteBatch)
@@ -92,8 +112,6 @@ namespace Invaders.Classes
             }
 
         }
-
-
     }
 
 }
