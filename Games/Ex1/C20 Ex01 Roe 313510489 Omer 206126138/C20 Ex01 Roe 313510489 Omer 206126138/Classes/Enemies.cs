@@ -128,23 +128,27 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
         }
 
-        public void EnemyGotHitFromBullet(Ship i_ship)
+        public Enemy EnemyGotHitFromBullet(Ship i_ship)
         {
+            Enemy enemyGotHit = null;
+
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
-                    if(i_ship.Bullet1.IsActive && m_Enemies[i, j].IsAlive)
+                    if(i_ship.Bullet1.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet1))
                     {
-                        BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet1);
+                        enemyGotHit = m_Enemies[i, j];
                     }
 
-                    if (i_ship.Bullet2.IsActive && m_Enemies[i, j].IsAlive)
+                    if (i_ship.Bullet2.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet2))
                     {
-                        BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet2);
+                        enemyGotHit = m_Enemies[i, j];
                     }
                 }
             }
+
+            return enemyGotHit;
         }
 
         public bool ShipIntersection(Ship i_ship)
@@ -169,16 +173,20 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             return answer;
         }
 
-        public void BulletIntersectsEnemy(Enemy i_enemy, Bullet i_bullet)
+        public bool BulletIntersectsEnemy(Enemy i_enemy, Bullet i_bullet)
         {
+            bool hit = false;
             Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
             Rectangle enemyRectangle = new Rectangle((int)i_enemy.Position.X, (int)i_enemy.Position.Y, i_enemy.Texture.Width, i_enemy.Texture.Height);
 
             if(bulletRectangle.Intersects(enemyRectangle))
             {
+                hit = true;
                 i_enemy.IsAlive = false;
                 i_bullet.IsActive = false;
             }
+
+            return hit;
         }
 
         private bool EnemyReachedBottom(GraphicsDevice i_GraphicDevice)

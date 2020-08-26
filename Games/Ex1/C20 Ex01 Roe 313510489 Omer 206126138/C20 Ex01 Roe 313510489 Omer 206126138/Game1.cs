@@ -17,6 +17,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         //Enemies collection
         private Enemies m_enemies;
 
+        //MotherShip object
+        private MotherShip m_MotherShip;
+
         //Background Properties
         private Texture2D m_TextureBackground;
         private Vector2 m_PositionBackground;
@@ -24,6 +27,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         // Ship object
         private Ship m_Ship;
+
+        // Score
+        private GameScore m_Score;
+        private const int lifeLost = -600;
 
         public Game1()
         {
@@ -36,6 +43,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             m_enemies = new Enemies();
             m_Ship = new Ship();
+            m_Score = new GameScore();
+            m_MotherShip = new MotherShip();
 
             base.Initialize();
         }
@@ -45,11 +54,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_PositionBackground = Vector2.Zero;
 
             m_Ship.InitPosition(GraphicsDevice);
-
-            //create an alpah channel for background:
-            Vector4 bgTint = Vector4.One;
-            bgTint.W = 0f; // set the alpha component to 0.2
-            m_TintBackground = new Color(bgTint);
+            m_MotherShip.initPositions();
         }
 
         protected override void LoadContent()
@@ -59,6 +64,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
             m_enemies.InitAndLoad(Content, GraphicsDevice);
             m_Ship.LoadContent(Content);
+            m_MotherShip.LoadContent(Content, "Red");
 
             InitPositions();
         }
@@ -70,6 +76,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             UpdateShip(gameTime);
             UpdateEnemies(gameTime, GraphicsDevice, m_Ship);
+            UpDateMotherShip(GraphicsDevice);
             UpdateIntersections(GraphicsDevice);
 
             m_PrevKbState = Keyboard.GetState();
@@ -84,27 +91,59 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void UpdateShip(GameTime gameTime)
         {
             ShipStillAlive();
+            //ShipMoveByMouse(GraphicsDevice);
             ShipMoveByKB(gameTime);
-            ShipMoveByMouse(GraphicsDevice);
             UpdateBulletsForShip(gameTime);
             NewShot();
+        }
+
+        private void UpDateMotherShip(GraphicsDevice i_GraphicDevice)
+        {
+            if (TimeForMotherShip() && !m_MotherShip.IsAlive)
+            {
+                m_MotherShip.GetReadyToPop();
+            }
+
+            if (m_MotherShip.IsAlive)
+                m_MotherShip.Move(i_GraphicDevice);
         }
 
         private void UpdateIntersections(GraphicsDevice i_GraphicDevice)
         {
             //enemy reach bottom
             if (m_enemies.IsEndOfGame(i_GraphicDevice))
-                Exit();
+                PrintScore();
 
             //enemy bullet hit ship
             ShipGotHitFromBullet();
 
             //ship bullet hit enemy
-            m_enemies.EnemyGotHitFromBullet(m_Ship);
+            Enemy tempEnemy = m_enemies.EnemyGotHitFromBullet(m_Ship);
+            if (tempEnemy != null)
+            {
+                m_Score.AddSCore(tempEnemy.Model);
+            }
 
             // Enemy and ship intersect
             if (m_enemies.ShipIntersection(m_Ship))
-                Exit(); 
+                PrintScore();
+
+            //MotherSHip Intersect with bullets
+            if (m_MotherShip.IntersectionWithShipBullets(m_Ship))
+                m_Score.AddSCore(m_MotherShip.Model);
+        }
+
+        private bool TimeForMotherShip()
+        {
+            bool answer = false;
+
+            Random rnd = new Random();
+            if(rnd.Next(0,100) == 0)
+            {
+                answer = true;
+            }
+
+            return answer;
         }
 
         private void ShipStillAlive()
@@ -145,7 +184,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 {
                     if(m_enemies.GetEnemy(i,j).Bullet.IsActive)
                     {
-                        m_Ship.BulletIntersectsShip(m_enemies.GetEnemy(i, j).Bullet);
+                        if (m_Ship.BulletIntersectsShip(m_enemies.GetEnemy(i, j).Bullet))
+                            m_Score.AddSCore(lifeLost);
                     }
                 }
             }
@@ -165,6 +205,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Ship.Bullet2.UpdateForShip(gameTime);
         }
 
+        //need messagebox
+        private void PrintScore()
+        {
+            string message = $"Game Over!!!\nYour score is : {m_Score.Score}";
+            Console.WriteLine(message);
+            while (true) ;
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -173,6 +221,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
             m_enemies.Draw(gameTime, m_spriteBatch);
             m_Ship.Draw(m_spriteBatch);
+            m_MotherShip.Draw(gameTime, m_spriteBatch);
 
             m_spriteBatch.End();
             base.Draw(gameTime);

@@ -22,9 +22,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private Bullet m_bullet;
         private bool m_IsAlive;
 
-        private const int m_EnemySpeed = 60;
-        private double m_CountSec = 0;
-
         public Enemy()
         {
             m_Position = new Vector2();
@@ -32,16 +29,18 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_IsAlive = true;
         }
 
+        public int Model { get { return (int)m_EnemyModel; } }
         public Texture2D Texture { get { return m_Texutre; } set { m_Texutre = value; } }
         public Vector2 Position { get { return m_Position; } set { m_Position = value; } }
         public bool IsAlive { get { return m_IsAlive; } set { m_IsAlive = value; } }
         public Bullet Bullet { get { return m_bullet; }  set { m_bullet = value; } }
 
-        enum EnemyModel
+        public enum EnemyModel
         {
-            Pink,
-            Blue,
-            White
+            Red = 600,
+            Pink = 300,
+            Blue = 200,
+            White = 70
         }
 
         public void Initialize(ContentManager i_ContentManager, GraphicsDevice i_GraphicDevice, string i_Model, float i_DeltaX, float i_DeltaY)
@@ -50,7 +49,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             initPositions(i_GraphicDevice, i_DeltaX, i_DeltaY);
         }
 
-        private void initPositions(GraphicsDevice i_GraphicDevice, float i_DeltaX, float i_DeltaY)
+        public virtual void initPositions(GraphicsDevice i_GraphicDevice, float i_DeltaX, float i_DeltaY)
         {
             const int margin = 20;
 
@@ -60,7 +59,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Position = new Vector2(x, y);
         }
 
-        private void LoadContent(ContentManager i_ContentManager, string i_Model)
+        public virtual void LoadContent(ContentManager i_ContentManager, string i_Model)
         {
             m_EnemyModel = (EnemyModel)Enum.Parse(typeof(EnemyModel), i_Model);
 
@@ -77,6 +76,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 case EnemyModel.White:
                     assetName = @"Sprites\Enemy0301_32x32";
                     break;
+                case EnemyModel.Red:
+                    assetName = @"Sprites\MotherShip_32x120";
+                    break;
                 default:
                     throw new ArgumentException("Color Is Not Recognize, there is no such enemy");
             }
@@ -87,35 +89,33 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         public bool Update(GameTime gameTime, bool i_LeftToRight, float i_MaxWidth, GraphicsDevice i_GraphicDevice)
         {
-            bool touchesTheBorder = false;
-            float nextPosition = m_Position.X;
-            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (m_CountSec >= 1000 / m_EnemySpeed)
+            bool touchesTheBorder = false;
+
+            if (i_LeftToRight)
             {
-                if (i_LeftToRight)
+                if (m_Position.X + k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds < i_MaxWidth - m_Texutre.Width)
                 {
-                    nextPosition += 1;
-                    m_Position.X = nextPosition;
-                    m_CountSec -= 1000 / m_EnemySpeed;
-                    if (nextPosition >= i_MaxWidth - m_Texutre.Width)
-                    {
-                        touchesTheBorder = true;
-                    }
+                    m_Position.X += k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 else
                 {
-                    nextPosition -= 1;
-                    m_Position.X = nextPosition;
-                    m_CountSec -= 1000 / m_EnemySpeed;
-                    if (nextPosition <= 0)
-                    {
-                        touchesTheBorder = true;
-                    }
+                    touchesTheBorder = true;
+                }
+            }
+            else
+            {
+                if (m_Position.X - k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds > 0)
+                {
+                    m_Position.X -= k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else
+                {
+                    touchesTheBorder = true;
                 }
             }
 
-            if(m_bullet.IsActive)
+            if (m_bullet.IsActive)
             {
                 m_bullet.UpdateForEnemy(i_GraphicDevice, gameTime);
             }
@@ -157,9 +157,13 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 case EnemyModel.White:
                     enemyColor = Color.White;
                     break;
+                case EnemyModel.Red:
+                    enemyColor = Color.Red;
+                    break;
             }
 
-            i_SpriteBatch.Draw(m_Texutre, m_Position, enemyColor);
+            if(IsAlive)
+                i_SpriteBatch.Draw(m_Texutre, m_Position, enemyColor);
 
             // Bullet
             if(m_bullet.IsActive)

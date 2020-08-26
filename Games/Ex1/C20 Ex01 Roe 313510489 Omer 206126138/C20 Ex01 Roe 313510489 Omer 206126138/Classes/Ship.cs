@@ -99,16 +99,21 @@ namespace Invaders.Classes
             }
         }
 
-        public void BulletIntersectsShip(Bullet i_bullet)
+        public bool BulletIntersectsShip(Bullet i_bullet)
         {
+            bool hit = false;
+
             Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
             Rectangle shipRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
 
             if (bulletRectangle.Intersects(shipRectangle))
             {
+                hit = true;
                 this.Hit();
                 i_bullet.IsActive = false;
             }
+
+            return hit;
         }
 
         private void Hit()
