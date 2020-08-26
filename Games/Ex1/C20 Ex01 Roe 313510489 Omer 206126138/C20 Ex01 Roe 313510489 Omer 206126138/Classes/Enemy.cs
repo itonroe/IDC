@@ -17,10 +17,13 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private EnemyModel m_EnemyModel;
         private const double k_speedMultiplicationParam = 1.06;
 
-        Texture2D m_Texutre;
-        Vector2 m_Position;
-        Bullet m_bullet;
-        bool m_IsAlive;
+        private Texture2D m_Texutre;
+        private Vector2 m_Position;
+        private Bullet m_bullet;
+        private bool m_IsAlive;
+
+        private const int m_EnemySpeed = 60;
+        private double m_CountSec = 0;
 
         public Enemy()
         {
@@ -85,33 +88,36 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         public bool Update(GameTime gameTime, bool i_LeftToRight, float i_MaxWidth, GraphicsDevice i_GraphicDevice)
         {
             bool touchesTheBorder = false;
+            float nextPosition = m_Position.X;
+            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (i_LeftToRight)
+            if (m_CountSec >= 1000 / m_EnemySpeed)
             {
-                if (m_Position.X + k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds < i_MaxWidth - m_Texutre.Width)
+                if (i_LeftToRight)
                 {
-                    m_Position.X += k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    nextPosition += 1;
+                    m_Position.X = nextPosition;
+                    m_CountSec -= 1000 / m_EnemySpeed;
+                    if (nextPosition >= i_MaxWidth - m_Texutre.Width)
+                    {
+                        touchesTheBorder = true;
+                    }
                 }
                 else
                 {
-                    touchesTheBorder = true;
-                }
-            }
-            else
-            {
-                if (m_Position.X - k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds > 0)
-                {
-                    m_Position.X -= k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                }
-                else
-                {
-                    touchesTheBorder = true;
+                    nextPosition -= 1;
+                    m_Position.X = nextPosition;
+                    m_CountSec -= 1000 / m_EnemySpeed;
+                    if (nextPosition <= 0)
+                    {
+                        touchesTheBorder = true;
+                    }
                 }
             }
 
             if(m_bullet.IsActive)
             {
-                m_bullet.UpdateForEnemy(i_GraphicDevice);
+                m_bullet.UpdateForEnemy(i_GraphicDevice, gameTime);
             }
 
             return touchesTheBorder;

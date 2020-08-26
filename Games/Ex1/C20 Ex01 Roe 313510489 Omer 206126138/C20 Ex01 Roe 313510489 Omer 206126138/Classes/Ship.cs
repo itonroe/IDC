@@ -12,11 +12,14 @@ namespace Invaders.Classes
 
         private readonly string m_texturePath = @"Sprites\Ship01_32x32";
 
-        Texture2D m_shipTexture;
-        Vector2 m_shipPosition;
+        private Texture2D m_shipTexture;
+        private Vector2 m_shipPosition;
 
-        Bullet m_bullet1;
-        Bullet m_bullet2;
+        private Bullet m_bullet1;
+        private Bullet m_bullet2;
+
+        private const int m_ShipSpeed = 130;
+        private double m_CountSec = 0;
 
         private int m_lifes;
 
@@ -48,19 +51,37 @@ namespace Invaders.Classes
         public void InitPosition(GraphicsDevice i_graphicDevice)
         {
             // Get the bottom and center:
-            float x = (float)i_graphicDevice.Viewport.Width / 2;
+            float x = (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width;
             float y = (float)i_graphicDevice.Viewport.Height - 50 ;
             m_shipPosition = new Vector2(x, y);
         }
 
-        public void MoveRight(int i_distance, GraphicsDevice i_graphicDevice)
+        public void MoveRight(GameTime gameTime, GraphicsDevice i_graphicDevice)
         {
-            m_shipPosition.X = Math.Clamp((m_shipPosition.X + i_distance), 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
+            float nextPosition = m_shipPosition.X;
+            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (m_CountSec >= 1000 / m_ShipSpeed)
+            {
+                nextPosition += 1;
+                m_CountSec -= 1000 / m_ShipSpeed;
+            }
+
+            m_shipPosition.X = Math.Clamp(nextPosition, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
         }
 
-        public void MoveLeft(int i_distance)
+        public void MoveLeft(GameTime gameTime)
         {
-            m_shipPosition.X = Math.Clamp((m_shipPosition.X - i_distance), 0, m_shipPosition.X);
+            float nextPosition = m_shipPosition.X;
+            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (m_CountSec >= 1000 / m_ShipSpeed)
+            {
+                nextPosition -= 1;
+                m_CountSec -= 1000 / m_ShipSpeed;
+            }
+
+            m_shipPosition.X = Math.Clamp(nextPosition, 0, m_shipPosition.X);
         }
 
         public void Shot()

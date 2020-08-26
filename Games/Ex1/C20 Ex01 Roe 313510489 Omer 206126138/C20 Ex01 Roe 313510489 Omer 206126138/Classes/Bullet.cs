@@ -11,12 +11,13 @@ namespace Invaders.Classes
     {
         private readonly string m_texturePath = @"Sprites\Bullet";
 
-        Texture2D m_bulletTexture;
-        Vector2 m_bulletPosition;
+        private Texture2D m_bulletTexture;
+        private Vector2 m_bulletPosition;
+        private Color m_bulletColor;
 
         private bool m_Active;
-
-        Color m_bulletColor;
+        private const int m_BulletSpeed = 140; //pxl pre sec
+        private double m_CountSec = 0;
 
         public Bullet(Color i_color)
         {
@@ -35,21 +36,34 @@ namespace Invaders.Classes
             m_bulletTexture = i_contentManager.Load<Texture2D>(m_texturePath);
         }
 
-        public void MoveUp()
+        // 1000 refers to 1000 milisecond in a second
+        public void MoveUp(GameTime gameTime)
         {
-            m_bulletPosition.Y -= 1;
+            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if(m_CountSec >= 1000/m_BulletSpeed)
+            {
+                m_bulletPosition.Y -= 1;
+                m_CountSec -= 1000 / m_BulletSpeed;
+            }
         }
 
-        public void MoveDown()
+        public void MoveDown(GameTime gameTime)
         {
-            m_bulletPosition.Y += 1;
+            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (m_CountSec >= 1000 / m_BulletSpeed)
+            {
+                m_bulletPosition.Y += 1;
+                m_CountSec -= 1000 / m_BulletSpeed;
+            }
         }
 
-        public void UpdateForShip()
+        public void UpdateForShip(GameTime gameTime)
         {
             if(m_Active)
             {
-                this.MoveUp();
+                this.MoveUp(gameTime);
                 if (m_bulletPosition.Y <= 0) 
                 {
                     m_Active = false;
@@ -57,11 +71,11 @@ namespace Invaders.Classes
             }
         }
 
-        public void UpdateForEnemy(GraphicsDevice i_graphicDevice)
+        public void UpdateForEnemy(GraphicsDevice i_graphicDevice, GameTime gameTime)
         {
             if (m_Active)
             {
-                this.MoveDown();
+                this.MoveDown(gameTime);
                 if (m_bulletPosition.Y >= i_graphicDevice.Viewport.Height)
                 {
                     m_Active = false;

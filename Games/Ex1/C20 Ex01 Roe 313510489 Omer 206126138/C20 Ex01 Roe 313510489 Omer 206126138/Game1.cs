@@ -3,6 +3,7 @@ using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
@@ -10,23 +11,25 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
     {
         private GraphicsDeviceManager m_graphics;
         private SpriteBatch m_spriteBatch;
+        private KeyboardState m_PrevKbState;
+        private MouseState m_PrevMosueState;
 
-        Enemies m_enemies;
+        //Enemies collection
+        private Enemies m_enemies;
 
         //Background Properties
-        Texture2D m_TextureBackground;
-        Vector2 m_PositionBackground;
-        Color m_TintBackground = Color.White;
+        private Texture2D m_TextureBackground;
+        private Vector2 m_PositionBackground;
+        private Color m_TintBackground = Color.White;
 
-        Ship m_Ship;
-
-        KeyboardState m_PrevKbState;
+        // Ship object
+        private Ship m_Ship;
 
         public Game1()
         {
             m_graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()
@@ -65,8 +68,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            UpdateShip();
+            UpdateShip(gameTime);
             UpdateEnemies(gameTime, GraphicsDevice, m_Ship);
+            UpdateIntersections(GraphicsDevice);
 
             m_PrevKbState = Keyboard.GetState();
             base.Update(gameTime);
@@ -75,17 +79,32 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void UpdateEnemies(GameTime gameTime, GraphicsDevice i_GraphicDevice, Ship i_ship)
         {
             m_enemies.Update(gameTime, GraphicsDevice, m_Ship);
-            //if (m_enemies.IsEndOfGame(i_GraphicDevice))
-                //Exit();
         }
 
-        private void UpdateShip()
+        private void UpdateShip(GameTime gameTime)
         {
             ShipStillAlive();
-            ShipMoveByKB();
-            UpdateBulletsForShip();
+            ShipMoveByKB(gameTime);
+            ShipMoveByMouse(GraphicsDevice);
+            UpdateBulletsForShip(gameTime);
             NewShot();
-            UpdateShipLifes();
+        }
+
+        private void UpdateIntersections(GraphicsDevice i_GraphicDevice)
+        {
+            //enemy reach bottom
+            if (m_enemies.IsEndOfGame(i_GraphicDevice))
+                Exit();
+
+            //enemy bullet hit ship
+            ShipGotHitFromBullet();
+
+            //ship bullet hit enemy
+            m_enemies.EnemyGotHitFromBullet(m_Ship);
+
+            // Enemy and ship intersect
+            if (m_enemies.ShipIntersection(m_Ship))
+                Exit(); 
         }
 
         private void ShipStillAlive()
@@ -94,20 +113,31 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 Exit();
         }
 
-        private void ShipMoveByKB()
+        private void ShipMoveByKB(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                m_Ship.MoveRight(5, GraphicsDevice);
+                m_Ship.MoveRight(gameTime, GraphicsDevice);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                m_Ship.MoveLeft(5);
+                m_Ship.MoveLeft(gameTime);
             }
         }
 
-        private void UpdateShipLifes()
+        private void ShipMoveByMouse(GraphicsDevice i_graphicDevice)
+        {
+            MouseState mouseState = Mouse.GetState();
+
+            var newXposition = Math.Clamp(m_Ship.Position.X + (Mouse.GetState().X - m_PrevMosueState.X) , 0, (float)i_graphicDevice.Viewport.Width - m_Ship.Texture.Width);
+            Vector2 mousePosition = new Vector2(newXposition,m_Ship.Position.Y);
+
+            m_Ship.Position = mousePosition;
+            
+        }
+
+        private void ShipGotHitFromBullet()
         {
             for (int i = 0; i< m_enemies.Table.GetLength(0); i++)
             {
@@ -129,10 +159,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
         }
 
-        private void UpdateBulletsForShip()
+        private void UpdateBulletsForShip(GameTime gameTime)
         {
-            m_Ship.Bullet1.UpdateForShip();
-            m_Ship.Bullet2.UpdateForShip();
+            m_Ship.Bullet1.UpdateForShip(gameTime);
+            m_Ship.Bullet2.UpdateForShip(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

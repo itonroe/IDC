@@ -60,7 +60,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         {
             EnemiesMovement(gameTime, i_GraphicDevice);
             TimeForShot();
-            EnemyIsDown(i_ship);
         }
         
         public bool IsEndOfGame(GraphicsDevice i_GraphicDevice)
@@ -129,7 +128,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
         }
 
-        public void EnemyIsDown(Ship i_ship)
+        public void EnemyGotHitFromBullet(Ship i_ship)
         {
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
             {
@@ -146,6 +145,28 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     }
                 }
             }
+        }
+
+        public bool ShipIntersection(Ship i_ship)
+        {
+            bool answer = false;
+
+            Rectangle ShipRectangle = new Rectangle((int)i_ship.Position.X, (int)i_ship.Position.Y, i_ship.Texture.Width, i_ship.Texture.Height);
+            Rectangle enemyRectangle;
+
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    enemyRectangle = new Rectangle((int)m_Enemies[i, j].Position.X, (int)m_Enemies[i, j].Position.Y, m_Enemies[i, j].Texture.Width, m_Enemies[i, j].Texture.Height);
+                    if (m_Enemies[i, j].IsAlive && enemyRectangle.Intersects(ShipRectangle))
+                    {
+                        answer = true;
+                    }
+                }
+            }
+
+            return answer;
         }
 
         public void BulletIntersectsEnemy(Enemy i_enemy, Bullet i_bullet)
