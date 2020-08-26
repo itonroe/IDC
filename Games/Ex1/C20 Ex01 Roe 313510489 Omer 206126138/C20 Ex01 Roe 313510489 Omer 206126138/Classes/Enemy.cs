@@ -14,10 +14,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
     {
         Texture2D m_Texutre;
         Vector2 m_Position;
+        bool m_IsAlive = true;
 
-        Vector2 m_PrevPosition;
+        //Vector2 m_PrevPosition;
 
         private const float k_EnemyVelocityPerSecond = 80;
+        private EnemyModel m_EnemyModel;
 
         enum EnemyModel
         {
@@ -26,23 +28,21 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             White
         }
 
-        private EnemyModel m_EnemyModel;
-
-        public Enemy()
-        {
-        }
+        public Texture2D Texture { get { return m_Texutre; } set { m_Texutre = value; } }
+        public Vector2 Position { get { return m_Position; } set { m_Position = value; } }
+        public bool IsAlive { get { return m_IsAlive; } set { m_IsAlive = value; } }
 
         public void Initialize(ContentManager i_ContentManager, GraphicsDevice i_GraphicDevice, string i_Model, float i_DeltaX, float i_DeltaY)
         {
-            loadContent(i_ContentManager, i_Model);
+            LoadContent(i_ContentManager, i_Model);
             initPositions(i_GraphicDevice, i_DeltaX, i_DeltaY);
         }
 
-        private void loadContent(ContentManager i_ContentManager, string i_Model)
+        private void LoadContent(ContentManager i_ContentManager, string i_Model)
         {
             m_EnemyModel = (EnemyModel)Enum.Parse(typeof(EnemyModel), i_Model);
 
-            string assetName = "";
+            string assetName = String.Empty;
 
             switch (m_EnemyModel)
             {

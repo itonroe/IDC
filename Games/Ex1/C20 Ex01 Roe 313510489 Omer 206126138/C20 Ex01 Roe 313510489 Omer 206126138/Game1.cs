@@ -1,4 +1,5 @@
-﻿using Invaders.Classes;
+﻿using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
+using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -7,11 +8,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager m_graphics;
+        private SpriteBatch m_spriteBatch;
 
-        private Enemy[,] m_Enemies;
-        private bool m_LeftToRight;
+        Enemies m_enemies;
 
         //Background Properties
         Texture2D m_TextureBackground;
@@ -24,55 +24,26 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            m_graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            if (m_Enemies == null)
-            {
-                initEnemies();
-            }
-
+            m_enemies = new Enemies();
             m_Ship = new Ship();
 
             base.Initialize();
         }
 
-        private void initEnemies()
-        {
-            m_Enemies = new Enemy[5, 9];
-            m_LeftToRight = true;
-
-            for (int i = 0; i < m_Enemies.GetLength(0); i++)
-            {
-                for (int j = 0; j < m_Enemies.GetLength(1); j++)
-                {
-                    m_Enemies[i, j] = new Enemy();
-
-                    string model = "Pink";
-
-                    if (i == 1 || i == 2)
-                    {
-                        model = "Blue";
-                    }
-                    else if (i != 0)
-                    {
-                        model = "White";
-                    }
-
-                    m_Enemies[i, j].Initialize(this.Content, this.GraphicsDevice, model, j, i);
-                }
-            }
-        }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
+            m_enemies.InitAndLoad(Content, GraphicsDevice);
             m_Ship.LoadContent(Content);
 
             InitPositions();
@@ -95,58 +66,32 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            ShipMovement();
+            UpdateShip();
             NewShot();
             UpdateBullets();
+            m_enemies.UpdateEnemies(gameTime, GraphicsDevice);
+            m_enemies.EnemyIsDown(m_Ship);
 
             m_PrevKbState = Keyboard.GetState();
-
-            updateEnemies(gameTime);
 
             base.Update(gameTime);
         }
 
-        private void updateEnemies(GameTime gameTime)
-        {
-            for (int i = 0; i < m_Enemies.GetLength(0); i++)
-            {
-                for (int j = 0; j < m_Enemies.GetLength(1); j++)
-                {
-                    if (m_Enemies[i, j].Update(gameTime, m_LeftToRight, (float)GraphicsDevice.Viewport.Width))
-                    {
-                        m_LeftToRight = !m_LeftToRight;
-                    }
-                }
-            }
-        }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            m_spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
+            m_spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
+            m_enemies.Draw(gameTime, m_spriteBatch);
+            m_Ship.Draw(m_spriteBatch);
 
-            drawEnemies(gameTime);
-            m_Ship.Draw(spriteBatch);
-
-            spriteBatch.End();
-
+            m_spriteBatch.End();
             base.Draw(gameTime);
         }
 
-        private void drawEnemies(GameTime gameTime)
-        {
-            for (int i = 0; i < m_Enemies.GetLength(0); i++)
-            {
-                for (int j = 0; j < m_Enemies.GetLength(1); j++)
-                {
-                    m_Enemies[i, j].Draw(gameTime, spriteBatch);
-                }
-            }
-        }
-        private void ShipMovement()
+        private void UpdateShip()
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
