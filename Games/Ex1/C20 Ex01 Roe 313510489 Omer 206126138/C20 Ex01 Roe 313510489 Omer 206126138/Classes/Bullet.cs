@@ -36,37 +36,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             m_bulletTexture = i_contentManager.Load<Texture2D>(m_texturePath);
         }
 
-        // 1000 refers to 1000 milisecond in a second
         public void MoveUp(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
         {
             m_bulletPosition.Y -= 140 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            /*
-            float nextPosition = m_bulletPosition.Y;
-            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (m_CountSec >= 1000 / m_BulletSpeed)
-            {
-                nextPosition -= (int)1000 / m_BulletSpeed;
-                m_CountSec -= 1000 / m_BulletSpeed;
-            }
-
-            m_bulletPosition.Y = Math.Clamp(nextPosition, 0, (float)i_GraphicsDevice.Viewport.Height);*/
         }
 
         public void MoveDown(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
         {
             m_bulletPosition.Y += 140 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            /*
-            float nextPosition = m_bulletPosition.Y;
-            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (m_CountSec >= 1000 / m_BulletSpeed)
-            {
-                nextPosition += (int)1000 / m_BulletSpeed;
-                m_CountSec -= 1000 / m_BulletSpeed;
-            }
-
-            m_bulletPosition.Y = Math.Clamp(nextPosition, 0, (float)i_GraphicsDevice.Viewport.Height - m_bulletTexture.Height);*/
         }
 
         public void UpdateForShip(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
@@ -81,16 +58,21 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
         }
 
-        public void UpdateForEnemy(GraphicsDevice i_graphicDevice, GameTime gameTime)
+        public bool UpdateForEnemy(GraphicsDevice i_graphicDevice, GameTime gameTime)
         {
+            bool bulletOutOfScreen = false;
+
             if (m_Active)
             {
                 this.MoveDown(gameTime, i_graphicDevice);
                 if (m_bulletPosition.Y >= i_graphicDevice.Viewport.Height)
                 {
                     m_Active = false;
+                    bulletOutOfScreen = true;
                 }
             }
+
+            return bulletOutOfScreen;
         }
 
         public void ChangedToActive(Vector2 i_shipPosition)

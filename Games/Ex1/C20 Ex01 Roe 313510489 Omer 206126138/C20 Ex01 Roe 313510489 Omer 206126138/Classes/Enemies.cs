@@ -14,13 +14,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         private bool m_LeftToRight;
         private int m_numOfBullets;
         private const int m_MaxNumOfBullets = 5;
-        private const int m_BulltDifficullty = 300; // 300 is easy - 1 is hard ( every frame)
+        private const int m_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
 
         public Enemies()
         {
             m_LeftToRight = true;
             m_numOfBullets = 0;
         }
+
+        public int ActiveBullets { get { return m_numOfBullets; } set { m_numOfBullets = value; } }
 
         public Enemy[,] Table { get { return m_Enemies; } set { m_Enemies = value; } }
 
@@ -43,7 +45,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     }
                     else if (i != 0)
                     {
-                        model = "White";
+                        model = "Yellow";
                     }
 
                     m_Enemies[i, j].Initialize(i_ContentManager, i_GraphicDevice, model, j, i);
@@ -77,6 +79,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     {
                         ChanegeDirection();
                     }
+
+                    if (m_Enemies[i, j].UpdateBullet(gameTime, i_GraphicDevice))
+                        m_numOfBullets--;
                 }
             }
         }
@@ -206,6 +211,22 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             return answer;
         }
 
+        public bool AllEnemiesAreDead()
+        {
+            bool allDead = true;
+
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    if (m_Enemies[i, j].IsAlive)
+                        allDead = false;
+                }
+            }
+
+            return allDead;
+        }
+
         public void Draw(GameTime gameTime, SpriteBatch i_SpriteBatch)
         {
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
@@ -214,6 +235,17 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 {
                     if (m_Enemies[i, j].IsAlive)
                         m_Enemies[i, j].Draw(gameTime, i_SpriteBatch);
+                }
+            }
+        }
+
+        public void IncreseSpeedForAllEnemis(double i_Speed)
+        {
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    m_Enemies[i, j].IncreseSpeed(i_Speed);
                 }
             }
         }

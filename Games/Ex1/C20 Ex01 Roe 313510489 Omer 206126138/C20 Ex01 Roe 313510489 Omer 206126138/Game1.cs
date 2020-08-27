@@ -13,10 +13,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private GraphicsDeviceManager m_graphics;
         private SpriteBatch m_spriteBatch;
         private KeyboardState m_PrevKbState;
-        private MouseState m_PrevMosueState;
+        private MouseState m_PrevMouseState;
 
         //Enemies collection
         private Enemies m_enemies;
+        private int m_CountEnemyKills;
+        private const double k_IncreseSpeedAfterFiveKills = 1.03;
 
         //MotherShip object
         private MotherShip m_MotherShip;
@@ -46,6 +48,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Ship = new Ship();
             m_Score = new GameScore();
             m_MotherShip = new MotherShip();
+
+            m_CountEnemyKills = 0;
 
             m_graphics.PreferredBackBufferWidth = 1024;
             m_graphics.PreferredBackBufferHeight = 600  ;
@@ -91,13 +95,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void UpdateEnemies(GameTime gameTime, GraphicsDevice i_GraphicDevice, Ship i_ship)
         {
             m_enemies.Update(gameTime, GraphicsDevice, m_Ship);
+            if (m_enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
+                PrintScore();
         }
 
         private void UpdateShip(GameTime gameTime)
         {
             ShipStillAlive();
-            //ShipMoveByMouse(GraphicsDevice);
-            ShipMoveByKB(gameTime);
+            if(!ShipMoveByMouse(GraphicsDevice))
+                ShipMoveByKB(gameTime);
             UpdateBulletsForShip(gameTime);
             NewShot();
         }
@@ -127,10 +133,18 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             if (tempEnemy != null)
             {
                 m_Score.AddSCore(tempEnemy.Model);
+
+                // for speed increse
+                m_CountEnemyKills++;
+                if(m_CountEnemyKills % 5 == 0)
+                {
+                    m_enemies.IncreseSpeedForAllEnemis(k_IncreseSpeedAfterFiveKills);
+                }
+                
             }
 
             // Enemy and ship intersect
-            if (m_enemies.ShipIntersection(m_Ship))
+            if (m_enemies.ShipIntersection(m_Ship) )
                 PrintScore();
 
             //MotherSHip Intersect with bullets
@@ -143,7 +157,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             bool answer = false;
 
             Random rnd = new Random();
-            if(rnd.Next(0,100) == 0)
+            if(rnd.Next(0,300) == 0)
             {
                 answer = true;
             }
@@ -154,7 +168,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void ShipStillAlive()
         {
             if (m_Ship.Lifes == 0)
-                Exit();
+                PrintScore();
         }
 
         private void ShipMoveByKB(GameTime gameTime)
@@ -175,15 +189,47 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
         }
 
-        private void ShipMoveByMouse(GraphicsDevice i_graphicDevice)
+        private bool ShipMoveByMouse(GraphicsDevice i_graphicDevice)
         {
-            MouseState mouseState = Mouse.GetState();
+            bool isMouseMove = false;
 
-            var newXposition = Math.Clamp(m_Ship.Position.X + (Mouse.GetState().X - m_PrevMosueState.X) , 0, (float)i_graphicDevice.Viewport.Width - m_Ship.Texture.Width);
+            float mouseDeltaX = GetMousePositionDelta().X;
+            var newXposition = Math.Clamp(m_Ship.Position.X + mouseDeltaX , 0, (float)i_graphicDevice.Viewport.Width - m_Ship.Texture.Width);
             Vector2 mousePosition = new Vector2(newXposition,m_Ship.Position.Y);
-
             m_Ship.Position = mousePosition;
-            
+
+            if (mouseDeltaX != 0)
+                isMouseMove = true;
+
+            return isMouseMove;
+        }
+
+        private Vector2 GetMousePositionDelta()
+        {
+            Vector2 retVal = Vector2.Zero;
+
+            MouseState currState = Mouse.GetState();
+
+            if (m_PrevMouseState != null)
+            {
+                retVal.X = (currState.X - m_PrevMouseState.X);
+                retVal.Y = (currState.Y - m_PrevMouseState.Y);
+            }
+
+            m_PrevMouseState = currState;
+
+            return retVal;
+        }
+
+        private void NewShot()
+        {
+            bool keyBoardClick = Keyboard.GetState().IsKeyDown(Keys.Space) && !m_PrevKbState.IsKeyDown(Keys.Space);
+            bool mouseClick = Mouse.GetState().LeftButton == ButtonState.Pressed && m_PrevMouseState.LeftButton == ButtonState.Released;
+
+            if (keyBoardClick || mouseClick)
+            {
+                m_Ship.Shot();
+            }
         }
 
         private void ShipGotHitFromBullet()
@@ -192,20 +238,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             {
                 for (int j = 0; j< m_enemies.Table.GetLength(1); j++)
                 {
-                    if(m_enemies.GetEnemy(i,j).Bullet.IsActive)
+                    if (m_enemies.GetEnemy(i, j).Bullet.IsActive)
                     {
                         if (m_Ship.BulletIntersectsShip(m_enemies.GetEnemy(i, j).Bullet))
+                        {
                             m_Score.AddSCore(lifeLost);
+                            m_enemies.ActiveBullets--;
+                        }
                     }
                 }
-            }
-        }
-
-        private void NewShot()
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && !m_PrevKbState.IsKeyDown(Keys.Space))
-            {
-                m_Ship.Shot();
             }
         }
 

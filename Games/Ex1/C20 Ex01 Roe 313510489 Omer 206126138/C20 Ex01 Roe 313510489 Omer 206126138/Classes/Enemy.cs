@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
-using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
-using Invaders.Classes;
+﻿using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.MediaFoundation;
+using System;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138
@@ -41,7 +36,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             Red = 600,
             Pink = 300,
             Blue = 200,
-            White = 70
+            Yellow = 70
         }
 
         public void Initialize(ContentManager i_ContentManager, GraphicsDevice i_GraphicDevice, string i_Model, float i_DeltaX, float i_DeltaY)
@@ -74,7 +69,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 case EnemyModel.Blue:
                     assetName = @"Sprites\Enemy0201_32x32";
                     break;
-                case EnemyModel.White:
+                case EnemyModel.Yellow:
                     assetName = @"Sprites\Enemy0301_32x32";
                     break;
                 case EnemyModel.Red:
@@ -116,18 +111,24 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 }
             }
 
+            return touchesTheBorder;
+        }
+
+        public bool UpdateBullet(GameTime gameTime, GraphicsDevice i_GraphicDevice)
+        {
             if (m_bullet.IsActive)
             {
-                m_bullet.UpdateForEnemy(i_GraphicDevice, gameTime);
+                 return m_bullet.UpdateForEnemy(i_GraphicDevice, gameTime);
             }
 
-            return touchesTheBorder;
+            return false;
         }
 
         public void MoveRight(GameTime i_GameTime)
         {
             m_Position.X += k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
         }
+
         public void MoveLeft(GameTime i_GameTime)
         {
             m_Position.X -= k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
@@ -141,6 +142,11 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         public void IncreseSpeed()
         {
             k_EnemyVelocityPerSecond = (float)(k_EnemyVelocityPerSecond * k_speedMultiplicationParam);
+        }
+
+        public void IncreseSpeed(double i_speed)
+        {
+            k_EnemyVelocityPerSecond = (float)(k_EnemyVelocityPerSecond * i_speed);
         }
 
         public void Shot()
@@ -164,8 +170,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 case EnemyModel.Blue:
                     enemyColor = Color.LightBlue;
                     break;
-                case EnemyModel.White:
-                    enemyColor = Color.White;
+                case EnemyModel.Yellow:
+                    enemyColor = Color.LightYellow;
                     break;
                 case EnemyModel.Red:
                     enemyColor = Color.Red;

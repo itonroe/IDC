@@ -22,14 +22,13 @@ namespace Invaders.Classes
         private const int m_ShipSpeed = 130;
         private double m_CountSec = 0;
 
-        private int m_lifes;
+        private int m_lifes = 3;
 
         public Ship()
         {
             m_shipPosition = new Vector2(0, 0);
             m_bullet1 = new Bullet(Color.Red);
             m_bullet2 = new Bullet(Color.Red);
-            m_lifes = 2;
         }
 
         public Vector2 Position { get { return m_shipPosition; } set { m_shipPosition = value; } }
@@ -62,15 +61,6 @@ namespace Invaders.Classes
 
             m_shipPosition.X += 130 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            /*float nextPosition = m_shipPosition.X;
-            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (m_CountSec >= 1000 / m_ShipSpeed)
-            {
-                nextPosition += (int)(m_CountSec / (1000 / m_ShipSpeed));
-                m_CountSec -= 1000 / m_ShipSpeed;
-            }*/
-
             m_shipPosition.X = Math.Clamp(m_shipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
         }
 
@@ -79,17 +69,6 @@ namespace Invaders.Classes
 
             m_shipPosition.X -= 130 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-
-            /*float nextPosition = m_shipPosition.X;
-            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (m_CountSec >= 1000 / m_ShipSpeed)
-            {
-                nextPosition -= (int)(m_CountSec / (float)(1000 / m_ShipSpeed));
-                m_CountSec %= 1000 / m_ShipSpeed;
-            }
-
-            m_shipPosition.X = Math.Clamp(nextPosition, 0, m_shipPosition.X);*/
             m_shipPosition.X = Math.Clamp(m_shipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
         }
 

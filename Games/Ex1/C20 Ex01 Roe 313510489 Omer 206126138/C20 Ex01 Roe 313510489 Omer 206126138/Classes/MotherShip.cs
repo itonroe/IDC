@@ -18,6 +18,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         public void initPositions()
         {
             k_EnemyVelocityPerSecond = 95;
+            base.Position = new Vector2(0, 0);
         }
 
         public override void LoadContent(ContentManager i_ContentManager, string i_Model)
