@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
@@ -46,6 +47,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Score = new GameScore();
             m_MotherShip = new MotherShip();
 
+            m_graphics.PreferredBackBufferWidth = 1024;
+            m_graphics.PreferredBackBufferHeight = 600  ;
+            m_graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -76,7 +81,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             UpdateShip(gameTime);
             UpdateEnemies(gameTime, GraphicsDevice, m_Ship);
-            UpDateMotherShip(GraphicsDevice);
+            UpdateMotherShip(gameTime);
             UpdateIntersections(GraphicsDevice);
 
             m_PrevKbState = Keyboard.GetState();
@@ -97,7 +102,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             NewShot();
         }
 
-        private void UpDateMotherShip(GraphicsDevice i_GraphicDevice)
+        private void UpdateMotherShip(GameTime gameTime)
         {
             if (TimeForMotherShip() && !m_MotherShip.IsAlive)
             {
@@ -105,7 +110,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
 
             if (m_MotherShip.IsAlive)
-                m_MotherShip.Move(i_GraphicDevice);
+                m_MotherShip.MoveRight(gameTime, GraphicsDevice);
         }
 
         private void UpdateIntersections(GraphicsDevice i_GraphicDevice)
@@ -154,6 +159,11 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void ShipMoveByKB(GameTime gameTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                System.Windows.Forms.MessageBox.Show(m_Score.Score.ToString(), "Game Over");
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 m_Ship.MoveRight(gameTime, GraphicsDevice);
@@ -161,7 +171,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                m_Ship.MoveLeft(gameTime);
+                m_Ship.MoveLeft(gameTime, GraphicsDevice);
             }
         }
 
@@ -201,16 +211,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void UpdateBulletsForShip(GameTime gameTime)
         {
-            m_Ship.Bullet1.UpdateForShip(gameTime);
-            m_Ship.Bullet2.UpdateForShip(gameTime);
+            m_Ship.Bullet1.UpdateForShip(gameTime, GraphicsDevice);
+            m_Ship.Bullet2.UpdateForShip(gameTime, GraphicsDevice);
         }
 
-        //need messagebox
         private void PrintScore()
         {
-            string message = $"Game Over!!!\nYour score is : {m_Score.Score}";
-            Console.WriteLine(message);
-            while (true) ;
+            string message = $"Your score is: {m_Score.Score}";
+            System.Windows.Forms.MessageBox.Show(message, "Game Over");
+            Exit();
         }
 
         protected override void Draw(GameTime gameTime)

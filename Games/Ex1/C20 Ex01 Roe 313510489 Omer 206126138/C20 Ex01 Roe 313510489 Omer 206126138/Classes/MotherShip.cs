@@ -17,7 +17,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
         public void initPositions()
         {
-            base.Position = new Vector2(0, 0);
+            k_EnemyVelocityPerSecond = 95;
         }
 
         public override void LoadContent(ContentManager i_ContentManager, string i_Model)
@@ -30,12 +30,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             base.IsAlive = true;
         }
 
-        public void Move(GraphicsDevice i_GraphicDevice)
+        public void MoveRight(GameTime i_GameTime, GraphicsDevice i_GraphicDevice)
         {
-            Vector2 nexPos = new Vector2(base.Position.X + 5, 0);
-            base.Position = nexPos;
-
-            if (nexPos.X >= i_GraphicDevice.Viewport.Width)
+            base.MoveRight(i_GameTime);
+            if (base.Position.X >= i_GraphicDevice.Viewport.Width)
             {
                 base.IsAlive = false;
                 base.Position = Vector2.Zero;
@@ -53,7 +51,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             Rectangle bulletRectangle2 = new Rectangle((int)bullet2.Position.X, (int)bullet2.Position.Y, bullet2.Texture.Width, bullet2.Texture.Height);
             Rectangle MotherShipRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
 
-            if (bulletRectangle1.Intersects(MotherShipRectangle))
+            if (bulletRectangle1.Intersects(MotherShipRectangle) && bullet1.IsActive)
             {
                 hit = true;
 
@@ -62,8 +60,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
                 initPositions();
             }
-
-            else if(bulletRectangle2.Intersects(MotherShipRectangle))
+            else if (bulletRectangle2.Intersects(MotherShipRectangle) && bullet2.IsActive)
             {
                 hit = true;
 

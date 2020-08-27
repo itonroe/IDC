@@ -4,33 +4,9 @@ C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.runtimeconfig.dev.json
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.dll
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.pdb
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.VisualBasic.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\MonoGame.Framework.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Direct2D1.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Direct3D11.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Direct3D9.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.DXGI.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Mathematics.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.MediaFoundation.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.XAudio2.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.XInput.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\debian-x64\native\libuv.so
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\fedora-x64\native\libuv.so
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\opensuse-x64\native\libuv.so
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\osx\native\libuv.dylib
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\rhel-x64\native\libuv.so
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-arm\native\libuv.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-x64\native\libuv.dll
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-x86\native\libuv.dll
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csprojAssemblyReference.cache
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.AssemblyInfoInputs.cache
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.AssemblyInfo.cs
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csproj.CoreCompileInputs.cache
-C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csproj.CopyComplete
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.dll
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.pdb
 C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.genruntimeconfig.cache
@@ -82,3 +58,27 @@ C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\
 C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csproj.CopyComplete
 C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.dll
 C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.pdb
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csproj.CoreCompileInputs.cache
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.VisualBasic.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\MonoGame.Framework.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Direct2D1.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Direct3D11.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Direct3D9.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.DXGI.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.Mathematics.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.MediaFoundation.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.XAudio2.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\SharpDX.XInput.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\debian-x64\native\libuv.so
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\fedora-x64\native\libuv.so
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\opensuse-x64\native\libuv.so
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\osx\native\libuv.dylib
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\rhel-x64\native\libuv.so
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-arm\native\libuv.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-x64\native\libuv.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-x86\native\libuv.dll
+C:\GitHub\Education\IDC\Games\Ex1\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csproj.CopyComplete

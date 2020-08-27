@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Invaders.Classes
+namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
     class Bullet
     {
@@ -37,33 +37,43 @@ namespace Invaders.Classes
         }
 
         // 1000 refers to 1000 milisecond in a second
-        public void MoveUp(GameTime gameTime)
+        public void MoveUp(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
         {
-            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if(m_CountSec >= 1000/m_BulletSpeed)
-            {
-                m_bulletPosition.Y -= 1;
-                m_CountSec -= 1000 / m_BulletSpeed;
-            }
-        }
-
-        public void MoveDown(GameTime gameTime)
-        {
+            m_bulletPosition.Y -= 140 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            /*
+            float nextPosition = m_bulletPosition.Y;
             m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (m_CountSec >= 1000 / m_BulletSpeed)
             {
-                m_bulletPosition.Y += 1;
+                nextPosition -= (int)1000 / m_BulletSpeed;
                 m_CountSec -= 1000 / m_BulletSpeed;
             }
+
+            m_bulletPosition.Y = Math.Clamp(nextPosition, 0, (float)i_GraphicsDevice.Viewport.Height);*/
         }
 
-        public void UpdateForShip(GameTime gameTime)
+        public void MoveDown(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
+        {
+            m_bulletPosition.Y += 140 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            /*
+            float nextPosition = m_bulletPosition.Y;
+            m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (m_CountSec >= 1000 / m_BulletSpeed)
+            {
+                nextPosition += (int)1000 / m_BulletSpeed;
+                m_CountSec -= 1000 / m_BulletSpeed;
+            }
+
+            m_bulletPosition.Y = Math.Clamp(nextPosition, 0, (float)i_GraphicsDevice.Viewport.Height - m_bulletTexture.Height);*/
+        }
+
+        public void UpdateForShip(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
         {
             if(m_Active)
             {
-                this.MoveUp(gameTime);
+                this.MoveUp(gameTime, i_GraphicsDevice);
                 if (m_bulletPosition.Y <= 0) 
                 {
                     m_Active = false;
@@ -75,7 +85,7 @@ namespace Invaders.Classes
         {
             if (m_Active)
             {
-                this.MoveDown(gameTime);
+                this.MoveDown(gameTime, i_graphicDevice);
                 if (m_bulletPosition.Y >= i_graphicDevice.Viewport.Height)
                 {
                     m_Active = false;

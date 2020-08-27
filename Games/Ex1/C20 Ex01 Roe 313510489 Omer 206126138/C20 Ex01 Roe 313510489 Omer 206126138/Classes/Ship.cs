@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -58,30 +59,38 @@ namespace Invaders.Classes
 
         public void MoveRight(GameTime gameTime, GraphicsDevice i_graphicDevice)
         {
-            float nextPosition = m_shipPosition.X;
+
+            m_shipPosition.X += 130 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            /*float nextPosition = m_shipPosition.X;
             m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (m_CountSec >= 1000 / m_ShipSpeed)
             {
-                nextPosition += 1;
+                nextPosition += (int)(m_CountSec / (1000 / m_ShipSpeed));
                 m_CountSec -= 1000 / m_ShipSpeed;
-            }
+            }*/
 
-            m_shipPosition.X = Math.Clamp(nextPosition, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
+            m_shipPosition.X = Math.Clamp(m_shipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
         }
 
-        public void MoveLeft(GameTime gameTime)
+        public void MoveLeft(GameTime gameTime, GraphicsDevice i_graphicDevice)
         {
-            float nextPosition = m_shipPosition.X;
+
+            m_shipPosition.X -= 130 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+
+            /*float nextPosition = m_shipPosition.X;
             m_CountSec += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (m_CountSec >= 1000 / m_ShipSpeed)
             {
-                nextPosition -= 1;
-                m_CountSec -= 1000 / m_ShipSpeed;
+                nextPosition -= (int)(m_CountSec / (float)(1000 / m_ShipSpeed));
+                m_CountSec %= 1000 / m_ShipSpeed;
             }
 
-            m_shipPosition.X = Math.Clamp(nextPosition, 0, m_shipPosition.X);
+            m_shipPosition.X = Math.Clamp(nextPosition, 0, m_shipPosition.X);*/
+            m_shipPosition.X = Math.Clamp(m_shipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
         }
 
         public void Shot()

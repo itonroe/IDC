@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -13,7 +14,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
     class Enemy
     {
-        private float k_EnemyVelocityPerSecond = 80;
+        protected float k_EnemyVelocityPerSecond = 60;
         private EnemyModel m_EnemyModel;
         private const double k_speedMultiplicationParam = 1.06;
 
@@ -96,7 +97,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             {
                 if (m_Position.X + k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds < i_MaxWidth - m_Texutre.Width)
                 {
-                    m_Position.X += k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    MoveRight(gameTime);
                 }
                 else
                 {
@@ -107,7 +108,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             {
                 if (m_Position.X - k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds > 0)
                 {
-                    m_Position.X -= k_EnemyVelocityPerSecond * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    MoveLeft(gameTime);
                 }
                 else
                 {
@@ -121,6 +122,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
 
             return touchesTheBorder;
+        }
+
+        public void MoveRight(GameTime i_GameTime)
+        {
+            m_Position.X += k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+        }
+        public void MoveLeft(GameTime i_GameTime)
+        {
+            m_Position.X -= k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void MoveDown()
