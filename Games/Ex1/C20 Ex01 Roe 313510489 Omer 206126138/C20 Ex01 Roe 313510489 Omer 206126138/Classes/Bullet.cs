@@ -7,51 +7,84 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
-    class Bullet
+    public class Bullet
     {
-        private readonly string m_texturePath = @"Sprites\Bullet";
+        private const int r_BulletSpeed = 140; // pxl pre sec
 
-        private Texture2D m_bulletTexture;
-        private Vector2 m_bulletPosition;
-        private Color m_bulletColor;
+        private readonly string r_TexturePath = @"Sprites\Bullet";
+
+        private Texture2D m_BulletTexture;
+        private Vector2 m_BulletPosition;
+        private Color m_BulletColor;
 
         private bool m_Active;
-        private const int m_BulletSpeed = 140; //pxl pre sec
-        private double m_CountSec = 0;
 
         public Bullet(Color i_color)
         {
             m_Active = false;
-            m_bulletColor = i_color;
+            m_BulletColor = i_color;
         }
 
-        public Vector2 Position { get { return m_bulletPosition; } set { m_bulletPosition = value; } }
+        public Vector2 Position 
+        {
+            get 
+            { 
+                return m_BulletPosition; 
+            } 
 
-        public Texture2D Texture { get { return m_bulletTexture; } set { m_bulletTexture = value; } }
+            set 
+            {
+                m_BulletPosition = value; 
+            } 
+        }
 
-        public bool IsActive { get { return m_Active; } set { m_Active = value; } }
+        public Texture2D Texture 
+        { 
+            get 
+            { 
+                return m_BulletTexture; 
+            } 
+
+            set 
+            { 
+                m_BulletTexture = value; 
+            } 
+        }
+
+        public bool IsActive 
+        { 
+            get 
+            { 
+                return m_Active; 
+            } 
+
+            set 
+            { 
+                m_Active = value; 
+            } 
+        }
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
         {
-            m_bulletTexture = i_contentManager.Load<Texture2D>(m_texturePath);
+            m_BulletTexture = i_contentManager.Load<Texture2D>(r_TexturePath);
         }
 
-        public void MoveUp(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
+        private void moveUp(GameTime gameTime)
         {
-            m_bulletPosition.Y -= 140 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_BulletPosition.Y -= r_BulletSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        public void MoveDown(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
+        private void moveDown(GameTime gameTime)
         {
-            m_bulletPosition.Y += 140 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_BulletPosition.Y += r_BulletSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        public void UpdateForShip(GameTime gameTime, GraphicsDevice i_GraphicsDevice)
+        public void UpdateForShip(GameTime gameTime)
         {
             if(m_Active)
             {
-                this.MoveUp(gameTime, i_GraphicsDevice);
-                if (m_bulletPosition.Y <= 0) 
+                this.moveUp(gameTime);
+                if (m_BulletPosition.Y <= 0) 
                 {
                     m_Active = false;
                 }
@@ -64,8 +97,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             if (m_Active)
             {
-                this.MoveDown(gameTime, i_graphicDevice);
-                if (m_bulletPosition.Y >= i_graphicDevice.Viewport.Height)
+                this.moveDown(gameTime);
+                if (m_BulletPosition.Y >= i_graphicDevice.Viewport.Height)
                 {
                     m_Active = false;
                     bulletOutOfScreen = true;
@@ -88,7 +121,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
         public void Draw(SpriteBatch i_spriteBatch)
         {
-            i_spriteBatch.Draw(m_bulletTexture, m_bulletPosition, m_bulletColor);
+            i_spriteBatch.Draw(m_BulletTexture, m_BulletPosition, m_BulletColor);
         }
     }
 }

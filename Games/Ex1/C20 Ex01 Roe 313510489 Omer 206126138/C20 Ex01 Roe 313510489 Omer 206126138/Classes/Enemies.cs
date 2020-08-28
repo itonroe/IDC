@@ -1,30 +1,53 @@
-﻿using Invaders.Classes;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
-    class Enemies
+    public class Enemies
     {
+        private const int m_MaxNumOfBullets = 15;
+        private const int m_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
+
         private Enemy[,] m_Enemies;
         private bool m_LeftToRight;
-        private int m_numOfBullets;
-        private const int m_MaxNumOfBullets = 5;
-        private const int m_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
+        private int m_NumOfBullets;
 
         public Enemies()
         {
             m_LeftToRight = true;
-            m_numOfBullets = 0;
+            m_NumOfBullets = 0;
         }
 
-        public int ActiveBullets { get { return m_numOfBullets; } set { m_numOfBullets = value; } }
+        public int ActiveBullets 
+        { 
+            get 
+            { 
+                return m_NumOfBullets; 
+            } 
 
-        public Enemy[,] Table { get { return m_Enemies; } set { m_Enemies = value; } }
+            set 
+            {
+                m_NumOfBullets = value; 
+            } 
+        }
+
+        public Enemy[,] Table 
+        { 
+            get 
+            { 
+                return m_Enemies; 
+            } 
+
+            set 
+            { 
+                m_Enemies = value; 
+            } 
+        }
 
         public void InitAndLoad(ContentManager i_ContentManager, GraphicsDevice i_GraphicDevice)
         {
@@ -58,7 +81,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             return m_Enemies[x, y];
         }
 
-        public void Update(GameTime gameTime, GraphicsDevice i_GraphicDevice, Ship i_ship)
+        public void Update(GameTime gameTime, GraphicsDevice i_GraphicDevice)
         {
             EnemiesMovement(gameTime, i_GraphicDevice);
             TimeForShot();
@@ -75,13 +98,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
-                    if (m_Enemies[i, j].IsAlive && m_Enemies[i, j].Update(gameTime, m_LeftToRight, (float)i_GraphicDevice.Viewport.Width, i_GraphicDevice))
+                    if (m_Enemies[i, j].IsAlive && m_Enemies[i, j].Update(gameTime, m_LeftToRight, (float)i_GraphicDevice.Viewport.Width))
                     {
                         ChanegeDirection();
                     }
 
                     if (m_Enemies[i, j].UpdateBullet(gameTime, i_GraphicDevice))
-                        m_numOfBullets--;
+                    {
+                        m_NumOfBullets--;
+                    }
                 }
             }
         }
@@ -92,11 +117,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             Random rnd = new Random();
             if (rnd.Next(0, m_BulltDifficullty) == 0)
+            {
                 answer = true;
+            }
 
-            if (answer && (m_numOfBullets < m_MaxNumOfBullets))
+            if (answer && (m_NumOfBullets < m_MaxNumOfBullets))
+            {
                 RandomEnemyShot();
-
+            }
         }
 
         private void RandomEnemyShot()
@@ -109,13 +137,13 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             m_Enemies[i, j].Shot();
 
-            m_numOfBullets++;
+            m_NumOfBullets++;
         }
 
         public void ChanegeDirection()
         {
             m_LeftToRight = !m_LeftToRight;
-            MoveDown(); //
+            MoveDown();
         }
 
         private void MoveDown()
@@ -198,13 +226,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         {
             bool answer = false;
 
-            for (int i = 0; i<m_Enemies.GetLength(0); i++)
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
             {
-                for (int j = 0; j<m_Enemies.GetLength(1); j++)
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
                     Enemy enemy = m_Enemies[i, j];
                     if (enemy.IsAlive && (enemy.Position.Y + enemy.Texture.Height >= i_GraphicDevice.Viewport.Height))
+                    {
                         answer = true;
+                    }
                 }
             }
 
@@ -220,21 +250,25 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
                     if (m_Enemies[i, j].IsAlive)
+                    {
                         allDead = false;
+                    }
                 }
             }
 
             return allDead;
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch i_SpriteBatch)
+        public void Draw(SpriteBatch i_SpriteBatch)
         {
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
                     if (m_Enemies[i, j].IsAlive)
-                        m_Enemies[i, j].Draw(gameTime, i_SpriteBatch);
+                    {
+                        m_Enemies[i, j].Draw(i_SpriteBatch);
+                    }
                 }
             }
         }

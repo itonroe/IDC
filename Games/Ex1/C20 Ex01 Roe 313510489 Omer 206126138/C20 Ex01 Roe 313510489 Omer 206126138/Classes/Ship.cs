@@ -8,82 +8,133 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Invaders.Classes
 {
-    class Ship
+    public class Ship
     {
+        private const int r_ShipSpeed = 130;
 
-        private readonly string m_texturePath = @"Sprites\Ship01_32x32";
+        private readonly string r_TexturePath = @"Sprites\Ship01_32x32";
 
-        private Texture2D m_shipTexture;
-        private Vector2 m_shipPosition;
+        private Texture2D m_ShipTexture;
+        private Vector2 m_ShipPosition;
 
-        private Bullet m_bullet1;
-        private Bullet m_bullet2;
+        private Bullet m_Bullet1;
+        private Bullet m_Bullet2;
 
-        private const int m_ShipSpeed = 130;
-        private double m_CountSec = 0;
-
-        private int m_lifes = 3;
+        private int m_Lifes = 3;
 
         public Ship()
         {
-            m_shipPosition = new Vector2(0, 0);
-            m_bullet1 = new Bullet(Color.Red);
-            m_bullet2 = new Bullet(Color.Red);
+            m_ShipPosition = new Vector2(0, 0);
+            m_Bullet1 = new Bullet(Color.Red);
+            m_Bullet2 = new Bullet(Color.Red);
         }
 
-        public Vector2 Position { get { return m_shipPosition; } set { m_shipPosition = value; } }
-        public Texture2D Texture { get { return m_shipTexture; } set { m_shipTexture = value; } }
+        public Vector2 Position 
+        { 
+            get 
+            { 
+                return m_ShipPosition; 
+            } 
 
-        public Bullet Bullet1 { get { return m_bullet1; } set { m_bullet1 = value; } }
+            set 
+            { 
+                m_ShipPosition = value; 
+            } 
+        }
 
-        public Bullet Bullet2 { get { return m_bullet2; } set { m_bullet2 = value; } }
+        public Texture2D Texture 
+        { 
+            get 
+            { 
+                return m_ShipTexture; 
+            } 
+            
+            set 
+            { 
+                m_ShipTexture = value; 
+            } 
+        }
 
-        public int Lifes { get { return m_lifes; } set { m_lifes = value; } }
+        public Bullet Bullet1 
+        { 
+            get 
+            { 
+                return m_Bullet1; 
+            } 
+            
+            set 
+            { 
+                m_Bullet1 = value; 
+            } 
+        }
+
+        public Bullet Bullet2 
+        { 
+            get 
+            { 
+                return m_Bullet2; 
+            } 
+
+            set 
+            { 
+                m_Bullet2 = value; 
+            } 
+        }
+
+        public int Lifes 
+        { 
+            get 
+            { 
+                return m_Lifes; 
+            } 
+            
+            set 
+            { 
+                m_Lifes = value; 
+            } 
+        }
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
         {
-            m_shipTexture = i_contentManager.Load<Texture2D>(m_texturePath);
-            m_bullet1.LoadContent(i_contentManager);
-            m_bullet2.LoadContent(i_contentManager);
-
+            m_ShipTexture = i_contentManager.Load<Texture2D>(r_TexturePath);
+            m_Bullet1.LoadContent(i_contentManager);
+            m_Bullet2.LoadContent(i_contentManager);
         }
 
         public void InitPosition(GraphicsDevice i_graphicDevice)
         {
             // Get the bottom and center:
-            float x = (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width;
-            float y = (float)i_graphicDevice.Viewport.Height - 50 ;
-            m_shipPosition = new Vector2(x, y);
+            float x = (float)i_graphicDevice.Viewport.Width - m_ShipTexture.Width;
+            float y = (float)i_graphicDevice.Viewport.Height - 50;
+            m_ShipPosition = new Vector2(x, y);
         }
 
         public void MoveRight(GameTime gameTime, GraphicsDevice i_graphicDevice)
         {
+            m_ShipPosition.X += r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            m_shipPosition.X += 130 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            m_shipPosition.X = Math.Clamp(m_shipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
+            m_ShipPosition.X = Math.Clamp(m_ShipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_ShipTexture.Width);
         }
 
         public void MoveLeft(GameTime gameTime, GraphicsDevice i_graphicDevice)
         {
+            m_ShipPosition.X -= r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            m_shipPosition.X -= 130 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            m_shipPosition.X = Math.Clamp(m_shipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_shipTexture.Width);
+            m_ShipPosition.X = Math.Clamp(m_ShipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_ShipTexture.Width);
         }
 
         public void Shot()
         {
-            if(!m_bullet1.IsActive)
+            if(!m_Bullet1.IsActive)
             {
-                m_bullet1.ChangedToActive(new Vector2(m_shipPosition.X + (m_shipTexture.Width/2) ,m_shipPosition.Y));
+                m_Bullet1.ChangedToActive(new Vector2(m_ShipPosition.X + (m_ShipTexture.Width / 2), m_ShipPosition.Y));
 
                 return;
             }
 
-            if (!m_bullet2.IsActive)
+            if (!m_Bullet2.IsActive)
             {
-                m_bullet2.ChangedToActive(new Vector2(m_shipPosition.X + (m_shipTexture.Width / 2), m_shipPosition.Y));
+                m_Bullet2.ChangedToActive(new Vector2(m_ShipPosition.X + (m_ShipTexture.Width / 2), m_ShipPosition.Y));
             }
         }
 
@@ -106,26 +157,24 @@ namespace Invaders.Classes
 
         private void Hit()
         {
-            m_lifes--;
+            m_Lifes--;
         }
 
         public void Draw(SpriteBatch i_spriteBatch)
         {
-            //Ship draw
-            i_spriteBatch.Draw(m_shipTexture, m_shipPosition,Color.White);
+            // Ship draw
+            i_spriteBatch.Draw(m_ShipTexture, m_ShipPosition, Color.White);
 
             // BulletDraw
-            if(m_bullet1.IsActive)
+            if(m_Bullet1.IsActive)
             {
-                m_bullet1.Draw(i_spriteBatch);
+                m_Bullet1.Draw(i_spriteBatch);
             }
 
-            if (m_bullet2.IsActive)
+            if (m_Bullet2.IsActive)
             {
-                m_bullet2.Draw(i_spriteBatch);
+                m_Bullet2.Draw(i_spriteBatch);
             }
-
         }
     }
-
 }

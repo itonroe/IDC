@@ -1,14 +1,14 @@
-﻿using Invaders.Classes;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
-    class MotherShip : Enemy
+    public class MotherShip : Enemy
     {
         public MotherShip()
         {
@@ -18,7 +18,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         public void initPositions()
         {
             k_EnemyVelocityPerSecond = 95;
-            base.Position = new Vector2(0,32);
+            base.Position = new Vector2(0, 32);
         }
 
         public override void LoadContent(ContentManager i_ContentManager, string i_Model)
@@ -73,6 +73,5 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             return hit;
         }
-
     }
 }

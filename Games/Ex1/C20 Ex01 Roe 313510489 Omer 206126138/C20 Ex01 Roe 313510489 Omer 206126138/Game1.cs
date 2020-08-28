@@ -1,29 +1,31 @@
-﻿using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
+﻿using System;
+using System.Collections;
+using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager m_graphics;
-        private SpriteBatch m_spriteBatch;
+        private const double k_IncreseSpeedAfterFiveKills = 1.03;
+        private const int k_LifeLost = -600;
+
+        private GraphicsDeviceManager m_Graphics;
+        private SpriteBatch m_SpriteBatch;
         private KeyboardState m_PrevKbState;
         private MouseState m_PrevMouseState;
 
-        //Enemies collection
-        private Enemies m_enemies;
+        // Enemies collection
+        private Enemies m_Enemies;
         private int m_CountEnemyKills;
-        private const double k_IncreseSpeedAfterFiveKills = 1.03;
 
-        //MotherShip object
+        // MotherShip object
         private MotherShip m_MotherShip;
 
-        //Background Properties
+        // Background Properties
         private Texture2D m_TextureBackground;
         private Vector2 m_PositionBackground;
         private Color m_TintBackground = Color.White;
@@ -33,32 +35,31 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         // Score
         private GameScore m_Score;
-        private const int lifeLost = -600;
 
         public Game1()
         {
-            m_graphics = new GraphicsDeviceManager(this);
+            m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
         }
 
         protected override void Initialize()
         {
-            m_enemies = new Enemies();
+            m_Enemies = new Enemies();
             m_Ship = new Ship();
             m_Score = new GameScore();
             m_MotherShip = new MotherShip();
 
             m_CountEnemyKills = 0;
 
-            m_graphics.PreferredBackBufferWidth = 1024;
-            m_graphics.PreferredBackBufferHeight = 600  ;
-            m_graphics.ApplyChanges();
+            m_Graphics.PreferredBackBufferWidth = 1024;
+            m_Graphics.PreferredBackBufferHeight = 600;
+            m_Graphics.ApplyChanges();
 
             base.Initialize();
         }
 
-        private void InitPositions()
+        private void initPositions()
         {
             m_PositionBackground = Vector2.Zero;
 
@@ -68,68 +69,79 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         protected override void LoadContent()
         {
-            m_spriteBatch = new SpriteBatch(GraphicsDevice);
+            m_SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
-            m_enemies.InitAndLoad(Content, GraphicsDevice);
+            m_Enemies.InitAndLoad(Content, GraphicsDevice);
             m_Ship.LoadContent(Content);
             m_MotherShip.LoadContent(Content, "Red");
 
-            InitPositions();
+            initPositions();
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 Exit();
+            }
 
-            UpdateShip(gameTime);
-            UpdateEnemies(gameTime, GraphicsDevice, m_Ship);
-            UpdateMotherShip(gameTime);
-            UpdateIntersections(GraphicsDevice);
+            updateShip(gameTime);
+            updateEnemies(gameTime);
+            updateMotherShip(gameTime);
+            updateIntersections(GraphicsDevice);
 
             m_PrevKbState = Keyboard.GetState();
             base.Update(gameTime);
         }
 
-        private void UpdateEnemies(GameTime gameTime, GraphicsDevice i_GraphicDevice, Ship i_ship)
+        private void updateEnemies(GameTime gameTime)
         {
-            m_enemies.Update(gameTime, GraphicsDevice, m_Ship);
-            if (m_enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
-                PrintScore();
+            m_Enemies.Update(gameTime, GraphicsDevice);
+            if (m_Enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
+            {
+                printScore();
+            }
         }
 
-        private void UpdateShip(GameTime gameTime)
+        private void updateShip(GameTime gameTime)
         {
-            ShipStillAlive();
-            if(!ShipMoveByMouse(GraphicsDevice))
-                ShipMoveByKB(gameTime);
-            UpdateBulletsForShip(gameTime);
-            NewShot();
+            shipStillAlive();
+            if (!shipMoveByMouse(GraphicsDevice))
+            {
+                shipMoveByKB(gameTime);
+            }
+
+            updateBulletsForShip(gameTime);
+            newShot();
         }
 
-        private void UpdateMotherShip(GameTime gameTime)
+        private void updateMotherShip(GameTime gameTime)
         {
-            if (TimeForMotherShip() && !m_MotherShip.IsAlive)
+            if (timeForMotherShip() && !m_MotherShip.IsAlive)
             {
                 m_MotherShip.GetReadyToPop();
             }
 
             if (m_MotherShip.IsAlive)
+            {
                 m_MotherShip.MoveRight(gameTime, GraphicsDevice);
+            }
         }
 
-        private void UpdateIntersections(GraphicsDevice i_GraphicDevice)
+        private void updateIntersections(GraphicsDevice i_GraphicDevice)
         {
-            //enemy reach bottom
-            if (m_enemies.IsEndOfGame(i_GraphicDevice))
-                PrintScore();
+            // enemy reach bottom
+            if (m_Enemies.IsEndOfGame(i_GraphicDevice))
+            {
+                printScore();
+            }
 
-            //enemy bullet hit ship
-            ShipGotHitFromBullet();
+            // enemy bullet hit ship
+            shipGotHitFromBullet();
 
-            //ship bullet hit enemy
-            Enemy tempEnemy = m_enemies.EnemyGotHitFromBullet(m_Ship);
+            // ship bullet hit enemy
+            Enemy tempEnemy = m_Enemies.EnemyGotHitFromBullet(m_Ship);
             if (tempEnemy != null)
             {
                 m_Score.AddSCore(tempEnemy.Model);
@@ -138,26 +150,29 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 m_CountEnemyKills++;
                 if(m_CountEnemyKills % 5 == 0)
                 {
-                    m_enemies.IncreseSpeedForAllEnemis(k_IncreseSpeedAfterFiveKills);
-                }
-                
+                    m_Enemies.IncreseSpeedForAllEnemis(k_IncreseSpeedAfterFiveKills);
+                }    
             }
 
             // Enemy and ship intersect
-            if (m_enemies.ShipIntersection(m_Ship) )
-                PrintScore();
+            if (m_Enemies.ShipIntersection(m_Ship))
+            {
+                printScore();
+            }
 
-            //MotherSHip Intersect with bullets
+            // MotherSHip Intersect with bullets
             if (m_MotherShip.IntersectionWithShipBullets(m_Ship))
+            {
                 m_Score.AddSCore(m_MotherShip.Model);
+            }
         }
 
-        private bool TimeForMotherShip()
+        private bool timeForMotherShip()
         {
             bool answer = false;
 
             Random rnd = new Random();
-            if(rnd.Next(0,300) == 0)
+            if(rnd.Next(0, 300) == 0)
             {
                 answer = true;
             }
@@ -165,13 +180,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             return answer;
         }
 
-        private void ShipStillAlive()
+        private void shipStillAlive()
         {
             if (m_Ship.Lifes == 0)
-                PrintScore();
+            {
+                printScore();
+            }
         }
 
-        private void ShipMoveByKB(GameTime gameTime)
+        private void shipMoveByKB(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
@@ -189,22 +206,24 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
         }
 
-        private bool ShipMoveByMouse(GraphicsDevice i_graphicDevice)
+        private bool shipMoveByMouse(GraphicsDevice i_graphicDevice)
         {
             bool isMouseMove = false;
 
-            float mouseDeltaX = GetMousePositionDelta().X;
-            var newXposition = Math.Clamp(m_Ship.Position.X + mouseDeltaX , 0, (float)i_graphicDevice.Viewport.Width - m_Ship.Texture.Width);
-            Vector2 mousePosition = new Vector2(newXposition,m_Ship.Position.Y);
+            float mouseDeltaX = getMousePositionDelta().X;
+            var newXposition = Math.Clamp(m_Ship.Position.X + mouseDeltaX, 0, (float)i_graphicDevice.Viewport.Width - m_Ship.Texture.Width);
+            Vector2 mousePosition = new Vector2(newXposition, m_Ship.Position.Y);
             m_Ship.Position = mousePosition;
 
             if (mouseDeltaX != 0)
+            {
                 isMouseMove = true;
+            }
 
             return isMouseMove;
         }
 
-        private Vector2 GetMousePositionDelta()
+        private Vector2 getMousePositionDelta()
         {
             Vector2 retVal = Vector2.Zero;
 
@@ -212,8 +231,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             if (m_PrevMouseState != null)
             {
-                retVal.X = (currState.X - m_PrevMouseState.X);
-                retVal.Y = (currState.Y - m_PrevMouseState.Y);
+                retVal.X = currState.X - m_PrevMouseState.X;
+                retVal.Y = currState.Y - m_PrevMouseState.Y;
             }
 
             m_PrevMouseState = currState;
@@ -221,7 +240,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             return retVal;
         }
 
-        private void NewShot()
+        private void newShot()
         {
             bool keyBoardClick = Keyboard.GetState().IsKeyDown(Keys.Space) && !m_PrevKbState.IsKeyDown(Keys.Space);
             bool mouseClick = Mouse.GetState().LeftButton == ButtonState.Pressed && m_PrevMouseState.LeftButton == ButtonState.Released;
@@ -232,31 +251,31 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
         }
 
-        private void ShipGotHitFromBullet()
+        private void shipGotHitFromBullet()
         {
-            for (int i = 0; i< m_enemies.Table.GetLength(0); i++)
+            for (int i = 0; i < m_Enemies.Table.GetLength(0); i++)
             {
-                for (int j = 0; j< m_enemies.Table.GetLength(1); j++)
+                for (int j = 0; j < m_Enemies.Table.GetLength(1); j++)
                 {
-                    if (m_enemies.GetEnemy(i, j).Bullet.IsActive)
+                    if (m_Enemies.GetEnemy(i, j).Bullet.IsActive)
                     {
-                        if (m_Ship.BulletIntersectsShip(m_enemies.GetEnemy(i, j).Bullet))
+                        if (m_Ship.BulletIntersectsShip(m_Enemies.GetEnemy(i, j).Bullet))
                         {
-                            m_Score.AddSCore(lifeLost);
-                            m_enemies.ActiveBullets--;
+                            m_Score.AddSCore(k_LifeLost);
+                            m_Enemies.ActiveBullets--;
                         }
                     }
                 }
             }
         }
 
-        private void UpdateBulletsForShip(GameTime gameTime)
+        private void updateBulletsForShip(GameTime gameTime)
         {
-            m_Ship.Bullet1.UpdateForShip(gameTime, GraphicsDevice);
-            m_Ship.Bullet2.UpdateForShip(gameTime, GraphicsDevice);
+            m_Ship.Bullet1.UpdateForShip(gameTime);
+            m_Ship.Bullet2.UpdateForShip(gameTime);
         }
 
-        private void PrintScore()
+        private void printScore()
         {
             string message = $"Your score is: {m_Score.Score}";
             System.Windows.Forms.MessageBox.Show(message, "Game Over");
@@ -266,14 +285,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            m_spriteBatch.Begin();
+            m_SpriteBatch.Begin();
 
-            m_spriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
-            m_enemies.Draw(gameTime, m_spriteBatch);
-            m_Ship.Draw(m_spriteBatch);
-            m_MotherShip.Draw(gameTime, m_spriteBatch);
+            m_SpriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
+            m_Enemies.Draw(m_SpriteBatch);
+            m_Ship.Draw(m_SpriteBatch);
+            m_MotherShip.Draw(m_SpriteBatch);
 
-            m_spriteBatch.End();
+            m_SpriteBatch.End();
             base.Draw(gameTime);
         }
     }
