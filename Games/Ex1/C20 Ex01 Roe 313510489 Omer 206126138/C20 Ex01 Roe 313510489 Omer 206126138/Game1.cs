@@ -92,6 +92,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             updateIntersections(GraphicsDevice);
 
             m_PrevKbState = Keyboard.GetState();
+            m_PrevMouseState = Mouse.GetState();
             base.Update(gameTime);
         }
 
@@ -210,8 +211,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             bool isMouseMove = false;
 
+
+
             float mouseDeltaX = getMousePositionDelta().X;
-            var newXposition = Math.Clamp(m_Ship.Position.X + mouseDeltaX, 0, (float)i_graphicDevice.Viewport.Width - m_Ship.Texture.Width);
+            var newXposition = Math.Clamp(mouseDeltaX, 0, (float)i_graphicDevice.Viewport.Width - m_Ship.Texture.Width);
             Vector2 mousePosition = new Vector2(newXposition, m_Ship.Position.Y);
             m_Ship.Position = mousePosition;
 
@@ -234,8 +237,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 retVal.X = currState.X - m_PrevMouseState.X;
                 retVal.Y = currState.Y - m_PrevMouseState.Y;
             }
-
-            m_PrevMouseState = currState;
 
             return retVal;
         }
