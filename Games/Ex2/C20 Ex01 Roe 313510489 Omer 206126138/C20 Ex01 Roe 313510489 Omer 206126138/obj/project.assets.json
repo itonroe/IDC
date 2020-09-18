@@ -7741,27 +7741,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Roe Iton\\.nuget\\packages\\": {}
+    "C:\\Users\\עומר\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Roe Iton\\Desktop\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138.csproj",
+      "projectUniqueName": "C:\\Users\\עומר\\Desktop\\שיעורים ועבודות\\שנה ב\\סמסטר ב\\C#\\IDC\\Games\\Ex2\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138.csproj",
       "projectName": "C20 Ex01 Roe 313510489 Omer 206126138",
-      "projectPath": "C:\\Users\\Roe Iton\\Desktop\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138.csproj",
-      "packagesPath": "C:\\Users\\Roe Iton\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Roe Iton\\Desktop\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138\\obj\\",
+      "projectPath": "C:\\Users\\עומר\\Desktop\\שיעורים ועבודות\\שנה ב\\סמסטר ב\\C#\\IDC\\Games\\Ex2\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138.csproj",
+      "packagesPath": "C:\\Users\\עומר\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\עומר\\Desktop\\שיעורים ועבודות\\שנה ב\\סמסטר ב\\C#\\IDC\\Games\\Ex2\\C20 Ex01 Roe 313510489 Omer 206126138\\C20 Ex01 Roe 313510489 Omer 206126138\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Roe Iton\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\עומר\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Users\\Roe Iton\\Desktop": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7809,7 +7813,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

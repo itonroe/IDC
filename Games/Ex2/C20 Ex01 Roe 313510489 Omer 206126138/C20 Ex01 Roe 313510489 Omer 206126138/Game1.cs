@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
@@ -35,6 +36,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private Player m_Player1;
         private Player m_Player2;
 
+        //Barriers
+        private const int k_NumOfBarriers = 4;
+        private Barriers m_Barriers;
+
         public Game1()
         {
             m_Graphics = new GraphicsDeviceManager(this);
@@ -45,8 +50,17 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         protected override void Initialize()
         {
             m_Enemies = new Enemies();
-            m_Player1 = new Player();
-            m_Player2 = new Player();
+            m_Barriers = new Barriers(k_NumOfBarriers);
+
+            try
+            {
+                m_Player1 = new Player(1, Content);
+                m_Player2 = new Player(2, Content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             m_MotherShip = new MotherShip();
 
             m_CountEnemyKills = 0;
@@ -66,6 +80,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Player2.InitPosition(GraphicsDevice);
 
             m_MotherShip.initPositions();
+
+            m_Barriers.InitPositions(GraphicsDevice);
         }
 
         protected override void LoadContent()
@@ -77,6 +93,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Player1.LoadContent(Content);
             m_Player2.LoadContent(Content);
             m_MotherShip.LoadContent(Content, "Red");
+            m_Barriers.LoadContent(Content);
 
             initPositions();
         }
@@ -109,7 +126,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void updateShip(GameTime gameTime)
         {
-            shipStillAlive();
+            GameIsOn();
             if (!shipMoveByMouse(GraphicsDevice))
             {
                 shipMoveByKB(gameTime);
@@ -153,6 +170,41 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             {
                 printScore();
             }
+
+            // Barriers and bullets
+            m_Barriers.BulletIntersection(AllActiveBullets());
+        }
+
+        public List<Bullet> AllActiveBullets()
+        {
+            List<Bullet> bullets = new List<Bullet>();
+
+            //Enemies bullets
+            foreach(Enemy enemy in m_Enemies.Table)
+            {
+                if (enemy.Bullet.IsActive)
+                    bullets.Add(enemy.Bullet);
+            }
+
+            //players bullets
+            if(m_Player1.Bullet1.IsActive)
+            {
+                bullets.Add(m_Player1.Bullet1);
+            }
+            if (m_Player1.Bullet2.IsActive)
+            {
+                bullets.Add(m_Player1.Bullet2);
+            }
+            if (m_Player2.Bullet1.IsActive)
+            {
+                bullets.Add(m_Player2.Bullet1);
+            }
+            if (m_Player2.Bullet2.IsActive)
+            {
+                bullets.Add(m_Player2.Bullet2);
+            }
+
+            return bullets;
         }
 
         public void shipHitEnemy(Player i_Player)
@@ -191,9 +243,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             return answer;
         }
 
-        private void shipStillAlive()
+        private void GameIsOn()
         {
-            if (m_Player1.Lifes == 0 || m_Player2.Lifes == 0)
+            if (m_Player1.Lifes <= 0 && m_Player2.Lifes <= 0)
             {
                 printScore();
             }
@@ -321,6 +373,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Player1.Draw(m_SpriteBatch);
             m_Player2.Draw(m_SpriteBatch);
             m_MotherShip.Draw(m_SpriteBatch);
+            m_Barriers.Draw(m_SpriteBatch);
 
             m_SpriteBatch.End();
             base.Draw(gameTime);

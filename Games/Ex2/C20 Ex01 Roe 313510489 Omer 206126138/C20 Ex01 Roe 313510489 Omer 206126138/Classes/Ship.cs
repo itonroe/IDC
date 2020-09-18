@@ -12,9 +12,9 @@ namespace Invaders.Classes
     {
         private const int r_ShipSpeed = 140;
 
-        private readonly string r_TexturePath = @"Sprites\Ship01_32x32";
+        protected string m_TexturePath;
 
-        private Texture2D m_ShipTexture;
+        protected Texture2D m_ShipTexture;
         private Vector2 m_ShipPosition;
 
         private Bullet m_Bullet1;
@@ -96,7 +96,7 @@ namespace Invaders.Classes
 
         public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
         {
-            m_ShipTexture = i_contentManager.Load<Texture2D>(r_TexturePath);
+            m_ShipTexture = i_contentManager.Load<Texture2D>(m_TexturePath);
             m_Bullet1.LoadContent(i_contentManager);
             m_Bullet2.LoadContent(i_contentManager);
         }
