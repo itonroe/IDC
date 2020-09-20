@@ -4,89 +4,56 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Infrastructure.ObjectModel;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
-    public class Bullet
+    public class Bullet : Sprite
     {
         private const int r_BulletSpeed = 140; // pxl pre sec
 
-        private readonly string r_TexturePath = @"Sprites\Bullet";
+        private const string k_AssetName = @"Sprites\Bullet";
 
-        private Texture2D m_BulletTexture;
-        private Vector2 m_BulletPosition;
-        private Color m_BulletColor;
-
-        private bool m_Active;
-
-        public Bullet(Color i_color)
+        public Bullet(Color i_Color, Game i_Game) : base (k_AssetName, i_Game)
         {
-            m_Active = false;
-            m_BulletColor = i_color;
-        }
+            Visible = false;
 
-        public Vector2 Position 
-        {
-            get 
-            { 
-                return m_BulletPosition; 
-            } 
+            TintColor = i_Color;
 
-            set 
-            {
-                m_BulletPosition = value; 
-            } 
-        }
-
-        public Texture2D Texture 
-        { 
-            get 
-            { 
-                return m_BulletTexture; 
-            } 
-
-            set 
-            { 
-                m_BulletTexture = value; 
-            } 
+            Initialize();
         }
 
         public bool IsActive 
         { 
             get 
             { 
-                return m_Active; 
+                return Visible; 
             } 
 
             set 
             { 
-                m_Active = value; 
+                Visible = value; 
             } 
-        }
-
-        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
-        {
-            m_BulletTexture = i_contentManager.Load<Texture2D>(r_TexturePath);
         }
 
         private void moveUp(GameTime gameTime)
         {
-            m_BulletPosition.Y -= r_BulletSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_Position.Y -= r_BulletSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         private void moveDown(GameTime gameTime)
         {
-            m_BulletPosition.Y += r_BulletSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_Position.Y += r_BulletSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void UpdateForShip(GameTime gameTime)
         {
-            if(m_Active)
+            if(IsActive)
             {
                 this.moveUp(gameTime);
-                if (m_BulletPosition.Y <= 0) 
+                if (m_Position.Y <= 0) 
                 {
-                    m_Active = false;
+                    IsActive = false;
                 }
             }
         }
@@ -95,12 +62,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         {
             bool bulletOutOfScreen = false;
 
-            if (m_Active)
+            if (IsActive)
             {
                 this.moveDown(gameTime);
-                if (m_BulletPosition.Y >= i_graphicDevice.Viewport.Height)
+                if (m_Position.Y >= i_graphicDevice.Viewport.Height)
                 {
-                    m_Active = false;
+                    IsActive = false;
                     bulletOutOfScreen = true;
                 }
             }
@@ -110,18 +77,18 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
         public void ChangedToActive(Vector2 i_shipPosition)
         {
-            m_Active = true;
+            IsActive = true;
             Position = i_shipPosition;
         }
 
         public void ChangeToNotActive()
         {
-            m_Active = false;
+            IsActive = false;
         }
 
         public void Draw(SpriteBatch i_spriteBatch)
         {
-            i_spriteBatch.Draw(m_BulletTexture, m_BulletPosition, m_BulletColor);
+            i_spriteBatch.Draw(Texture, m_Position, TintColor);
         }
     }
 }

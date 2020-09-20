@@ -49,19 +49,20 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         protected override void Initialize()
         {
-            m_Enemies = new Enemies();
+            m_Enemies = new Enemies(this);
             m_Barriers = new Barriers(k_NumOfBarriers);
 
             try
             {
-                m_Player1 = new Player(1, Content);
-                m_Player2 = new Player(2, Content);
+                m_Player1 = new Player(1, this);
+                m_Player2 = new Player(2, this);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            m_MotherShip = new MotherShip();
+
+            m_MotherShip = new MotherShip(this);
 
             m_CountEnemyKills = 0;
 
@@ -76,10 +77,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             m_PositionBackground = Vector2.Zero;
 
-            m_Player1.InitPosition(GraphicsDevice);
-            m_Player2.InitPosition(GraphicsDevice);
-
-            m_MotherShip.initPositions();
+            m_Player1.InitPosition();
+            m_Player2.InitPosition();
 
             m_Barriers.InitPositions(GraphicsDevice);
         }
@@ -89,10 +88,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
-            m_Enemies.InitAndLoad(Content, GraphicsDevice);
-            m_Player1.LoadContent(Content);
-            m_Player2.LoadContent(Content);
-            m_MotherShip.LoadContent(Content, "Red");
+            m_Enemies.InitAndLoad();
+            m_MotherShip.LoadContent("Red");
             m_Barriers.LoadContent(Content);
 
             initPositions();
@@ -117,7 +114,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void updateEnemies(GameTime gameTime)
         {
-            m_Enemies.Update(Content, gameTime, GraphicsDevice);
+            m_Enemies.Update(gameTime);
             if (m_Enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
             {
                 printScore();
@@ -145,14 +142,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             if (m_MotherShip.IsAlive)
             {
-                m_MotherShip.MoveRight(gameTime, GraphicsDevice);
+                m_MotherShip.MoveRight(gameTime);
             }
         }
 
         private void updateIntersections(GraphicsDevice i_GraphicDevice)
         {
             // enemy reach bottom
-            if (m_Enemies.IsEndOfGame(i_GraphicDevice))
+            if (m_Enemies.IsEndOfGame())
             {
                 printScore();
             }
@@ -260,22 +257,22 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
-                m_Player1.MoveRight(gameTime, GraphicsDevice);
+                m_Player1.MoveRight(gameTime);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.I))
             {
-                m_Player1.MoveLeft(gameTime, GraphicsDevice);
+                m_Player1.MoveLeft(gameTime);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.R))
             {
-                m_Player2.MoveRight(gameTime, GraphicsDevice);
+                m_Player2.MoveRight(gameTime);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                m_Player2.MoveLeft(gameTime, GraphicsDevice);
+                m_Player2.MoveLeft(gameTime);
             }
         }
 
@@ -338,7 +335,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 {
                     if (m_Enemies.GetEnemy(i, j).Bullet.IsActive)
                     {
-                        if (i_Player.BulletIntersectsShip(m_Enemies.GetEnemy(i, j).Bullet, i_GraphicDevice))
+                        if (i_Player.BulletIntersectsShip(m_Enemies.GetEnemy(i, j).Bullet))
                         {
                             i_Player.Score.AddScore(k_LifeLost);
                             m_Enemies.ActiveBullets--;

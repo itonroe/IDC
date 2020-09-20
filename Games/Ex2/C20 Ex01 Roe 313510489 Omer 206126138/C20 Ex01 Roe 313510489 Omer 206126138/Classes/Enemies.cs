@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Infrastructure.ObjectModel;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -17,8 +18,11 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         private bool m_LeftToRight;
         private int m_NumOfBullets;
 
-        public Enemies()
+        private Game m_Game;
+
+        public Enemies(Game i_Game)
         {
+            m_Game = i_Game;
             m_LeftToRight = true;
             m_NumOfBullets = 0;
         }
@@ -49,7 +53,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             } 
         }
 
-        public void InitAndLoad(ContentManager i_ContentManager, GraphicsDevice i_GraphicDevice)
+        public void InitAndLoad()
         {
             m_Enemies = new Enemy[5, 9];
             m_LeftToRight = true;
@@ -58,20 +62,23 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
-                    m_Enemies[i, j] = new Enemy();
-
                     string model = "Pink";
+                    string assetName = @"Sprites\Enemy0101_32x32";
 
                     if (i == 1 || i == 2)
                     {
                         model = "Blue";
+                        assetName = @"Sprites\Enemy0201_32x32";
                     }
                     else if (i != 0)
                     {
                         model = "Yellow";
+                        assetName = @"Sprites\Enemy0301_32x32";
                     }
 
-                    m_Enemies[i, j].Initialize(i_ContentManager, i_GraphicDevice, model, j, i);
+
+                    m_Enemies[i, j] = new Enemy(assetName, m_Game);
+                    m_Enemies[i, j].Initialize(model, j, i);
                 }
             }
         }
@@ -81,29 +88,29 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             return m_Enemies[x, y];
         }
 
-        public void Update(ContentManager i_ContentManager, GameTime gameTime, GraphicsDevice i_GraphicDevice)
+        public void Update(GameTime gameTime)
         {
-            EnemiesMovement(i_ContentManager, gameTime, i_GraphicDevice);
+            EnemiesMovement(gameTime);
             TimeForShot();
         }
         
-        public bool IsEndOfGame(GraphicsDevice i_GraphicDevice)
+        public bool IsEndOfGame()
         {
-            return EnemyReachedBottom(i_GraphicDevice); // means enemy reached button so we return false for no more updates
+            return EnemyReachedBottom(); // means enemy reached button so we return false for no more updates
         }
 
-        public void EnemiesMovement(ContentManager i_ContentManager, GameTime gameTime, GraphicsDevice i_GraphicDevice)
+        public void EnemiesMovement(GameTime gameTime)
         {
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
-                    if (m_Enemies[i, j].IsAlive && m_Enemies[i, j].Update(i_ContentManager, gameTime, m_LeftToRight, (float)i_GraphicDevice.Viewport.Width))
+                    if (m_Enemies[i, j].IsAlive && m_Enemies[i, j].Update(gameTime, m_LeftToRight, (float)m_Game.GraphicsDevice.Viewport.Width))
                     {
                         ChanegeDirection();
                     }
 
-                    if (m_Enemies[i, j].UpdateBullet(gameTime, i_GraphicDevice))
+                    if (m_Enemies[i, j].UpdateBullet(gameTime, m_Game.GraphicsDevice))
                     {
                         m_NumOfBullets--;
                     }
@@ -222,7 +229,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             return hit;
         }
 
-        private bool EnemyReachedBottom(GraphicsDevice i_GraphicDevice)
+        private bool EnemyReachedBottom()
         {
             bool answer = false;
 
@@ -231,7 +238,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
                     Enemy enemy = m_Enemies[i, j];
-                    if (enemy.IsAlive && (enemy.Position.Y + enemy.Texture.Height >= i_GraphicDevice.Viewport.Height))
+                    if (enemy.IsAlive && (enemy.Position.Y + enemy.Texture.Height >= m_Game.GraphicsDevice.Viewport.Height))
                     {
                         answer = true;
                     }

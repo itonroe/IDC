@@ -11,36 +11,35 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
     public class MotherShip : Enemy
     {
         private const int k_positionY = 32; 
+        private const string k_AssetName = @"Sprites\MotherShip_32x120";
 
-        public MotherShip()
-        {
-            base.IsAlive = false;
-        }
-
-        public void initPositions()
+        public MotherShip(Game i_Game) : base (k_AssetName, i_Game)
         {
             k_EnemyVelocityPerSecond = 95;
-            base.Position = new Vector2(0, 32);
+            TintColor = Color.Red;
+            Visible = false;
+
+            initPositions();
         }
 
-        public override void LoadContent(ContentManager i_ContentManager, string i_Model)
+        private void initPositions()
         {
-            base.LoadContent(i_ContentManager, i_Model);
+            Position = new Vector2(0, 32);
         }
 
         public void GetReadyToPop()
         {
-            this.initPositions();
-            base.IsAlive = true;
+            initPositions();
+            Visible = true;
         }
 
-        public void MoveRight(GameTime i_GameTime, GraphicsDevice i_GraphicDevice)
+        public void MoveRight(GameTime i_GameTime)
         {
-            base.MoveRight(i_GameTime, (int)(k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
+            MoveRight(i_GameTime, (int)(k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
 
-            if (base.Position.X >= i_GraphicDevice.Viewport.Width)
+            if (Position.X >= GraphicsDevice.Viewport.Width)
             {
-                base.IsAlive = false;
+                Visible = false;
             }
         }
 
@@ -53,13 +52,13 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             Rectangle bulletRectangle1 = new Rectangle((int)bullet1.Position.X, (int)bullet1.Position.Y, bullet1.Texture.Width, bullet1.Texture.Height);
             Rectangle bulletRectangle2 = new Rectangle((int)bullet2.Position.X, (int)bullet2.Position.Y, bullet2.Texture.Width, bullet2.Texture.Height);
-            Rectangle MotherShipRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
+            Rectangle MotherShipRectangle = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
 
             if (bulletRectangle1.Intersects(MotherShipRectangle) && bullet1.IsActive)
             {
                 hit = true;
 
-                base.IsAlive = false;
+                Visible = false;
                 bullet1.IsActive = false;
 
                 initPositions();
@@ -68,7 +67,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             {
                 hit = true;
 
-                base.IsAlive = false;
+                Visible = false;
                 bullet2.IsActive = false;
 
                 initPositions();

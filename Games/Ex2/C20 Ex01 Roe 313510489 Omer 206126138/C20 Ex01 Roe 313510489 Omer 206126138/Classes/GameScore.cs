@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Infrastructure.ObjectModel;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
@@ -10,11 +11,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
     {
         private int m_Score;
         public SpriteFont m_ConsolasFont;
+        private ContentManager m_ContentManager;
 
-        public GameScore(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
+        public GameScore(ContentManager i_ContentManager)
         {
             m_Score = 0;
-            LoadContent(i_contentManager);
+            m_ContentManager = i_ContentManager;
+
+            LoadContent();
         }
 
         public int Score 
@@ -30,9 +34,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             } 
         }
 
-        protected void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
+        protected void LoadContent()
         {
-            m_ConsolasFont = i_contentManager.Load<SpriteFont>(@"Fonts\Consolas");
+            m_ConsolasFont = m_ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
         }
 
         public void AddScore(int i_ScoreToAdd)

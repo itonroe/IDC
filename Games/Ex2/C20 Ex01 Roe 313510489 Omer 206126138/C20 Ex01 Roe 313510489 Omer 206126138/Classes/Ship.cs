@@ -5,54 +5,26 @@ using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Infrastructure.ObjectModel;
 
 namespace Invaders.Classes
 {
-    public class Ship
+    public class Ship : Sprite
     {
         private const int r_ShipSpeed = 140;
 
         protected string m_TexturePath;
-
-        protected Texture2D m_ShipTexture;
-        private Vector2 m_ShipPosition;
 
         private Bullet m_Bullet1;
         private Bullet m_Bullet2;
 
         private int m_Lifes = 3;
 
-        public Ship()
+        public Ship(string i_AssetName, Game i_Game) : base (i_AssetName, i_Game)
         {
-            m_ShipPosition = new Vector2(0, 0);
-            m_Bullet1 = new Bullet(Color.Red);
-            m_Bullet2 = new Bullet(Color.Red);
-        }
-
-        public Vector2 Position 
-        { 
-            get 
-            { 
-                return m_ShipPosition; 
-            } 
-
-            set 
-            { 
-                m_ShipPosition = value; 
-            } 
-        }
-
-        public Texture2D Texture 
-        { 
-            get 
-            { 
-                return m_ShipTexture; 
-            } 
-            
-            set 
-            { 
-                m_ShipTexture = value; 
-            } 
+            Position = new Vector2(0, 0);
+            m_Bullet1 = new Bullet(Color.Red, i_Game);
+            m_Bullet2 = new Bullet(Color.Red, i_Game);
         }
 
         public Bullet Bullet1 
@@ -94,51 +66,44 @@ namespace Invaders.Classes
             } 
         }
 
-        public void LoadContent(Microsoft.Xna.Framework.Content.ContentManager i_contentManager)
-        {
-            m_ShipTexture = i_contentManager.Load<Texture2D>(m_TexturePath);
-            m_Bullet1.LoadContent(i_contentManager);
-            m_Bullet2.LoadContent(i_contentManager);
-        }
-
-        public void InitPosition(GraphicsDevice i_graphicDevice)
+        public void InitPosition()
         {
             // Get the bottom and center:
-            float x = (float)i_graphicDevice.Viewport.Width - m_ShipTexture.Width;
-            float y = (float)i_graphicDevice.Viewport.Height - 50;
-            m_ShipPosition = new Vector2(x, y);
+            float x = (float)GraphicsDevice.Viewport.Width - Texture.Width;
+            float y = (float)GraphicsDevice.Viewport.Height - 50;
+            Position = new Vector2(x, y);
         }
 
-        public void MoveRight(GameTime gameTime, GraphicsDevice i_graphicDevice)
+        public void MoveRight(GameTime gameTime)
         {
-            m_ShipPosition.X += r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_Position.X += r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            m_ShipPosition.X = Math.Clamp(m_ShipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_ShipTexture.Width);
+            m_Position.X = Math.Clamp(Position.X, 0, (float)GraphicsDevice.Viewport.Width - Texture.Width);
         }
 
-        public void MoveLeft(GameTime gameTime, GraphicsDevice i_graphicDevice)
+        public void MoveLeft(GameTime gameTime)
         {
-            m_ShipPosition.X -= r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_Position.X -= r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            m_ShipPosition.X = Math.Clamp(m_ShipPosition.X, 0, (float)i_graphicDevice.Viewport.Width - m_ShipTexture.Width);
+            m_Position.X = Math.Clamp(Position.X, 0, (float)GraphicsDevice.Viewport.Width - Texture.Width);
         }
 
         public void Shot()
         {
             if(!m_Bullet1.IsActive)
             {
-                m_Bullet1.ChangedToActive(new Vector2(m_ShipPosition.X + (m_ShipTexture.Width / 2), m_ShipPosition.Y));
+                m_Bullet1.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
 
                 return;
             }
 
             if (!m_Bullet2.IsActive)
             {
-                m_Bullet2.ChangedToActive(new Vector2(m_ShipPosition.X + (m_ShipTexture.Width / 2), m_ShipPosition.Y));
+                m_Bullet2.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
             }
         }
 
-        public bool BulletIntersectsShip(Bullet i_bullet, GraphicsDevice i_graphicDevice)
+        public bool BulletIntersectsShip(Bullet i_bullet)
         {
             bool hit = false;
 
@@ -148,23 +113,23 @@ namespace Invaders.Classes
             if (bulletRectangle.Intersects(shipRectangle))
             {
                 hit = true;
-                this.Hit(i_graphicDevice);
+                this.Hit();
                 i_bullet.IsActive = false;
             }
 
             return hit;
         }
 
-        private void Hit(GraphicsDevice i_graphicDevice)
+        private void Hit()
         {
-            InitPosition(i_graphicDevice);
+            InitPosition();
             m_Lifes--;
         }
 
         public void Draw(SpriteBatch i_spriteBatch)
         {
             // Ship draw
-            i_spriteBatch.Draw(m_ShipTexture, m_ShipPosition, Color.White);
+            i_spriteBatch.Draw(Texture, Position, Color.White);
 
             // BulletDraw
             if(m_Bullet1.IsActive)

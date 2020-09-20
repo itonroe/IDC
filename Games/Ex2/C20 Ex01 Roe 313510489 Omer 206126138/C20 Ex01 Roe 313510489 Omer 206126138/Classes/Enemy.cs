@@ -4,31 +4,32 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Vector2 = Microsoft.Xna.Framework.Vector2;
+using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel.Animators.ConcreteAnimators;
+using Infrastructure.ServiceInterfaces;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
-    public class Enemy
+    public class Enemy : Sprite
     {
+        private int k_NumOfFrames = 5;
+
         private const double k_SpeedMultiplicationParam = 1.06;
 
         protected float k_EnemyVelocityPerSecond = 60;
         private eEnemyModels m_EnemyModel;
 
-        private Texture2D m_Texutre;
-        private Vector2 m_Position;
         private Bullet m_Bullet;
-        private bool m_IsAlive;
 
         private bool m_ImageFliped;
 
         private double m_GameTotalSeconds;
         private double m_TimeToJump;
 
-        public Enemy()
+        public Enemy(string i_Asset, Game i_Game) : base(i_Asset, i_Game)
         {
-            m_Position = new Vector2();
-            m_Bullet = new Bullet(Color.Blue);
-            m_IsAlive = true;
+            m_Bullet = new Bullet(Color.Blue, i_Game);
+            Visible = true;
             m_ImageFliped = false;
             m_GameTotalSeconds = 0;
             m_TimeToJump = 1;
@@ -42,42 +43,16 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             } 
         }
 
-        public Texture2D Texture 
-        { 
-            get 
-            { 
-                return m_Texutre; 
-            } 
-
-            set 
-            { 
-                m_Texutre = value; 
-            } 
-        }
-
-        public Vector2 Position 
-        { 
-            get 
-            { 
-                return m_Position; 
-            } 
-
-            set 
-            { 
-                m_Position = value; 
-            } 
-        }
-
         public bool IsAlive 
         { 
             get 
             { 
-                return m_IsAlive; 
+                return Visible; 
             } 
 
             set 
             { 
-                m_IsAlive = value; 
+                Visible = value; 
             } 
         }
 
@@ -102,34 +77,104 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             Yellow = 70
         }
 
-        public void Initialize(ContentManager i_ContentManager, GraphicsDevice i_GraphicDevice, string i_Model, float i_DeltaX, float i_DeltaY)
+        public void Initialize(string i_Model, float i_DeltaX, float i_DeltaY)
         {
-            LoadContent(i_ContentManager, i_Model);
-            InitPositions(i_GraphicDevice, i_DeltaX, i_DeltaY);
+            base.Initialize();
+
+            // Enemy
+            Color enemyColor = Color.Black;
+
+            switch (Enum.Parse(typeof(eEnemyModels), i_Model))
+            {
+                case eEnemyModels.Pink:
+                    enemyColor = Color.LightPink;
+                    break;
+                case eEnemyModels.Blue:
+                    enemyColor = Color.LightBlue;
+                    break;
+                case eEnemyModels.Yellow:
+                    enemyColor = Color.LightYellow;
+                    break;
+                case eEnemyModels.Red:
+                    enemyColor = Color.Red;
+                    break;
+            }
+
+            TintColor = enemyColor;
+
+            //initAnimations();
+
+            LoadContent(i_Model);
+            InitPositions(i_DeltaX, i_DeltaY);
         }
 
-        public virtual void InitPositions(GraphicsDevice i_GraphicDevice, float i_DeltaX, float i_DeltaY)
+        private void initAnimations()
+        {
+            //const bool v_Loop = true;
+            //const float k_TravelSpeed = 120;
+
+            //CellAnimator celAnimation = new CellAnimator(TimeSpan.FromSeconds(0.3), k_NumOfFrames, TimeSpan.Zero);
+
+            BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
+
+            /*WaypointsAnymator waypointsAnimation1 =
+                new WaypointsAnymator(
+                "waypoints1",
+                k_TravelSpeed,
+                TimeSpan.FromSeconds(7),
+                v_Loop,
+                new Vector2(100),
+                new Vector2(150, 100),
+                new Vector2(130, 50));
+
+            WaypointsAnymator waypointsAnimation2 =
+                new WaypointsAnymator(
+                    "waypoints2",
+                    k_TravelSpeed / 2,
+                    TimeSpan.Zero,
+                    !v_Loop,
+                    new Vector2(200));
+
+            SequencialAnimator sequencialAnimations = new SequencialAnimator(
+                "sequence1",
+                TimeSpan.Zero, this,
+                new BlinkAnimator("Blink", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5)),
+                waypointsAnimation1,
+                waypointsAnimation2);*/
+
+            //this.Animations.Add(celAnimation);
+            this.Animations.Add(blinkAnimation);
+
+            blinkAnimation.Finished += new EventHandler(sequencialAnimations_Finished);
+
+            this.Animations.Enabled = true;
+        }
+
+        private void sequencialAnimations_Finished(object sender, EventArgs e)
+        {
+            //this.Animations["CelAnimation"].Pause();
+        }
+
+        public virtual void InitPositions(float i_DeltaX, float i_DeltaY)
         {
             const int margin = 20;
 
-            float x = i_DeltaX * (m_Texutre.Width + margin);
-            float y = 3 * m_Texutre.Height + (i_DeltaY * (m_Texutre.Height + margin));
+            float x = i_DeltaX * (Texture.Width + margin);
+            float y = 3 * Texture.Height + (i_DeltaY * (Texture.Height + margin));
 
             m_Position = new Vector2(x, y);
         }
 
-        public virtual void LoadContent(ContentManager i_ContentManager, string i_Model)
+        public virtual void LoadContent(string i_Model)
         {
             m_EnemyModel = (eEnemyModels)Enum.Parse(typeof(eEnemyModels), i_Model);
 
-            SwitchImage(i_ContentManager);
-
-            m_Bullet.LoadContent(i_ContentManager);
+            SwitchImage(ContentManager);
         }
 
-        public bool Update(ContentManager i_ContentManager, GameTime I_GameTime, bool i_LeftToRight, float i_MaxWidth)
+        public bool Update(GameTime i_GameTime, bool i_LeftToRight, float i_MaxWidth)
         {
-            return TimeToJump(I_GameTime) ? Jump(i_ContentManager, I_GameTime, i_LeftToRight, i_MaxWidth) : false;
+            return TimeToJump(i_GameTime) ? Jump(i_GameTime, i_LeftToRight, i_MaxWidth) : false;
         }
 
         public bool TimeToJump(GameTime I_GameTime)
@@ -148,18 +193,17 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             return jump;
         }
 
-        public bool Jump(ContentManager i_ContentManager, GameTime i_GameTime, bool i_LeftToRight, float i_MaxWidth)
+        public bool Jump(GameTime i_GameTime, bool i_LeftToRight, float i_MaxWidth)
         {
             bool touchesTheBorder = false;
 
-            SwitchImage(i_ContentManager);
+            SwitchImage(ContentManager);
 
             if (i_LeftToRight)
             {
-                //1.a
-                if (m_Position.X + m_Texutre.Width <= i_MaxWidth - m_Texutre.Width)
+                if (m_Position.X + Texture.Width <= i_MaxWidth - Texture.Width)
                 {
-                    MoveRight(i_GameTime, m_Texutre.Width);
+                    MoveRight(i_GameTime, Texture.Width);
                 }
                 else
                 {
@@ -168,10 +212,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
             else
             {
-                //1.a
-                if (m_Position.X - m_Texutre.Width > 0)
+                if (m_Position.X - Texture.Width > 0)
                 {
-                    MoveLeft(i_GameTime, m_Texutre.Width);
+                    MoveLeft(i_GameTime, Texture.Width);
                 }
                 else
                 {
@@ -206,7 +249,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             m_ImageFliped = !m_ImageFliped;
 
-            m_Texutre = i_ContentManager.Load<Texture2D>(assetName);
+            Texture = i_ContentManager.Load<Texture2D>(assetName);
         }
 
         public bool UpdateBullet(GameTime gameTime, GraphicsDevice i_GraphicDevice)
@@ -231,7 +274,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         public void MoveDown()
         {
-            m_Position.Y += m_Texutre.Height / 2;
+            m_Position.Y += Texture.Height / 2;
             m_TimeToJump -= ((0.05) * m_TimeToJump);
         }
 
@@ -249,36 +292,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             if (!m_Bullet.IsActive)
             {
-                m_Bullet.ChangedToActive(new Vector2(m_Position.X + (m_Texutre.Width / 2), m_Position.Y));
+                m_Bullet.ChangedToActive(new Vector2(m_Position.X + (Texture.Width / 2), m_Position.Y));
             }
         }
 
         public void Draw(SpriteBatch i_SpriteBatch)
         {
-            // Enemy
-            Color enemyColor = Color.Black;
-
-            switch (m_EnemyModel)
-            {
-                case eEnemyModels.Pink:
-                    enemyColor = Color.LightPink;
-                    break;
-                case eEnemyModels.Blue:
-                    enemyColor = Color.LightBlue;
-                    break;
-                case eEnemyModels.Yellow:
-                    enemyColor = Color.LightYellow;
-                    break;
-                case eEnemyModels.Red:
-                    enemyColor = Color.Red;
-                    break;
-            }
-
-            if (IsAlive)
-            {
-                i_SpriteBatch.Draw(m_Texutre, m_Position, enemyColor);
-            }
-
             // Bullet
             if(m_Bullet.IsActive)
             {
