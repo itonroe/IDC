@@ -90,16 +90,19 @@ namespace Invaders.Classes
 
         public void Shot()
         {
-            if(!m_Bullet1.IsActive)
+            if (this.Visible == true)
             {
-                m_Bullet1.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
+                if (!m_Bullet1.IsActive)
+                {
+                    m_Bullet1.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
 
-                return;
-            }
+                    return;
+                }
 
-            if (!m_Bullet2.IsActive)
-            {
-                m_Bullet2.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
+                if (!m_Bullet2.IsActive)
+                {
+                    m_Bullet2.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
+                }
             }
         }
 
@@ -110,7 +113,7 @@ namespace Invaders.Classes
             Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
             Rectangle shipRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
 
-            if (bulletRectangle.Intersects(shipRectangle))
+            if (bulletRectangle.Intersects(shipRectangle) && this.Visible)
             {
                 hit = true;
                 this.Hit();
@@ -124,6 +127,10 @@ namespace Invaders.Classes
         {
             InitPosition();
             m_Lifes--;
+            if(m_Lifes <= 0)
+            {
+                base.Visible = false;
+            }
         }
 
         public void Draw(SpriteBatch i_spriteBatch)
