@@ -11,8 +11,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
     public class Enemies
     {
-        private const int m_MaxNumOfBullets = 15;
-        private const int m_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
+        private const int k_MaxNumOfBullets = 5;
+        private const int k_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
 
         private Enemy[,] m_Enemies;
         private bool m_LeftToRight;
@@ -182,12 +182,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             bool answer = false;
 
             Random rnd = new Random();
-            if (rnd.Next(0, m_BulltDifficullty) == 0)
+            if (rnd.Next(0, k_BulltDifficullty) == 0)
             {
                 answer = true;
             }
 
-            if (answer && (m_NumOfBullets < m_MaxNumOfBullets))
+            if (answer && (m_NumOfBullets < k_MaxNumOfBullets))
             {
                 RandomEnemyShot();
             }

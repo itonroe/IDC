@@ -33,14 +33,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
         }
 
-        public void Draw(SpriteBatch i_SpriteBatch)
-        {
-            /*foreach(Barrier barrier in m_Barriers)
-            {
-                barrier.Draw(i_SpriteBatch);
-            }*/
-        }
-
         public void BulletIntersection(List<Bullet> i_Bullets)
         {
             foreach (Barrier barrier in m_Barriers)

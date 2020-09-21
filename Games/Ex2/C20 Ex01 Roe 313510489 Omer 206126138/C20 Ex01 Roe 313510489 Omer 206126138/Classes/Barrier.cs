@@ -83,7 +83,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     }
                 }
             }
-            
             //enemy bullet
             else
             {
@@ -100,7 +99,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 }
             }
 
-            Texture.SetData<Color>(barrierPixels);
+            this.Texture = new Texture2D(GraphicsDevice, this.Texture.Width, this.Texture.Height);
+            this.Texture.SetData<Color>(barrierPixels);
+
             if (demageCounter < startCounter)
                 hit = true;
 

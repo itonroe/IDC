@@ -373,7 +373,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Player1.Draw(m_SpriteBatch);
             m_Player2.Draw(m_SpriteBatch);
             m_MotherShip.Draw(m_SpriteBatch);
-            m_Barriers.Draw(m_SpriteBatch);
 
             m_SpriteBatch.End();
             base.Draw(gameTime);
