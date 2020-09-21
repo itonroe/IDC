@@ -112,6 +112,10 @@ C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.runtimeconfig.dev.json
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.dll
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.pdb
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csprojAssemblyReference.cache
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.AssemblyInfoInputs.cache
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.AssemblyInfo.cs
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.genruntimeconfig.cache
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.VisualBasic.dll
@@ -134,9 +138,9 @@ C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-arm\native\libuv.dll
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-x64\native\libuv.dll
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\runtimes\win7-x86\native\libuv.dll
-C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csprojAssemblyReference.cache
-C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.AssemblyInfoInputs.cache
-C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.AssemblyInfo.cs
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csproj.CoreCompileInputs.cache
 C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.csproj.CopyComplete
-C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex01 Roe 313510489 Omer 206126138.genruntimeconfig.cache
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Sprites\Enemy01_32x32.xnb
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Sprites\Enemy02_32x32.xnb
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Sprites\Enemy03_32x32.xnb
+C:\GitHub\Education\IDC\Games\Ex2\C20 Ex01 Roe 313510489 Omer 206126138\C20 Ex01 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Sprites\Enemy_192x32.xnb

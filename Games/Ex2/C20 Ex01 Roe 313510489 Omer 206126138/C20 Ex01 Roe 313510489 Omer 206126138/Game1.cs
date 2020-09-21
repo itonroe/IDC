@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
+using Infrastructure.Managers;
+using Infrastructure.ServiceInterfaces;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,6 +21,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private SpriteBatch m_SpriteBatch;
         private KeyboardState m_PrevKbState;
         private MouseState m_PrevMouseState;
+        private IInputManager m_InputManager;
 
         // Enemies collection
         private Enemies m_Enemies;
@@ -45,12 +48,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
+
+            m_InputManager = new InputManager(this);
         }
 
         protected override void Initialize()
         {
             m_Enemies = new Enemies(this);
-            m_Barriers = new Barriers(k_NumOfBarriers);
+            m_Barriers = new Barriers(this, k_NumOfBarriers);
 
             try
             {
@@ -90,14 +95,13 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_TextureBackground = Content.Load<Texture2D>(@"Sprites\BG_Space01_1024x768");
             m_Enemies.InitAndLoad();
             m_MotherShip.LoadContent("Red");
-            m_Barriers.LoadContent(Content);
 
             initPositions();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (m_InputManager.ButtonsPressed(eInputButtons.Back) || m_InputManager.KeyPressed(Keys.Escape))
             {
                 Exit();
             }
@@ -250,27 +254,27 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void shipMoveByKB(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (m_InputManager.KeyPressed(Keys.Escape))
             {
                 System.Windows.Forms.MessageBox.Show(m_Player1.Score.Score.ToString() + "\n" + m_Player2.Score.Score.ToString(), "Game Over");
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (m_InputManager.KeyHeld(Keys.P))
             {
                 m_Player1.MoveRight(gameTime);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.I))
+            if (m_InputManager.KeyHeld(Keys.I))
             {
                 m_Player1.MoveLeft(gameTime);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            if (m_InputManager.KeyHeld(Keys.R))
             {
                 m_Player2.MoveRight(gameTime);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            if (m_InputManager.KeyHeld(Keys.W))
             {
                 m_Player2.MoveLeft(gameTime);
             }
@@ -312,9 +316,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void newShot()
         {
-            bool keyBoardClickPlayer1 = Keyboard.GetState().IsKeyDown(Keys.D9) && !m_PrevKbState.IsKeyDown(Keys.D9);
-            bool keyBoardClickPlayer2 = Keyboard.GetState().IsKeyDown(Keys.D3) && !m_PrevKbState.IsKeyDown(Keys.D3);
-            bool mouseClick = Mouse.GetState().LeftButton == ButtonState.Pressed && m_PrevMouseState.LeftButton == ButtonState.Released;
+            bool keyBoardClickPlayer1 = m_InputManager.KeyPressed(Keys.D9);
+            bool keyBoardClickPlayer2 = m_InputManager.KeyPressed(Keys.D3);
+            bool mouseClick = m_InputManager.ButtonPressed(eInputButtons.Left);
 
             if (keyBoardClickPlayer1 || mouseClick)
             {
@@ -366,7 +370,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_SpriteBatch.Begin();
 
             m_SpriteBatch.Draw(m_TextureBackground, m_PositionBackground, m_TintBackground); // tinting with alpha channel
-            m_Enemies.Draw(m_SpriteBatch);
             m_Player1.Draw(m_SpriteBatch);
             m_Player2.Draw(m_SpriteBatch);
             m_MotherShip.Draw(m_SpriteBatch);

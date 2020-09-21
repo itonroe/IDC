@@ -26,6 +26,16 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         {
             Position = new Vector2(0, 32);
         }
+        protected override void InitSourceRectangle()
+        {
+            base.InitSourceRectangle();
+
+            this.SourceRectangle = new Rectangle(
+                    0,
+                    0,
+                    (int)Texture.Width,
+                    (int)Texture.Height);
+        }
 
         public void GetReadyToPop()
         {

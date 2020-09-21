@@ -63,17 +63,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
                     string model = "Pink";
-                    string assetName = @"Sprites\Enemy0101_32x32";
+                    string assetName = @"Sprites\Enemy_192x32";
 
                     if (i == 1 || i == 2)
                     {
                         model = "Blue";
-                        assetName = @"Sprites\Enemy0201_32x32";
                     }
                     else if (i != 0)
                     {
                         model = "Yellow";
-                        assetName = @"Sprites\Enemy0301_32x32";
                     }
 
 
@@ -101,14 +99,18 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
         public void EnemiesMovement(GameTime gameTime)
         {
+            int distance = isOneOfEnemiesTochesBorder((float)m_Game.GraphicsDevice.Viewport.Width);
+
+            if (distance <= 0)
+            {
+                ChanegeDirection();
+            }
+
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
-                    if (m_Enemies[i, j].IsAlive && m_Enemies[i, j].Update(gameTime, m_LeftToRight, (float)m_Game.GraphicsDevice.Viewport.Width))
-                    {
-                        ChanegeDirection();
-                    }
+                    m_Enemies[i, j].Update(gameTime, m_LeftToRight, distance);
 
                     if (m_Enemies[i, j].UpdateBullet(gameTime, m_Game.GraphicsDevice))
                     {
@@ -116,6 +118,63 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     }
                 }
             }
+        }
+
+        private int isOneOfEnemiesTochesBorder(float i_MaxWidth)
+        {
+            int distance = 0;
+            bool touches = false;
+
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    int recWidth = m_Enemies[i, j].SourceRectangle.Width;
+
+                    if (m_Enemies[i, j].IsAlive)
+                    {
+                        if (m_LeftToRight)
+                        {
+                            float rightMargin = m_Enemies[i, j].Position.X + recWidth;
+
+                            if (rightMargin + recWidth < i_MaxWidth)
+                            {
+                                distance = recWidth;
+                            }
+                            else
+                            {
+                                distance = (int)(i_MaxWidth - rightMargin);
+                            }
+                        }
+                        else
+                        {
+                            float positionX = m_Enemies[i, j].Position.X;
+
+                            if (positionX - recWidth > 0)
+                            {
+                                distance = recWidth;
+                            }
+                            else
+                            {
+                                distance = (int)positionX;
+                            }
+                        }
+                    }
+
+                    if (distance != recWidth)
+                    {
+                        touches = true;
+                        break;
+                    }
+                }
+
+                if (touches)
+                {
+                    break;
+                }
+            }
+
+            return distance;
         }
 
         private void TimeForShot()
@@ -202,7 +261,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
-                    enemyRectangle = new Rectangle((int)m_Enemies[i, j].Position.X, (int)m_Enemies[i, j].Position.Y, m_Enemies[i, j].Texture.Width, m_Enemies[i, j].Texture.Height);
+                    enemyRectangle = new Rectangle((int)m_Enemies[i, j].Position.X, (int)m_Enemies[i, j].Position.Y, m_Enemies[i, j].SourceRectangle.Width, m_Enemies[i, j].SourceRectangle.Height);
                     if (m_Enemies[i, j].IsAlive && enemyRectangle.Intersects(ShipRectangle))
                     {
                         answer = true;
@@ -216,8 +275,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         public bool BulletIntersectsEnemy(Enemy i_enemy, Bullet i_bullet)
         {
             bool hit = false;
-            Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
-            Rectangle enemyRectangle = new Rectangle((int)i_enemy.Position.X, (int)i_enemy.Position.Y, i_enemy.Texture.Width, i_enemy.Texture.Height);
+            Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.SourceRectangle.Width, i_bullet.Texture.Height);
+            Rectangle enemyRectangle = new Rectangle((int)i_enemy.Position.X, (int)i_enemy.Position.Y, i_enemy.SourceRectangle.Width, i_enemy.SourceRectangle.Height);
 
             if(bulletRectangle.Intersects(enemyRectangle))
             {
@@ -264,20 +323,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
 
             return allDead;
-        }
-
-        public void Draw(SpriteBatch i_SpriteBatch)
-        {
-            for (int i = 0; i < m_Enemies.GetLength(0); i++)
-            {
-                for (int j = 0; j < m_Enemies.GetLength(1); j++)
-                {
-                    if (m_Enemies[i, j].IsAlive)
-                    {
-                        m_Enemies[i, j].Draw(i_SpriteBatch);
-                    }
-                }
-            }
         }
 
         public void IncreseSpeedForAllEnemis(double i_Speed)

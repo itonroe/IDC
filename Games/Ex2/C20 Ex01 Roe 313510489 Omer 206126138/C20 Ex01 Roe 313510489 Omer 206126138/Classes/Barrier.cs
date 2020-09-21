@@ -1,4 +1,5 @@
 ﻿using C20_Ex01_Roe_313510489_Omer_206126138;
+using Infrastructure.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,38 +9,25 @@ using System.Text;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
-    class Barrier
+    class Barrier : Sprite
     {
-        private Texture2D m_Texture;
-        private Vector2 m_Position;
         private const string k_TexturePath = @"Sprites\Barrier_44x32";
-        private bool m_Visible;
 
-        public Texture2D Texture
+        public Barrier(Game i_Game) : base(k_TexturePath, i_Game)
         {
-            get
-            {
-                return m_Texture;
-            }
         }
 
         public void Initialize(Vector2 i_Poition)
         {
-            m_Position = i_Poition;
-            m_Visible = true;
-        }
-
-
-        public void LoadContent(ContentManager i_ContentManager)
-        {
-            m_Texture = i_ContentManager.Load<Texture2D>(k_TexturePath);
+            Position = i_Poition;
+            Visible = true;
         }
 
         public void Draw(SpriteBatch i_SpriteBatch)
         {
-            if (m_Visible)
+            if (Visible)
             {
-                i_SpriteBatch.Draw(m_Texture, m_Position, Color.White);
+                i_SpriteBatch.Draw(Texture, Position, Color.White);
             }
         }
 

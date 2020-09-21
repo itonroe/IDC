@@ -12,7 +12,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
     public class Enemy : Sprite
     {
-        private int k_NumOfFrames = 5;
+        private int k_NumOfFrames = 6;
 
         private const double k_SpeedMultiplicationParam = 1.06;
 
@@ -25,6 +25,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private double m_GameTotalSeconds;
         private double m_TimeToJump;
+        private int m_LastJumpOfEnemy;
 
         public Enemy(string i_Asset, Game i_Game) : base(i_Asset, i_Game)
         {
@@ -100,10 +101,11 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                     break;
             }
 
+            m_EnemyModel = (eEnemyModels)Enum.Parse(typeof(eEnemyModels), i_Model);
+
             TintColor = enemyColor;
 
             //initAnimations();
-
             LoadContent(i_Model);
             InitPositions(i_DeltaX, i_DeltaY);
         }
@@ -159,8 +161,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             const int margin = 20;
 
-            float x = i_DeltaX * (Texture.Width + margin);
-            float y = 3 * Texture.Height + (i_DeltaY * (Texture.Height + margin));
+            float x = i_DeltaX * (m_SourceRectangle.Width + margin);
+            float y = 3 * m_SourceRectangle.Height + (i_DeltaY * (m_SourceRectangle.Height + margin));
 
             m_Position = new Vector2(x, y);
         }
@@ -168,13 +170,11 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         public virtual void LoadContent(string i_Model)
         {
             m_EnemyModel = (eEnemyModels)Enum.Parse(typeof(eEnemyModels), i_Model);
-
-            SwitchImage(ContentManager);
         }
 
-        public bool Update(GameTime i_GameTime, bool i_LeftToRight, float i_MaxWidth)
+        public bool Update(GameTime i_GameTime, bool i_LeftToRight, int i_Distance)
         {
-            return TimeToJump(i_GameTime) ? Jump(i_GameTime, i_LeftToRight, i_MaxWidth) : false;
+            return TimeToJump(i_GameTime) ? Jump(i_GameTime, i_LeftToRight, i_Distance) : false;
         }
 
         public bool TimeToJump(GameTime I_GameTime)
@@ -193,63 +193,64 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             return jump;
         }
 
-        public bool Jump(GameTime i_GameTime, bool i_LeftToRight, float i_MaxWidth)
+        public bool Jump(GameTime i_GameTime, bool i_LeftToRight, int i_Distance)
         {
-            bool touchesTheBorder = false;
-
-            SwitchImage(ContentManager);
+            SwitchImage();
 
             if (i_LeftToRight)
             {
-                if (m_Position.X + Texture.Width <= i_MaxWidth - Texture.Width)
-                {
-                    MoveRight(i_GameTime, Texture.Width);
-                }
-                else
-                {
-                    touchesTheBorder = true;
-                }
+                MoveRight(i_GameTime, i_Distance);
             }
             else
             {
-                if (m_Position.X - Texture.Width > 0)
-                {
-                    MoveLeft(i_GameTime, Texture.Width);
-                }
-                else
-                {
-                    touchesTheBorder = true;
-                }
+                MoveLeft(i_GameTime, i_Distance);
             }
 
-            return touchesTheBorder;
+            return true;
         }
 
-        public void SwitchImage(ContentManager i_ContentManager)
+        protected override void InitSourceRectangle()
         {
-            string assetName;
+            base.InitSourceRectangle();
+
+            this.SourceRectangle = new Rectangle(
+                    getOffsetImageEenemy(),
+                    0,
+                    (int)(m_SourceRectangle.Width / k_NumOfFrames),
+                    (int)m_HeightBeforeScale);
+        }
+
+        public void SwitchImage()
+        {
+            int offsetX = getOffsetImageEenemy();
+
+            offsetX += m_ImageFliped ? 0 : 32;
+
+
+            this.SourceRectangle = new Rectangle(
+            offsetX,
+            0,
+            (int)(m_SourceRectangle.Width),
+            (int)m_HeightBeforeScale);
+
+            m_ImageFliped = !m_ImageFliped;
+        }
+
+        private int getOffsetImageEenemy()
+        {
+            int offsetX = 0;
 
             switch (m_EnemyModel)
             {
-                case eEnemyModels.Pink:
-                    assetName = m_ImageFliped ? @"Sprites\Enemy0101_32x32" : @"Sprites\Enemy0102_32x32";
-                    break;
                 case eEnemyModels.Blue:
-                    assetName = m_ImageFliped ? @"Sprites\Enemy0201_32x32" : @"Sprites\Enemy0202_32x32";
+                    offsetX += 64;
                     break;
                 case eEnemyModels.Yellow:
-                    assetName = m_ImageFliped ? @"Sprites\Enemy0301_32x32" : @"Sprites\Enemy0302_32x32";
+                    offsetX += 128;
                     break;
-                case eEnemyModels.Red:
-                    assetName = @"Sprites\MotherShip_32x120";
-                    break;
-                default:
-                    throw new ArgumentException("Color Is Not Recognize, there is no such enemy");
             }
 
-            m_ImageFliped = !m_ImageFliped;
-
-            Texture = i_ContentManager.Load<Texture2D>(assetName);
+            return offsetX;
         }
 
         public bool UpdateBullet(GameTime gameTime, GraphicsDevice i_GraphicDevice)
@@ -292,7 +293,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             if (!m_Bullet.IsActive)
             {
-                m_Bullet.ChangedToActive(new Vector2(m_Position.X + (Texture.Width / 2), m_Position.Y));
+                m_Bullet.ChangedToActive(new Vector2(m_Position.X + (SourceRectangle.Width / 2), m_Position.Y));
             }
         }
 

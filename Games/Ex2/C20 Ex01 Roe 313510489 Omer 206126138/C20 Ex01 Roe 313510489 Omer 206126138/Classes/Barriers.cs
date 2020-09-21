@@ -11,12 +11,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
     {
         Barrier[] m_Barriers;
 
-        public Barriers(int i_NumOfBarriers)
+        public Barriers(Game i_Game, int i_NumOfBarriers)
         {
             m_Barriers = new Barrier[i_NumOfBarriers];
             for(int i=0; i< i_NumOfBarriers; i++)
             {
-                m_Barriers[i] = new Barrier();
+                m_Barriers[i] = new Barrier(i_Game);
             }
         }
 
@@ -33,20 +33,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
         }
 
-        public void LoadContent(ContentManager i_ContentManager)
-        {
-            foreach (Barrier barrier in m_Barriers)
-            {
-                barrier.LoadContent(i_ContentManager);
-            }
-        }
-
         public void Draw(SpriteBatch i_SpriteBatch)
         {
-            foreach(Barrier barrier in m_Barriers)
+            /*foreach(Barrier barrier in m_Barriers)
             {
                 barrier.Draw(i_SpriteBatch);
-            }
+            }*/
         }
 
         public void BulletIntersection(List<Bullet> i_Bullets)
