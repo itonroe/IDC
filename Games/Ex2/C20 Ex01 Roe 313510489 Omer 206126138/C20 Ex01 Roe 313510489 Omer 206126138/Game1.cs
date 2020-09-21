@@ -174,6 +174,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             // Barriers and bullets
             m_Barriers.BulletIntersection(AllActiveBullets());
+
+            //Barriers and enemies
+            m_Barriers.EnemyIntersection(m_Enemies.Table);
         }
 
         public List<Bullet> AllActiveBullets()
