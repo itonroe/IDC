@@ -12,6 +12,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
     class Barrier : Sprite
     {
         private const string k_TexturePath = @"Sprites\Barrier_44x32";
+        private const int k_BarrierVelocityPerSecond = 35;
 
         public Barrier(Game i_Game) : base(k_TexturePath, i_Game)
         {
@@ -31,51 +32,49 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
         }
 
-        public bool BulletIntersectionRectangle(Sprite i_Sprite)
+        public bool BulletIntersectionRectangle(Bullet i_bullet)
         {
             bool hit = false;
 
-            Rectangle bulletRectangle = new Rectangle((int)i_Sprite.Position.X, (int)i_Sprite.Position.Y, i_Sprite.Texture.Width, i_Sprite.Texture.Height);
+            Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
             Rectangle barriesRectangle = new Rectangle((int)this.m_Position.X, (int)this.m_Position.Y, this.Texture.Width, this.Texture.Height);
 
             if (bulletRectangle.Intersects(barriesRectangle))
             {
-                if (isBarrierGotHitFromBullet(i_Sprite))
+                int relativeX = Math.Clamp((int)(i_bullet.Position.X - this.m_Position.X), 0, this.Texture.Width);
+                bool fromBottom = (i_bullet.Position.Y - this.m_Position.Y) >= 0;
+
+                if (isBarrierGotHitFromBullet(fromBottom, (int)relativeX, i_bullet.Texture.Width, i_bullet.Texture.Height))
                 {
                     hit = true;
-                    (i_Sprite as Bullet).IsActive = false;
+                    i_bullet.IsActive = false;
                 }
             }
+
             return hit;
         }
 
-        private bool isBarrierGotHitFromBullet(Sprite i_Sprite)
+        private bool isBarrierGotHitFromBullet(bool i_bottom, int x, int i_bulletWidth, int i_bulletHeight)
         {
             bool hit = false;
 
-            int relativeX = Math.Clamp((int)(i_Sprite.Position.X - this.m_Position.X), 0, this.Texture.Width);
-            bool fromBottom = (i_Sprite.Position.Y - this.m_Position.Y) >= 0;
-
-            // get pixel data
             Color[] barrierPixels = new Color[this.Texture.Width * this.Texture.Height];
             this.Texture.GetData<Color>(barrierPixels);
 
             // max demage is 0.35 of bullet size
-            int startCounter = (int)(i_Sprite.Height * i_Sprite.Width * 0.35);
+            int startCounter = (int)(i_bulletHeight * i_bulletWidth * 0.35);
             int demageCounter = startCounter;
 
-            // set before if
-            int yIteration;
-            int xIteration = (int)i_Sprite.Position.X;
+            int yIteration = 0;
 
             // ship bullet
-            if (fromBottom)
+            if (i_bottom)
             {
                 yIteration = this.Texture.Height - 1;
 
                 for (int i = yIteration; i >= 0 && demageCounter > 0; i--)  // i=y
                 {
-                    for (int j = xIteration; j < Math.Clamp(xIteration + i_Sprite.Height, 0, this.Texture.Width) && demageCounter > 0; j++) // j=x
+                    for (int j = x; j < Math.Clamp(x + i_bulletWidth, 0, this.Texture.Width) && demageCounter > 0; j++) // j=x
                     {
                         if (barrierPixels[i * this.Texture.Width + j].A != 0)
                         {
@@ -88,11 +87,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             //enemy bullet
             else
             {
-                yIteration = 0;
-
                 for (int i = 0; i < this.Texture.Height && demageCounter > 0; i++)  // i=y
                 {
-                    for (int j = xIteration; j < Math.Clamp(xIteration + i_Sprite.Height, 0, this.Texture.Width) && demageCounter > 0; j++) // j=x
+                    for (int j = x; j < Math.Clamp(x + i_bulletWidth, 0, this.Texture.Width) && demageCounter > 0; j++) // j=x
                     {
                         if (barrierPixels[i * this.Texture.Width + j].A != 0)
                         {
@@ -130,14 +127,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
         private Rectangle generateRectangleToCut(Sprite i_Sprite)
         {
-            int relativX = (int)(this.Position.X- i_Sprite.Position.X);
-            int relativY = (int)(this.Position.Y- i_Sprite.Position.Y);
+            int relativX = (int)(this.Position.X - i_Sprite.Position.X);
+            int relativY = (int)(this.Position.Y - i_Sprite.Position.Y);
 
 
             return new Rectangle((int)Math.Clamp(i_Sprite.Position.X - this.Position.X, 0, this.Width),
                 (int)Math.Clamp(i_Sprite.Position.Y - this.Position.Y, 0, this.Height),
-                 Math.Clamp((int)(i_Sprite.Position.X  + this.Width - this.Position.X), 0, (int)i_Sprite.Width),
-                 Math.Clamp((int)(i_Sprite.Position.Y + this.Height - this.Position.Y), 0, (int)i_Sprite.Height ));
+                 Math.Clamp((int)(i_Sprite.Position.X + this.Width - this.Position.X), 0, (int)i_Sprite.Width),
+                 Math.Clamp((int)(i_Sprite.Position.Y + this.Height - this.Position.Y), 0, (int)i_Sprite.Height));
         }
 
         public bool cutByRectangle(Rectangle i_RectangleToCut, Sprite i_Sprite)
@@ -148,9 +145,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             this.Texture.GetData<Color>(barrierPixels);
 
 
-            for ( int x=i_RectangleToCut.X; x< Math.Clamp(i_RectangleToCut.X + i_RectangleToCut.Width,0, this.Width); x++)
+            for (int x = i_RectangleToCut.X; x < Math.Clamp(i_RectangleToCut.X + i_RectangleToCut.Width, 0, this.Width); x++)
             {
-                for( int y = i_RectangleToCut.Y; y< Math.Clamp(i_RectangleToCut.Y + i_RectangleToCut.Height, 0,this.Height); y++)
+                for (int y = i_RectangleToCut.Y; y < Math.Clamp(i_RectangleToCut.Y + i_RectangleToCut.Height, 0, this.Height); y++)
                 {
                     int temp = y * this.Texture.Width + x;
                     if (barrierPixels[y * this.Texture.Width + x].A != 0)
@@ -163,6 +160,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             this.Texture.SetData<Color>(barrierPixels);
             return hit;
+        }
+
+        public void Move(bool i_LeftToRight, GameTime i_GameTime)
+        {
+            float distance = (k_BarrierVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds);
+
+            distance *= i_LeftToRight ? 1 : -1;
+
+            m_Position.X += distance;
         }
     }
 }

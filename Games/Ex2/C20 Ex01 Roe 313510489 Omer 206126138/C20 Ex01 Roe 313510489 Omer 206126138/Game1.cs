@@ -110,6 +110,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             updateEnemies(gameTime);
             updateMotherShip(gameTime);
             updateIntersections(GraphicsDevice);
+            m_Barriers.UpdateBarriers(gameTime);
 
             m_PrevKbState = Keyboard.GetState();
             m_PrevMouseState = Mouse.GetState();
