@@ -29,7 +29,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             for(int i=0; i<m_Barriers.Length; i++)
             {
-                m_Barriers[i].Initialize(new Vector2(firstX + ( i * (barriersWidth * (float)(1 + 1.3))), i_graphicDevice.Viewport.Height -250));
+                m_Barriers[i].Initialize(new Vector2(firstX + ( i * (barriersWidth * (float)(1 + 1.3))), i_graphicDevice.Viewport.Height -100));
             }
         }
 

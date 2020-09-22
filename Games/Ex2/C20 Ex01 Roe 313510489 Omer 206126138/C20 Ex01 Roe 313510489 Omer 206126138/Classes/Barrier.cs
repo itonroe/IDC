@@ -121,33 +121,42 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             if (enemyRectangle.Intersects(barriesRectangle))
             {
-                hit = isBarrierGotHitFromEnemy(i_Sprite);
+                Rectangle cut_rectangle = generateRectangleToCut(i_Sprite);
+                hit = cutByRectangle(cut_rectangle, i_Sprite);
             }
 
             return hit;
         }
 
-        private bool isBarrierGotHitFromEnemy(Sprite i_Sprite)
+        private Rectangle generateRectangleToCut(Sprite i_Sprite)
+        {
+            int relativX = (int)(this.Position.X- i_Sprite.Position.X);
+            int relativY = (int)(this.Position.Y- i_Sprite.Position.Y);
+
+
+            return new Rectangle((int)Math.Clamp(i_Sprite.Position.X - this.Position.X, 0, this.Width),
+                (int)Math.Clamp(i_Sprite.Position.Y - this.Position.Y, 0, this.Height),
+                 Math.Clamp((int)(i_Sprite.Position.X  + this.Width - this.Position.X), 0, (int)i_Sprite.Width),
+                 Math.Clamp((int)(i_Sprite.Position.Y + this.Height - this.Position.Y), 0, (int)i_Sprite.Height ));
+        }
+
+        public bool cutByRectangle(Rectangle i_RectangleToCut, Sprite i_Sprite)
         {
             bool hit = false;
 
             Color[] barrierPixels = new Color[this.Texture.Width * this.Texture.Height];
             this.Texture.GetData<Color>(barrierPixels);
 
-            for(int x1= (int)i_Sprite.Position.X; x1<(int)(i_Sprite.Position.X + i_Sprite.Width); x1++)
+
+            for ( int x=i_RectangleToCut.X; x< Math.Clamp(i_RectangleToCut.X + i_RectangleToCut.Width,0, this.Width); x++)
             {
-                for( int y1 = (int)i_Sprite.Position.Y ; y1< (int)(i_Sprite.Position.Y + i_Sprite.Height); y1++)
+                for( int y = i_RectangleToCut.Y; y< Math.Clamp(i_RectangleToCut.Y + i_RectangleToCut.Height, 0,this.Height); y++)
                 {
-                    for (int x2 = (int)this.Position.X; x2 < (int)(this.Position.X + this.Width); x2++)
+                    int temp = y * this.Texture.Width + x;
+                    if (barrierPixels[y * this.Texture.Width + x].A != 0)
                     {
-                        for (int y2 = (int)this.Position.Y; y2 < (int)(this.Position.Y + this.Height); y2++)
-                        {
-                            if(x1 == x2 && y1 == y2)
-                            {
-                                barrierPixels[(int)((y1-this.Position.Y) * this.Width + x1-this.Position.X)].A = 0;
-                                hit = true;
-                            }
-                        }
+                        barrierPixels[y * this.Texture.Width + x] = Color.Transparent;
+                        hit = true;
                     }
                 }
             }
