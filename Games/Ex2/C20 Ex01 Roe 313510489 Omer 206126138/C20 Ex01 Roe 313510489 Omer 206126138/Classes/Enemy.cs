@@ -110,7 +110,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             InitPositions(i_DeltaX, i_DeltaY);
         }
 
-        private void initAnimations()
+        public void InitAnimations()
         {
             //const bool v_Loop = true;
             //const float k_TravelSpeed = 120;
@@ -118,6 +118,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             //CellAnimator celAnimation = new CellAnimator(TimeSpan.FromSeconds(0.3), k_NumOfFrames, TimeSpan.Zero);
 
             BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
+            ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
 
             /*WaypointsAnymator waypointsAnimation1 =
                 new WaypointsAnymator(
@@ -145,16 +146,26 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 waypointsAnimation2);*/
 
             //this.Animations.Add(celAnimation);
-            this.Animations.Add(blinkAnimation);
 
-            blinkAnimation.Finished += new EventHandler(sequencialAnimations_Finished);
+           //this.Animations.Add(blinkAnimation);
+            this.Animations.Add(shrinkAnimation);
+            
+            //blinkAnimation.Finished += new EventHandler(blickAnimations_Finished);
+            shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
 
             this.Animations.Enabled = true;
         }
 
-        private void sequencialAnimations_Finished(object sender, EventArgs e)
+        private void blickAnimations_Finished(object sender, EventArgs e)
         {
-            //this.Animations["CelAnimation"].Pause();
+            this.Animations["blink1"].Pause();
+        }
+
+        private void shrinkAnimation_Finished(object sender, EventArgs e)
+        {
+            this.Animations["shrink1"].Pause();
+
+            this.Visible = false;
         }
 
         public virtual void InitPositions(float i_DeltaX, float i_DeltaY)
