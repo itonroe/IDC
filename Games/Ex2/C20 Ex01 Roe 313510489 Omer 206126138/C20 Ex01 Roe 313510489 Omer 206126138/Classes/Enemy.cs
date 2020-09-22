@@ -105,55 +105,30 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             TintColor = enemyColor;
 
-            //initAnimations();
+            InitAnimations();
             LoadContent(i_Model);
             InitPositions(i_DeltaX, i_DeltaY);
         }
 
         public void InitAnimations()
         {
-            //const bool v_Loop = true;
-            //const float k_TravelSpeed = 120;
-
-            //CellAnimator celAnimation = new CellAnimator(TimeSpan.FromSeconds(0.3), k_NumOfFrames, TimeSpan.Zero);
-
             BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
             ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
+            FaderAnimator faderAnimator = new FaderAnimator("fader1", TimeSpan.FromSeconds(0.3));
+            RotateAnimator rotateAnimator = new RotateAnimator("rotate1", TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3));
 
-            /*WaypointsAnymator waypointsAnimation1 =
-                new WaypointsAnymator(
-                "waypoints1",
-                k_TravelSpeed,
-                TimeSpan.FromSeconds(7),
-                v_Loop,
-                new Vector2(100),
-                new Vector2(150, 100),
-                new Vector2(130, 50));
 
-            WaypointsAnymator waypointsAnimation2 =
-                new WaypointsAnymator(
-                    "waypoints2",
-                    k_TravelSpeed / 2,
-                    TimeSpan.Zero,
-                    !v_Loop,
-                    new Vector2(200));
+            //this.Animations.Add(blinkAnimation);
+            //this.Animations.Add(shrinkAnimation);
+            //this.Animations.Add(faderAnimator);
+            this.Animations.Add(rotateAnimator);
 
-            SequencialAnimator sequencialAnimations = new SequencialAnimator(
-                "sequence1",
-                TimeSpan.Zero, this,
-                new BlinkAnimator("Blink", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5)),
-                waypointsAnimation1,
-                waypointsAnimation2);*/
-
-            //this.Animations.Add(celAnimation);
-
-           //this.Animations.Add(blinkAnimation);
-            this.Animations.Add(shrinkAnimation);
-            
             //blinkAnimation.Finished += new EventHandler(blickAnimations_Finished);
-            shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
+            //shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
+            //faderAnimator.Finished += new EventHandler(faderAnimation_Finished);
+            rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
 
-            this.Animations.Enabled = true;
+            //this.Animations.Enabled = true;
         }
 
         private void blickAnimations_Finished(object sender, EventArgs e)
@@ -164,6 +139,19 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void shrinkAnimation_Finished(object sender, EventArgs e)
         {
             this.Animations["shrink1"].Pause();
+
+            this.Visible = false;
+        }
+
+        private void faderAnimation_Finished(object sender, EventArgs e)
+        {
+            this.Animations["fader1"].Pause();
+
+            this.Visible = false;
+        }
+        private void rotateAnimation_Finished(object sender, EventArgs e)
+        {
+            this.Animations["rotate1"].Pause();
 
             this.Visible = false;
         }

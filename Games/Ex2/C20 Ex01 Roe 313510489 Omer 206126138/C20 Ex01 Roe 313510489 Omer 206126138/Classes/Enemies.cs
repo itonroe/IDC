@@ -281,7 +281,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             if(bulletRectangle.Intersects(enemyRectangle))
             {
                 hit = true;
-                i_enemy.InitAnimations();
+                i_enemy.Animations.Restart();
                 i_bullet.IsActive = false;
             }
 
