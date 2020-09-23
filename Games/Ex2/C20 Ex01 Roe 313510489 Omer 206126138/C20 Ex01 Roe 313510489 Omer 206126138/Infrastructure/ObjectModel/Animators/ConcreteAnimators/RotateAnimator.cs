@@ -6,6 +6,7 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
     public class RotateAnimator : SpriteAnimator
     {
         private TimeSpan m_AnimationLength;
+        private TimeSpan m_SingleRotateLength;
         private TimeSpan m_TimeLeftForRotate;
         private double m_LastRotationTime;
         const float k_AngularVelocity = (float)MathHelper.TwoPi;
@@ -22,7 +23,9 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
             : base(i_Name, i_AnimationLength)
         {
             this.m_AnimationLength = i_AnimationLength;
-            this.m_TimeLeftForRotate = i_RotateLength;
+            this.m_SingleRotateLength = i_RotateLength;
+            this.m_TimeLeftForRotate = m_SingleRotateLength;
+
             this.m_LastRotationTime = 0;
         }
 
@@ -35,23 +38,22 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
 
         protected override void DoFrame(GameTime i_GameTime)
         {
+            m_AnimationLength -= i_GameTime.ElapsedGameTime;
             m_TimeLeftForRotate -= i_GameTime.ElapsedGameTime;
-
-            if (i_GameTime.TotalGameTime.TotalSeconds - m_LastRotationTime >= m_AnimationLength.TotalSeconds)
-            {
-                this.BoundSprite.RotationOrigin = new Vector2(this.BoundSprite.Width/8, this.BoundSprite.Height/8);
-                this.BoundSprite.Rotation += (float)(MathHelper.TwoPi * m_TimeLeftForRotate.TotalSeconds *1/100);
-                this.BoundSprite.AngularVelocity = k_AngularVelocity;
-            }
 
             if (m_TimeLeftForRotate.TotalSeconds < 0)
             {
                 // we have elapsed, so blink
-                this.BoundSprite.Visible = !this.BoundSprite.Visible;
-                m_TimeLeftForRotate = m_AnimationLength;
+                m_TimeLeftForRotate = m_SingleRotateLength + (-1 * m_TimeLeftForRotate);
             }
 
-            
+            if (i_GameTime.TotalGameTime.TotalSeconds - m_LastRotationTime >= m_AnimationLength.TotalSeconds)
+            {
+                this.BoundSprite.RotationOrigin = new Vector2(this.BoundSprite.Height / 2, this.BoundSprite.Height / 2);
+                this.BoundSprite.Rotation = (float)(MathHelper.TwoPi * m_TimeLeftForRotate.TotalSeconds);
+                this.BoundSprite.AngularVelocity = k_AngularVelocity;
+            }
+
 
         }
 

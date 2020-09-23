@@ -113,7 +113,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         public void InitAnimations()
         {
             BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
-            ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
+            ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(0.3));
             FaderAnimator faderAnimator = new FaderAnimator("fader1", TimeSpan.FromSeconds(0.3));
             RotateAnimator rotateAnimator = new RotateAnimator("rotate1", TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3));
 
@@ -124,7 +124,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             this.Animations.Add(rotateAnimator);
 
             //blinkAnimation.Finished += new EventHandler(blickAnimations_Finished);
-            //shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
+           //shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
             //faderAnimator.Finished += new EventHandler(faderAnimation_Finished);
             rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
 

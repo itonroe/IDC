@@ -61,6 +61,11 @@ namespace Infrastructure.ObjectModel.Animators
         {
             get { return this.m_AnimationLength != TimeSpan.Zero; }
         }
+        
+        public TimeSpan TimeLeft
+        {
+            get { return this.m_TimeLeft; }
+        }
 
         public bool ResetAfterFinish
         {
