@@ -48,6 +48,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 {
                     hit = true;
                     i_bullet.IsActive = false;
+                    (base.Game as Game1).EnemyBulletDisabled();
                 }
             }
 

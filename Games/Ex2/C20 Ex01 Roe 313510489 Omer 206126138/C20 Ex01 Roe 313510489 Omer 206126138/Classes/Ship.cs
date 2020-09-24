@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Infrastructure.ObjectModel;
 using Infrastructure.ObjectModel.Animators.ConcreteAnimators;
+using C20_Ex01_Roe_313510489_Omer_206126138;
 
 namespace Invaders.Classes
 {
@@ -71,7 +72,7 @@ namespace Invaders.Classes
         public void InitPosition()
         {
             // Get the bottom and center:
-            float x = (float)GraphicsDevice.Viewport.Width - Texture.Width;
+            float x = (float)0;
             float y = (float)GraphicsDevice.Viewport.Height - 50;
             Position = new Vector2(x, y);
         }
@@ -122,11 +123,12 @@ namespace Invaders.Classes
             Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
             Rectangle shipRectangle = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.Texture.Width, this.Texture.Height);
 
-            if (bulletRectangle.Intersects(shipRectangle) && this.Visible)
+            if (bulletRectangle.Intersects(shipRectangle) && this.m_Lifes > 0)
             {
                 hit = true;
                 this.Hit();
                 i_bullet.IsActive = false;
+                //(base.Game as Game1).EnemyBulletDisabled();
             }
 
             return hit;
@@ -134,15 +136,22 @@ namespace Invaders.Classes
 
         private void Hit()
         {
-            InitPosition();
             m_Lifes--;
 
-            if(m_Lifes <= 0)
+            if(m_Lifes == 0)
             {
-                InitRotateFadeOutAnimation();
+                if (m_Animations["fadeout1"] == null)
+                {
+                    InitRotateFadeOutAnimation();
+                }
+                else
+                {
+                    m_Animations.Restart();
+                }
             }
             else
             {
+                InitPosition();
                 m_Animations.Enabled = true;
 
                 if (m_Animations["blink1"] == null)

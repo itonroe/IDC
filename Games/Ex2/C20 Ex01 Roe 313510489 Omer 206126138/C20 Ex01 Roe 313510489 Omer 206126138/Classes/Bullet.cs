@@ -86,6 +86,25 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             IsActive = false;
         }
 
+        public bool BulletIntersectionBullet(Bullet i_Bullet)
+        {
+            bool hit = false;
+            Random rnd = new Random();
+
+            if(this.Bounds.Intersects(i_Bullet.Bounds))
+            {
+                hit = true;
+                i_Bullet.ChangeToNotActive();
+                if(rnd.Next(0,4) == 0)
+                {
+                    this.ChangeToNotActive();
+                    (base.Game as Game1).EnemyBulletDisabled();
+                }
+            }
+
+            return hit;
+        }
+
         public void Draw(SpriteBatch i_spriteBatch)
         {
             i_spriteBatch.Draw(Texture, m_Position, TintColor);

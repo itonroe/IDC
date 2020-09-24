@@ -11,8 +11,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
     public class Enemies
     {
-        private const int k_MaxNumOfBullets = 15;
-        private const int k_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
+        int m_Counter=0;
+
+        private const int k_MaxNumOfBullets = 5;
+        private const int k_BulltDifficullty = 1; // 300 is easy - 1 is hard ( every frame)
 
         private Enemy[,] m_Enemies;
         private bool m_LeftToRight;
@@ -201,8 +203,14 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             int i = rndI.Next(0, m_Enemies.GetLength(0));
             int j = rndJ.Next(0, m_Enemies.GetLength(1));
 
-            m_Enemies[i, j].Shot();
+            while (!m_Enemies[i, j].IsAlive || m_Enemies[i, j].Bullet.IsActive)
+            {
+                i = rndI.Next(0, m_Enemies.GetLength(0));
+                j = rndJ.Next(0, m_Enemies.GetLength(1));
+            }
 
+            m_Enemies[i, j].Shot();
+            m_Counter++;
             m_NumOfBullets++;
         }
 

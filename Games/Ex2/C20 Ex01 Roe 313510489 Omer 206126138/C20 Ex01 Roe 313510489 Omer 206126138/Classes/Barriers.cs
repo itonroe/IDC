@@ -13,11 +13,13 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         private bool m_LeftToRight;
         private float m_RightBorder;
         private float m_LeftBorder;
+        private Game m_Game;
 
         public Barriers(Game i_Game, int i_NumOfBarriers)
         {
             m_LeftToRight = true;
             m_Barriers = new Barrier[i_NumOfBarriers];
+            m_Game = i_Game;
 
             for (int i=0; i< i_NumOfBarriers; i++)
             {
@@ -34,7 +36,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
             for(int i=0; i<m_Barriers.Length; i++)
             {
-                m_Barriers[i].Initialize(new Vector2(firstX + ( i * (barriersWidth * (float)(1 + 1.3))), i_graphicDevice.Viewport.Height -100));
+                m_Barriers[i].Initialize(new Vector2(firstX + ( i * (barriersWidth * (float)(1 + 1.3))), (m_Game as Game1).GetBarriersPostionY()));
 
                 if (i == 0)
                 {

@@ -44,17 +44,12 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
             if (m_TimeLeftForRotate.TotalSeconds < 0)
             {
                 // we have elapsed, so blink
-                m_TimeLeftForRotate = m_SingleRotateLength + (-1 * m_TimeLeftForRotate);
+                m_TimeLeftForRotate = m_SingleRotateLength;
             }
 
-            if (i_GameTime.TotalGameTime.TotalSeconds - m_LastRotationTime >= m_AnimationLength.TotalSeconds)
-            {
-                this.BoundSprite.RotationOrigin = this.BoundSprite.SourceRectangleCenter;
-                this.BoundSprite.Rotation = (float)(MathHelper.TwoPi * m_TimeLeftForRotate.TotalSeconds);
-                this.BoundSprite.AngularVelocity = k_AngularVelocity;
-            }
-
-
+            this.BoundSprite.RotationOrigin = this.BoundSprite.SourceRectangleCenter;
+            this.BoundSprite.Rotation = (float)(MathHelper.TwoPi * (m_TimeLeftForRotate.TotalSeconds / m_SingleRotateLength.TotalSeconds));
+            this.BoundSprite.AngularVelocity = k_AngularVelocity;
         }
 
         protected override void RevertToOriginal()

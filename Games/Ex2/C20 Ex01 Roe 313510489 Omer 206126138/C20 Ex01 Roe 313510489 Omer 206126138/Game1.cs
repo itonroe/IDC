@@ -181,6 +181,53 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             //Barriers and enemies
             m_Barriers.EnemyIntersection(m_Enemies.Table);
+
+            // Bullets and bullets
+            BulletsIntersection();
+        }
+
+        public void BulletsIntersection()
+        {
+            List<Bullet> enemyBullets = new List<Bullet>();
+            List<Bullet> playersBullets = new List<Bullet>();
+
+            //players bullets
+            if (m_Player1.Bullet1.IsActive)
+            {
+                playersBullets.Add(m_Player1.Bullet1);
+            }
+            if (m_Player1.Bullet2.IsActive)
+            {
+                playersBullets.Add(m_Player1.Bullet2);
+            }
+            if (m_Player2.Bullet1.IsActive)
+            {
+                playersBullets.Add(m_Player2.Bullet1);
+            }
+            if (m_Player2.Bullet2.IsActive)
+            {
+                playersBullets.Add(m_Player2.Bullet2);
+            }
+
+            //Enemies bullets
+            foreach (Enemy enemy in m_Enemies.Table)
+            {
+                if (enemy.Bullet.IsActive)
+                    enemyBullets.Add(enemy.Bullet);
+            }
+
+            foreach(Bullet eBullet in enemyBullets)
+            {
+                foreach(Bullet pBullet in playersBullets)
+                {
+                    eBullet.BulletIntersectionBullet(pBullet);
+                }
+            }
+        }
+
+        public void EnemyBulletDisabled()
+        {
+            this.m_Enemies.ActiveBullets--;
         }
 
         public List<Bullet> AllActiveBullets()
@@ -259,6 +306,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
         }
 
+        public float GetBarriersPostionY()
+        {
+            return this.m_Player1.Position.Y - 2 * this.m_Player1.Height;
+        }
         private void shipMoveByKB(GameTime gameTime)
         {
             if (m_InputManager.KeyPressed(Keys.Escape))
@@ -367,6 +418,25 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void printScore()
         {
             string message = $"Player 1 Score is: {m_Player1.Score.Score}\nPlayer 2 Score is: {m_Player2.Score.Score}";
+
+            string winner;
+
+            if (m_Player1.Score.Score > m_Player2.Score.Score)
+            {
+                winner = "Player 1";
+            }
+            else if (m_Player1.Score.Score < m_Player2.Score.Score)
+            {
+                winner = "Player 2";
+            }
+            else
+            {
+                winner = "Tie";
+            }
+
+            message += $"\n\n";
+            message += (winner.Equals("Tie")) ? "It's a Tie" : $"{winner} is the winner";
+
             System.Windows.Forms.MessageBox.Show(message, "Game Over");
             Exit();
         }
