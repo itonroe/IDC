@@ -16,7 +16,8 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
         protected override void DoFrame(GameTime i_GameTime)
         {
             float proportion = (float)(base.TimeLeft.TotalSeconds / AnimationLength.TotalSeconds);
-            this.BoundSprite.Opacity = proportion * this.m_OriginalSpriteInfo.Opacity;
+
+            this.BoundSprite.Opacity *= proportion;
         }
 
         protected override void RevertToOriginal()

@@ -112,46 +112,36 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         public void InitAnimations()
         {
-            BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
-            ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(0.3));
+            ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(1.7));
+            RotateAnimator rotateAnimator = new RotateAnimator("rotate1", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(1.7));
+
+            this.Animations.Add(shrinkAnimation);
+            this.Animations.Add(rotateAnimator);
+
+            rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
+
+            /*BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
             FaderAnimator faderAnimator = new FaderAnimator("fader1", TimeSpan.FromSeconds(0.3));
-            RotateAnimator rotateAnimator = new RotateAnimator("rotate1", TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3));
+            FadeOutAnimator fadeoutAnimator = new FadeOutAnimator("fadeout1", TimeSpan.FromSeconds(10));*/
 
 
             //this.Animations.Add(blinkAnimation);
-            //this.Animations.Add(shrinkAnimation);
             //this.Animations.Add(faderAnimator);
-            this.Animations.Add(rotateAnimator);
+            //this.Animations.Add(rotateAnimator);
+            //this.Animations.Add(fadeoutAnimator);
 
             //blinkAnimation.Finished += new EventHandler(blickAnimations_Finished);
-           //shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
+            //shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
             //faderAnimator.Finished += new EventHandler(faderAnimation_Finished);
-            rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
+            //rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
+            //fadeoutAnimator.Finished += new EventHandler(fadeoutAnimation_Finished);
 
             //this.Animations.Enabled = true;
-        }
-
-        private void blickAnimations_Finished(object sender, EventArgs e)
-        {
-            this.Animations["blink1"].Pause();
-        }
-
-        private void shrinkAnimation_Finished(object sender, EventArgs e)
-        {
-            this.Animations["shrink1"].Pause();
-
-            this.Visible = false;
-        }
-
-        private void faderAnimation_Finished(object sender, EventArgs e)
-        {
-            this.Animations["fader1"].Pause();
-
-            this.Visible = false;
         }
         private void rotateAnimation_Finished(object sender, EventArgs e)
         {
             this.Animations["rotate1"].Pause();
+            this.Animations["shrink1"].Pause();
 
             this.Visible = false;
         }

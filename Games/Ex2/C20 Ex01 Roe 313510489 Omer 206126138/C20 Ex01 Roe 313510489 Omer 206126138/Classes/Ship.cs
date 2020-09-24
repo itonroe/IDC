@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel.Animators.ConcreteAnimators;
 
 namespace Invaders.Classes
 {
@@ -25,6 +26,7 @@ namespace Invaders.Classes
             Position = new Vector2(0, 0);
             m_Bullet1 = new Bullet(Color.Red, i_Game);
             m_Bullet2 = new Bullet(Color.Red, i_Game);
+
         }
 
         public Bullet Bullet1 
@@ -74,6 +76,13 @@ namespace Invaders.Classes
             Position = new Vector2(x, y);
         }
 
+        public new void Initialize()
+        {
+            base.Initialize();
+
+            //InitAnimations();
+        }
+
         public void MoveRight(GameTime gameTime)
         {
             m_Position.X += r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -90,7 +99,7 @@ namespace Invaders.Classes
 
         public void Shot()
         {
-            if (this.Visible == true)
+            if (m_Lifes != 0)
             {
                 if (!m_Bullet1.IsActive)
                 {
@@ -127,17 +136,64 @@ namespace Invaders.Classes
         {
             InitPosition();
             m_Lifes--;
+
             if(m_Lifes <= 0)
             {
-                base.Visible = false;
+                InitRotateFadeOutAnimation();
             }
+            else
+            {
+                m_Animations.Enabled = true;
+
+                if (m_Animations["blink1"] == null)
+                {
+                    InitBlinkAnimation();
+                }
+                else
+                {
+                    m_Animations["blink1"].Restart();
+                }
+            }
+        }
+
+        public void InitBlinkAnimation()
+        {
+            BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.125), TimeSpan.FromSeconds(2));
+
+            this.m_Animations.Add(blinkAnimation);
+
+            blinkAnimation.Finished += new EventHandler(blinkAnimation_Finished);
+        }
+
+        public void InitRotateFadeOutAnimation()
+        {
+            if (m_Animations["blink1"] != null)
+            {
+                m_Animations.Remove("blink1");
+            }
+
+            FadeOutAnimator fadeoutAnimator = new FadeOutAnimator("fadeout1", TimeSpan.FromSeconds(2.6));
+            RotateAnimator rotateAnimator = new RotateAnimator("rotate1", TimeSpan.FromSeconds(0.16), TimeSpan.FromSeconds(2.6));
+
+            this.Animations.Add(fadeoutAnimator);
+            this.Animations.Add(rotateAnimator);
+
+            rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
+        }
+
+        private void blinkAnimation_Finished(object sender, EventArgs e)
+        {
+            this.Visible = true;
+        }
+
+        private void rotateAnimation_Finished(object sender, EventArgs e)
+        {
+            m_Animations.Pause();
+            base.Visible = false;
         }
 
         public void Draw(SpriteBatch i_spriteBatch)
         {
-            // Ship draw
-            i_spriteBatch.Draw(Texture, Position, Color.White);
-
             // BulletDraw
             if(m_Bullet1.IsActive)
             {

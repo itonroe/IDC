@@ -49,7 +49,7 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
 
             if (i_GameTime.TotalGameTime.TotalSeconds - m_LastRotationTime >= m_AnimationLength.TotalSeconds)
             {
-                this.BoundSprite.RotationOrigin = new Vector2(this.BoundSprite.Height / 2, this.BoundSprite.Height / 2);
+                this.BoundSprite.RotationOrigin = this.BoundSprite.SourceRectangleCenter;
                 this.BoundSprite.Rotation = (float)(MathHelper.TwoPi * m_TimeLeftForRotate.TotalSeconds);
                 this.BoundSprite.AngularVelocity = k_AngularVelocity;
             }

@@ -7,28 +7,32 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
 {
     public class ShrinkAnimator : SpriteAnimator
     {
-        private TimeSpan m_ShrinkLength;
+        private TimeSpan m_AnimationLength;
+        private TimeSpan m_TimeLeftForShrink;
 
         public TimeSpan ShrinkLength
         {
-            get { return m_ShrinkLength; }
-            set { m_ShrinkLength = value; }
+            get { return m_AnimationLength; }
+            set { m_AnimationLength = value; }
         }
+
 
         // CTORs
         public ShrinkAnimator(string i_Name, TimeSpan i_AnimationLength)
             : base(i_Name, i_AnimationLength)
         {
-            this.m_ShrinkLength = i_AnimationLength;
+            this.m_AnimationLength = i_AnimationLength;
+            this.m_TimeLeftForShrink = i_AnimationLength;
         }
+
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            this.BoundSprite.RotationOrigin = new Vector2(16, 16);
-            m_ShrinkLength -= i_GameTime.ElapsedGameTime;
+            this.BoundSprite.RotationOrigin = this.BoundSprite.SourceRectangleCenter;
+            m_TimeLeftForShrink -= i_GameTime.ElapsedGameTime;
 
-            float proportion = (float)(m_ShrinkLength.TotalSeconds / this.AnimationLength.TotalSeconds);
-            this.BoundSprite.Scales *= new Vector2(proportion, proportion);
+            float proportion = (float)(m_TimeLeftForShrink.TotalSeconds / m_AnimationLength.TotalSeconds);
+            this.BoundSprite.Scales = new Vector2(proportion, proportion);
         }
 
         protected override void RevertToOriginal()

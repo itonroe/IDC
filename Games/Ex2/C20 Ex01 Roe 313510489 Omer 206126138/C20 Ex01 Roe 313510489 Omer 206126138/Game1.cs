@@ -60,7 +60,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             try
             {
                 m_Player1 = new Player(1, this);
+                m_Player1.Initialize();
                 m_Player2 = new Player(2, this);
+                m_Player2.Initialize();
             }
             catch (Exception e)
             {
@@ -129,6 +131,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private void updateShip(GameTime gameTime)
         {
             GameIsOn();
+
             if (!shipMoveByMouse(GraphicsDevice))
             {
                 shipMoveByKB(gameTime);

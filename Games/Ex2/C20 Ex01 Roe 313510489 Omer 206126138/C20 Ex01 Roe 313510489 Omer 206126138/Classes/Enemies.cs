@@ -11,7 +11,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
     public class Enemies
     {
-        private const int k_MaxNumOfBullets = 5;
+        private const int k_MaxNumOfBullets = 15;
         private const int k_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
 
         private Enemy[,] m_Enemies;

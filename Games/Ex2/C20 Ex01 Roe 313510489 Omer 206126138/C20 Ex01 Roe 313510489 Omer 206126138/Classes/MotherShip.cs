@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Infrastructure.ObjectModel.Animators.ConcreteAnimators;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -13,12 +14,13 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         private const int k_positionY = 32; 
         private const string k_AssetName = @"Sprites\MotherShip_32x120";
 
+        private bool m_Hit;
+
         public MotherShip(Game i_Game) : base (k_AssetName, i_Game)
         {
             k_EnemyVelocityPerSecond = 95;
             TintColor = Color.Red;
             Visible = false;
-
             initPositions();
         }
 
@@ -40,17 +42,50 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         public void GetReadyToPop()
         {
             initPositions();
+            m_Hit = false;
+            if (m_Animations["blink1"] == null)
+            {
+                InitAnimations();
+            }
+            Animations.Enabled = false;
             Visible = true;
         }
 
         public void MoveRight(GameTime i_GameTime)
         {
-            MoveRight(i_GameTime, (int)(k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
-
-            if (Position.X >= GraphicsDevice.Viewport.Width)
+            if (!m_Hit)
             {
-                Visible = false;
+                MoveRight(i_GameTime, (int)(k_EnemyVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds));
+
+                if (Position.X >= GraphicsDevice.Viewport.Width)
+                {
+                    Visible = false;
+                }
             }
+        }
+
+        public new void InitAnimations()
+        {
+            BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(3));
+            ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(3));
+            FadeOutAnimator fadeoutAnimator = new FadeOutAnimator("fadeout1", TimeSpan.FromSeconds(3));
+
+            this.Animations.Add(blinkAnimation);
+            this.Animations.Add(shrinkAnimation);
+            this.Animations.Add(fadeoutAnimator);
+
+            fadeoutAnimator.Finished += new EventHandler(fadeoutAnimator_Finished);
+        }
+
+        private void fadeoutAnimator_Finished(object sender, EventArgs e)
+        {
+            this.Animations.Pause();
+            this.Visible = false;
+
+            this.Scales = new Vector2(1, 1);
+            this.Opacity = 1;
+
+            initPositions();
         }
 
         public bool IntersectionWithShipBullets(Ship i_Ship)
@@ -68,20 +103,25 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             {
                 hit = true;
 
-                Visible = false;
                 bullet1.IsActive = false;
 
-                initPositions();
             }
             else if (bulletRectangle2.Intersects(MotherShipRectangle) && bullet2.IsActive)
             {
                 hit = true;
 
-                Visible = false;
                 bullet2.IsActive = false;
 
-                initPositions();
             }
+
+            if (hit)
+            {
+                m_Hit = true;
+                m_Animations.Enabled = true;
+                m_Animations.Restart();
+            }
+
+
 
             return hit;
         }
