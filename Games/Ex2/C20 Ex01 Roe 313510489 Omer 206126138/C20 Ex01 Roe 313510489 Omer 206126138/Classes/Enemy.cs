@@ -12,7 +12,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
     public class Enemy : Sprite
     {
-        private const double k_SpeedMultiplicationParam = 1.06;
         private int k_NumOfFrames = 6;
         protected float k_EnemyVelocityPerSecond = 60;
         private eEnemyModels m_EnemyModel;
@@ -20,7 +19,15 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private bool m_ImageFliped;
         private double m_GameTotalSeconds;
         private double m_TimeToJump;
-        private int m_LastJumpOfEnemy;
+
+        private bool m_Animating;
+
+        public bool DuringAnimation
+        {
+            get { return m_Animating; }
+            set { m_Animating = value; }
+        }
+
 
         public Enemy(string i_Asset, Game i_Game) : base(i_Asset, i_Game)
         {
@@ -29,6 +36,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             m_ImageFliped = false;
             m_GameTotalSeconds = 0;
             m_TimeToJump = 1;
+            m_Animating = false;
         }
 
         public int Model 
@@ -122,6 +130,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             this.Animations["shrink1"].Pause();
 
             this.Visible = false;
+            DuringAnimation = false;
         }
 
         public virtual void InitPositions(float i_DeltaX, float i_DeltaY)
@@ -243,16 +252,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             m_Position.Y += Texture.Height / 2;
             m_TimeToJump -= 0.05 * m_TimeToJump;
-        }
-
-        public void IncreseSpeed()
-        {
-            IncreseSpeed(k_SpeedMultiplicationParam);
-        }
-
-        public void IncreseSpeed(double i_Speed)
-        {
-            k_EnemyVelocityPerSecond = (float)(k_EnemyVelocityPerSecond * i_Speed);
         }
 
         public void Shot()

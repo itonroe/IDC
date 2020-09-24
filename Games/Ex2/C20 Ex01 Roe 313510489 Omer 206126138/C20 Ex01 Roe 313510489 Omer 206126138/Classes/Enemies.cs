@@ -142,7 +142,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                             }
                             else
                             {
+                                touches = true;
                                 distance = (int)(i_MaxWidth - rightMargin);
+                                break;
                             }
                         }
                         else
@@ -155,21 +157,17 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                             }
                             else
                             {
+                                touches = true;
                                 distance = (int)positionX;
+                                break;
                             }
                         }
-                    }
-
-                    if (distance != recWidth)
-                    {
-                        touches = true;
-                        break;
                     }
                 }
 
                 if (touches)
                 {
-                    break;
+                    return distance;
                 }
             }
 
@@ -225,7 +223,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     if (m_Enemies[i, j].IsAlive)
                     {
                         m_Enemies[i, j].MoveDown();
-                        m_Enemies[i, j].IncreseSpeed();
                     }
                 }
             }
@@ -242,9 +239,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     if(i_ship.Bullet1.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet1))
                     {
                         enemyGotHit = m_Enemies[i, j];
-                    }
-
-                    if (i_ship.Bullet2.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet2))
+                    } else if (i_ship.Bullet2.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet2))
                     {
                         enemyGotHit = m_Enemies[i, j];
                     }
@@ -276,17 +271,22 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             return answer;
         }
 
-        public bool BulletIntersectsEnemy(Enemy i_enemy, Bullet i_bullet)
+        public bool BulletIntersectsEnemy(Enemy i_Enemy, Bullet i_bullet)
         {
             bool hit = false;
-            Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.SourceRectangle.Width, i_bullet.Texture.Height);
-            Rectangle enemyRectangle = new Rectangle((int)i_enemy.Position.X, (int)i_enemy.Position.Y, i_enemy.SourceRectangle.Width, i_enemy.SourceRectangle.Height);
 
-            if(bulletRectangle.Intersects(enemyRectangle))
+            if (!i_Enemy.DuringAnimation)
             {
-                hit = true;
-                i_enemy.Animations.Restart();
-                i_bullet.IsActive = false;
+                Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.SourceRectangle.Width, i_bullet.Texture.Height);
+                Rectangle enemyRectangle = new Rectangle((int)i_Enemy.Position.X, (int)i_Enemy.Position.Y, i_Enemy.SourceRectangle.Width, i_Enemy.SourceRectangle.Height);
+
+                if (bulletRectangle.Intersects(enemyRectangle))
+                {
+                    hit = true;
+                    i_Enemy.DuringAnimation = true;
+                    i_Enemy.Animations.Restart();
+                    i_bullet.IsActive = false;
+                }
             }
 
             return hit;
@@ -327,17 +327,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
 
             return allDead;
-        }
-
-        public void IncreseSpeedForAllEnemis(double i_Speed)
-        {
-            for (int i = 0; i < m_Enemies.GetLength(0); i++)
-            {
-                for (int j = 0; j < m_Enemies.GetLength(1); j++)
-                {
-                    m_Enemies[i, j].IncreseSpeed(i_Speed);
-                }
-            }
         }
     }
 }

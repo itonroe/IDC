@@ -279,13 +279,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             if (tempEnemy != null)
             {
                 i_Player.Score.AddScore(tempEnemy.Model);
-
-                // for speed increse
-                m_CountEnemyKills++;
-                if (m_CountEnemyKills % 5 == 0)
-                {
-                    m_Enemies.IncreseSpeedForAllEnemis(k_IncreseSpeedAfterFiveKills);
-                }
             }
 
             // MotherSHip Intersect with bullets

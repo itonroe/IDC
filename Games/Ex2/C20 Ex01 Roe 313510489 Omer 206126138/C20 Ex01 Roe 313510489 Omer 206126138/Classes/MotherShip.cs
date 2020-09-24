@@ -48,6 +48,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             if (m_Animations["blink1"] == null)
             {
                 InitAnimations();
+                
             }
 
             Animations.Enabled = false;
@@ -83,6 +84,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         private void fadeoutAnimator_Finished(object sender, EventArgs e)
         {
             this.Animations.Pause();
+            this.Animations.Enabled = false;
             this.Visible = false;
 
             this.Scales = new Vector2(1, 1);
@@ -95,31 +97,34 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         {
             bool hit = false;
 
-            Bullet bullet1 = i_Ship.Bullet1;
-            Bullet bullet2 = i_Ship.Bullet2;
-
-            Rectangle bulletRectangle1 = new Rectangle((int)bullet1.Position.X, (int)bullet1.Position.Y, bullet1.Texture.Width, bullet1.Texture.Height);
-            Rectangle bulletRectangle2 = new Rectangle((int)bullet2.Position.X, (int)bullet2.Position.Y, bullet2.Texture.Width, bullet2.Texture.Height);
-            Rectangle MotherShipRectangle = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
-
-            if (bulletRectangle1.Intersects(MotherShipRectangle) && bullet1.IsActive)
+            if (!m_Hit)
             {
-                hit = true;
+                Bullet bullet1 = i_Ship.Bullet1;
+                Bullet bullet2 = i_Ship.Bullet2;
 
-                bullet1.IsActive = false;
-            }
-            else if (bulletRectangle2.Intersects(MotherShipRectangle) && bullet2.IsActive)
-            {
-                hit = true;
+                Rectangle bulletRectangle1 = new Rectangle((int)bullet1.Position.X, (int)bullet1.Position.Y, bullet1.Texture.Width, bullet1.Texture.Height);
+                Rectangle bulletRectangle2 = new Rectangle((int)bullet2.Position.X, (int)bullet2.Position.Y, bullet2.Texture.Width, bullet2.Texture.Height);
+                Rectangle MotherShipRectangle = new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height);
 
-                bullet2.IsActive = false;
-            }
+                if (bulletRectangle1.Intersects(MotherShipRectangle) && bullet1.IsActive)
+                {
+                    hit = true;
+                    bullet1.IsActive = false;
+                }
+                else if (bulletRectangle2.Intersects(MotherShipRectangle) && bullet2.IsActive)
+                {
+                    hit = true;
 
-            if (hit)
-            {
-                m_Hit = true;
-                m_Animations.Enabled = true;
-                m_Animations.Restart();
+                    bullet2.IsActive = false;
+                }
+
+                if (hit)
+                {
+                    m_Hit = true;
+                    DuringAnimation = true;
+                    m_Animations.Enabled = true;
+                    m_Animations.Restart();
+                }
             }
 
             return hit;
