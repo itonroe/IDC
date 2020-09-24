@@ -14,7 +14,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
         private const string k_AssetName = @"Sprites\Bullet";
 
-        public Bullet(Color i_Color, Game i_Game) : base (k_AssetName, i_Game)
+        public Bullet(Color i_Color, Game i_Game) : base(k_AssetName, i_Game)
         {
             Visible = false;
 
@@ -95,10 +95,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             {
                 hit = true;
                 i_Bullet.ChangeToNotActive();
-                if(rnd.Next(0,4) == 0)
+                if(rnd.Next(0, 4) == 0)
                 {
                     this.ChangeToNotActive();
-                    (base.Game as Game1).EnemyBulletDisabled();
+                    (Game as Game1).EnemyBulletDisabled();
                 }
             }
 

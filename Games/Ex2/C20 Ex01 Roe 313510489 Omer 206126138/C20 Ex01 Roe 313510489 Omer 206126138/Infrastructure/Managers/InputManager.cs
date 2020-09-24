@@ -1,4 +1,4 @@
-//*** Guy Ronen (c) 2008-2011 ***//
+////*** Guy Ronen © 2008-2011 ***//
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -96,7 +96,7 @@ namespace Infrastructure.Managers
         /// <returns>Returns true if held.</returns>
         public bool KeyHeld(Keys i_Key)
         {
-            return (m_KeyboardState.IsKeyDown(i_Key) && m_PrevKeyboardState.IsKeyDown(i_Key));
+            return m_KeyboardState.IsKeyDown(i_Key) && m_PrevKeyboardState.IsKeyDown(i_Key);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Infrastructure.Managers
         /// <returns>Return true if so.</returns>
         public bool KeyPressed(Keys i_Key)
         {
-            return (m_PrevKeyboardState.IsKeyUp(i_Key) && m_KeyboardState.IsKeyDown(i_Key));
+            return m_PrevKeyboardState.IsKeyUp(i_Key) && m_KeyboardState.IsKeyDown(i_Key);
         }
         #endregion Keyboard Services
 
@@ -506,7 +506,6 @@ namespace Infrastructure.Managers
             #endregion Mouse Buttons
 
             return i_IsOneEnough ? atLeastOneIsTrue : allTrue;
-
         }
 
         /// <summary>

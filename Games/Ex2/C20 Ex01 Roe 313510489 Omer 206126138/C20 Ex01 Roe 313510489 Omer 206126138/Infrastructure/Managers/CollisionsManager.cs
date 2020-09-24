@@ -1,4 +1,4 @@
-//*** Guy Ronen © 2008-2011 ***//
+////*** Guy Ronen © 2008-2011 ***//
 using System;
 using System.Collections.Generic;
 using Infrastructure.ObjectModel;
@@ -14,7 +14,7 @@ namespace Infrastructure.Managers
 
         public CollisionsManager(Game i_Game) : 
             base(i_Game, int.MaxValue)
-        {} 
+        { } 
 
         protected override void RegisterAsService()
         {
@@ -53,7 +53,7 @@ namespace Infrastructure.Managers
         private void collidable_Changed(object sender, EventArgs e)
         {
             if (sender is ICollidable)
-            {// to be on the safe side :)
+            { // to be on the safe side :)
                 checkCollision(sender as ICollidable);
             }
         }

@@ -16,6 +16,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private const double k_IncreseSpeedAfterFiveKills = 1.03;
         private const int k_LifeLost = -600;
         private const int k_RadnomPopDifficulty = 500;
+        private const int k_NumOfBarriers = 4;
 
         private GraphicsDeviceManager m_Graphics;
         private SpriteBatch m_SpriteBatch;
@@ -39,8 +40,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         private Player m_Player1;
         private Player m_Player2;
 
-        //Barriers
-        private const int k_NumOfBarriers = 4;
+        // Barriers
         private Barriers m_Barriers;
 
         public Game1()
@@ -167,8 +167,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             shipGotHitFromBullet(m_Player2, i_GraphicDevice);
 
             // ship bullet hit enemy
-            shipHitEnemy(m_Player1);
-            shipHitEnemy(m_Player2);
+            ShipHitEnemy(m_Player1);
+            ShipHitEnemy(m_Player2);
 
             // Enemy and ship intersect
             if (m_Enemies.ShipIntersection(m_Player1) || m_Enemies.ShipIntersection(m_Player2))
@@ -179,7 +179,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             // Barriers and bullets
             m_Barriers.BulletIntersection(AllActiveBullets());
 
-            //Barriers and enemies
+            // Barriers and enemies
             m_Barriers.EnemyIntersection(m_Enemies.Table);
 
             // Bullets and bullets
@@ -191,29 +191,34 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             List<Bullet> enemyBullets = new List<Bullet>();
             List<Bullet> playersBullets = new List<Bullet>();
 
-            //players bullets
+            // Players bullets
             if (m_Player1.Bullet1.IsActive)
             {
                 playersBullets.Add(m_Player1.Bullet1);
             }
+
             if (m_Player1.Bullet2.IsActive)
             {
                 playersBullets.Add(m_Player1.Bullet2);
             }
+
             if (m_Player2.Bullet1.IsActive)
             {
                 playersBullets.Add(m_Player2.Bullet1);
             }
+
             if (m_Player2.Bullet2.IsActive)
             {
                 playersBullets.Add(m_Player2.Bullet2);
             }
 
-            //Enemies bullets
+            // Enemies bullets
             foreach (Enemy enemy in m_Enemies.Table)
             {
                 if (enemy.Bullet.IsActive)
+                {
                     enemyBullets.Add(enemy.Bullet);
+                }
             }
 
             foreach(Bullet eBullet in enemyBullets)
@@ -234,26 +239,31 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         {
             List<Bullet> bullets = new List<Bullet>();
 
-            //Enemies bullets
+            // Enemies bullets
             foreach(Enemy enemy in m_Enemies.Table)
             {
                 if (enemy.Bullet.IsActive)
+                {
                     bullets.Add(enemy.Bullet);
+                }
             }
 
-            //players bullets
+            // players bullets
             if(m_Player1.Bullet1.IsActive)
             {
                 bullets.Add(m_Player1.Bullet1);
             }
+
             if (m_Player1.Bullet2.IsActive)
             {
                 bullets.Add(m_Player1.Bullet2);
             }
+
             if (m_Player2.Bullet1.IsActive)
             {
                 bullets.Add(m_Player2.Bullet1);
             }
+
             if (m_Player2.Bullet2.IsActive)
             {
                 bullets.Add(m_Player2.Bullet2);
@@ -262,7 +272,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             return bullets;
         }
 
-        public void shipHitEnemy(Player i_Player)
+        public void ShipHitEnemy(Player i_Player)
         {
             Enemy tempEnemy = m_Enemies.EnemyGotHitFromBullet(i_Player);
 
@@ -300,7 +310,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         private void GameIsOn()
         {
-            if (m_Player1.Lifes <= 0 && m_Player2.Lifes <= 0)
+            if ((m_Player1.Lifes <= 0) && (m_Player2.Lifes <= 0))
             {
                 printScore();
             }
@@ -308,8 +318,9 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
         public float GetBarriersPostionY()
         {
-            return this.m_Player1.Position.Y - 2 * this.m_Player1.Height;
+            return this.m_Player1.Position.Y - (2 * this.m_Player1.Height);
         }
+
         private void shipMoveByKB(GameTime gameTime)
         {
             if (m_InputManager.KeyPressed(Keys.Escape))
@@ -367,7 +378,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
                 retVal.Y = currState.Y - m_PrevMouseState.Y;
             }
 
-            //m_PrevMouseState = currState;
+            //// m_PrevMouseState = currState
 
             return retVal;
         }
@@ -435,7 +446,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             }
 
             message += $"\n\n";
-            message += (winner.Equals("Tie")) ? "It's a Tie" : $"{winner} is the winner";
+            message += winner.Equals("Tie") ? "It's a Tie" : $"{winner} is the winner";
 
             System.Windows.Forms.MessageBox.Show(message, "Game Over");
             Exit();

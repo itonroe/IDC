@@ -11,10 +11,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 {
     public class Enemies
     {
-        int m_Counter=0;
-
         private const int k_MaxNumOfBullets = 5;
-        private const int k_BulltDifficullty = 1; // 300 is easy - 1 is hard ( every frame)
+        private const int k_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
 
         private Enemy[,] m_Enemies;
         private bool m_LeftToRight;
@@ -75,7 +73,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                     {
                         model = "Yellow";
                     }
-
 
                     m_Enemies[i, j] = new Enemy(assetName, m_Game);
                     m_Enemies[i, j].Initialize(model, j, i);
@@ -210,7 +207,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
             }
 
             m_Enemies[i, j].Shot();
-            m_Counter++;
             m_NumOfBullets++;
         }
 

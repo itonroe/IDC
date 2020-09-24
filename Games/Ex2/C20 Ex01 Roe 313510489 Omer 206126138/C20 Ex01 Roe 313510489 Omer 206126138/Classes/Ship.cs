@@ -13,21 +13,17 @@ namespace Invaders.Classes
 {
     public class Ship : Sprite
     {
-        private const int r_ShipSpeed = 140;
-
+        private const int k_ShipSpeed = 140;
         protected string m_TexturePath;
-
         private Bullet m_Bullet1;
         private Bullet m_Bullet2;
-
         private int m_Lifes = 3;
 
-        public Ship(string i_AssetName, Game i_Game) : base (i_AssetName, i_Game)
+        public Ship(string i_AssetName, Game i_Game) : base(i_AssetName, i_Game)
         {
             Position = new Vector2(0, 0);
             m_Bullet1 = new Bullet(Color.Red, i_Game);
             m_Bullet2 = new Bullet(Color.Red, i_Game);
-
         }
 
         public Bullet Bullet1 
@@ -80,20 +76,18 @@ namespace Invaders.Classes
         public new void Initialize()
         {
             base.Initialize();
-
-            //InitAnimations();
         }
 
         public void MoveRight(GameTime gameTime)
         {
-            m_Position.X += r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_Position.X += k_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             m_Position.X = Math.Clamp(Position.X, 0, (float)GraphicsDevice.Viewport.Width - Texture.Width);
         }
 
         public void MoveLeft(GameTime gameTime)
         {
-            m_Position.X -= r_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            m_Position.X -= k_ShipSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             m_Position.X = Math.Clamp(Position.X, 0, (float)GraphicsDevice.Viewport.Width - Texture.Width);
         }
@@ -128,7 +122,6 @@ namespace Invaders.Classes
                 hit = true;
                 this.Hit();
                 i_bullet.IsActive = false;
-                //(base.Game as Game1).EnemyBulletDisabled();
             }
 
             return hit;
@@ -198,7 +191,7 @@ namespace Invaders.Classes
         private void rotateAnimation_Finished(object sender, EventArgs e)
         {
             m_Animations.Pause();
-            base.Visible = false;
+            Visible = false;
         }
 
         public void Draw(SpriteBatch i_spriteBatch)

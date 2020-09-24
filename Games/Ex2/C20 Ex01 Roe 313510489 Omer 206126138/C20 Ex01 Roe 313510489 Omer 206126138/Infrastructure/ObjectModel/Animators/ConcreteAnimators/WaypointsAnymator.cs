@@ -1,4 +1,4 @@
-//*** Guy Ronen © 2008-2011 ***//
+////*** Guy Ronen © 2008-2011 ***//
 using System;
 using Microsoft.Xna.Framework;
 
@@ -19,7 +19,7 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
             params Vector2[] i_Waypoints)
 
             : this("Waypoints", i_VelocityPerSecond, i_AnimationLength, i_Loop, i_Waypoints)
-        {}
+        { }
 
         public WaypointsAnymator(
             string i_Name,
@@ -83,12 +83,12 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
 
         private bool reachedLastWaypoint()
         {
-            return (m_CurrentWaypointIdx == m_Waypoints.Length - 1);
+            return m_CurrentWaypointIdx == m_Waypoints.Length - 1;
         }
 
         private bool reachedCurrentWaypoint()
         {
-            return (this.BoundSprite.Position == m_Waypoints[m_CurrentWaypointIdx]);
+            return this.BoundSprite.Position == m_Waypoints[m_CurrentWaypointIdx];
         }
     }
 }

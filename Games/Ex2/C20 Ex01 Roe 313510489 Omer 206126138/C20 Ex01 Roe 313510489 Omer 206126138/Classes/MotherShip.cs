@@ -16,7 +16,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
 
         private bool m_Hit;
 
-        public MotherShip(Game i_Game) : base (k_AssetName, i_Game)
+        public MotherShip(Game i_Game) : base(k_AssetName, i_Game)
         {
             k_EnemyVelocityPerSecond = 95;
             TintColor = Color.Red;
@@ -28,6 +28,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         {
             Position = new Vector2(0, 32);
         }
+
         protected override void InitSourceRectangle()
         {
             base.InitSourceRectangle();
@@ -43,10 +44,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
         {
             initPositions();
             m_Hit = false;
+
             if (m_Animations["blink1"] == null)
             {
                 InitAnimations();
             }
+
             Animations.Enabled = false;
             Visible = true;
         }
@@ -104,14 +107,12 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 hit = true;
 
                 bullet1.IsActive = false;
-
             }
             else if (bulletRectangle2.Intersects(MotherShipRectangle) && bullet2.IsActive)
             {
                 hit = true;
 
                 bullet2.IsActive = false;
-
             }
 
             if (hit)
@@ -120,8 +121,6 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes
                 m_Animations.Enabled = true;
                 m_Animations.Restart();
             }
-
-
 
             return hit;
         }

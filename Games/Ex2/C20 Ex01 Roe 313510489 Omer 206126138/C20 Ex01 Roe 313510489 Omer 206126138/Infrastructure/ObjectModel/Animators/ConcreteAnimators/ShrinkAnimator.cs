@@ -1,4 +1,4 @@
-//*** Guy Ronen © 2008-2011 ***//
+////*** Guy Ronen © 2008-2011 ***//
 using System;
 using System.Drawing;
 using Microsoft.Xna.Framework;
@@ -16,7 +16,6 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
             set { m_AnimationLength = value; }
         }
 
-
         // CTORs
         public ShrinkAnimator(string i_Name, TimeSpan i_AnimationLength)
             : base(i_Name, i_AnimationLength)
@@ -24,7 +23,6 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
             this.m_AnimationLength = i_AnimationLength;
             this.m_TimeLeftForShrink = i_AnimationLength;
         }
-
 
         protected override void DoFrame(GameTime i_GameTime)
         {

@@ -3,26 +3,21 @@ using C20_Ex01_Roe_313510489_Omer_206126138.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Infrastructure.ObjectModel;
 using Infrastructure.ObjectModel.Animators.ConcreteAnimators;
 using Infrastructure.ServiceInterfaces;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138
 {
     public class Enemy : Sprite
     {
-        private int k_NumOfFrames = 6;
-
         private const double k_SpeedMultiplicationParam = 1.06;
-
+        private int k_NumOfFrames = 6;
         protected float k_EnemyVelocityPerSecond = 60;
         private eEnemyModels m_EnemyModel;
-
         private Bullet m_Bullet;
-
         private bool m_ImageFliped;
-
         private double m_GameTotalSeconds;
         private double m_TimeToJump;
         private int m_LastJumpOfEnemy;
@@ -119,25 +114,8 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             this.Animations.Add(rotateAnimator);
 
             rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
-
-            /*BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(4.5));
-            FaderAnimator faderAnimator = new FaderAnimator("fader1", TimeSpan.FromSeconds(0.3));
-            FadeOutAnimator fadeoutAnimator = new FadeOutAnimator("fadeout1", TimeSpan.FromSeconds(10));*/
-
-
-            //this.Animations.Add(blinkAnimation);
-            //this.Animations.Add(faderAnimator);
-            //this.Animations.Add(rotateAnimator);
-            //this.Animations.Add(fadeoutAnimator);
-
-            //blinkAnimation.Finished += new EventHandler(blickAnimations_Finished);
-            //shrinkAnimation.Finished += new EventHandler(shrinkAnimation_Finished);
-            //faderAnimator.Finished += new EventHandler(faderAnimation_Finished);
-            //rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
-            //fadeoutAnimator.Finished += new EventHandler(fadeoutAnimation_Finished);
-
-            //this.Animations.Enabled = true;
         }
+
         private void rotateAnimation_Finished(object sender, EventArgs e)
         {
             this.Animations["rotate1"].Pause();
@@ -151,7 +129,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
             const int margin = 20;
 
             float x = i_DeltaX * (m_SourceRectangle.Width + margin);
-            float y = 3 * m_SourceRectangle.Height + (i_DeltaY * (m_SourceRectangle.Height + margin));
+            float y = (3 * m_SourceRectangle.Height) + (i_DeltaY * (m_SourceRectangle.Height + margin));
 
             m_Position = new Vector2(x, y);
         }
@@ -215,11 +193,10 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
 
             offsetX += m_ImageFliped ? 0 : 32;
 
-
             this.SourceRectangle = new Rectangle(
             offsetX,
             0,
-            (int)(m_SourceRectangle.Width),
+            (int)m_SourceRectangle.Width,
             (int)m_HeightBeforeScale);
 
             m_ImageFliped = !m_ImageFliped;
@@ -265,7 +242,7 @@ namespace C20_Ex01_Roe_313510489_Omer_206126138
         public void MoveDown()
         {
             m_Position.Y += Texture.Height / 2;
-            m_TimeToJump -= ((0.05) * m_TimeToJump);
+            m_TimeToJump -= 0.05 * m_TimeToJump;
         }
 
         public void IncreseSpeed()

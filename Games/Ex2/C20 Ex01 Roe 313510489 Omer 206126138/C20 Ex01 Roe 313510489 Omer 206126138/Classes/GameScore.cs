@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 using Infrastructure.ObjectModel;
 
 namespace C20_Ex01_Roe_313510489_Omer_206126138.Classes

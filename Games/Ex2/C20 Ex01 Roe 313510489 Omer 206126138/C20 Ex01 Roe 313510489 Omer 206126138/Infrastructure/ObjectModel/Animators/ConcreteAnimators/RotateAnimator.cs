@@ -5,12 +5,11 @@ namespace Infrastructure.ObjectModel.Animators.ConcreteAnimators
 {
     public class RotateAnimator : SpriteAnimator
     {
+        private const float k_AngularVelocity = (float)MathHelper.TwoPi;
         private TimeSpan m_AnimationLength;
         private TimeSpan m_SingleRotateLength;
         private TimeSpan m_TimeLeftForRotate;
         private double m_LastRotationTime;
-        const float k_AngularVelocity = (float)MathHelper.TwoPi;
-        const float k_MaxAngle = ((float)MathHelper.TwoPi);
 
         public TimeSpan RotateLength
         {

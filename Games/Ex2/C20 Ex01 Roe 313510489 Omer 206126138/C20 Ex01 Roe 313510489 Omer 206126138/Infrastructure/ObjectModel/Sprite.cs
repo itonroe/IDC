@@ -1,4 +1,4 @@
-//*** Guy Ronen © 2008-2011 ***//
+////*** Guy Ronen © 2008-2011 ***//
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Infrastructure.ServiceInterfaces;
@@ -9,6 +9,7 @@ namespace Infrastructure.ObjectModel
     public class Sprite : LoadableDrawableComponent
     {
         protected CompositeAnimator m_Animations;
+
         public CompositeAnimator Animations
         {
             get { return m_Animations; }
@@ -16,6 +17,7 @@ namespace Infrastructure.ObjectModel
         }
 
         private Texture2D m_Texture;
+
         public Texture2D Texture
         {
             get { return m_Texture; }
@@ -35,6 +37,7 @@ namespace Infrastructure.ObjectModel
         }
 
         protected float m_WidthBeforeScale;
+
         public float WidthBeforeScale
         {
             get { return m_WidthBeforeScale; }
@@ -42,6 +45,7 @@ namespace Infrastructure.ObjectModel
         }
 
         protected float m_HeightBeforeScale;
+
         public float HeightBeforeScale
         {
             get { return m_HeightBeforeScale; }
@@ -49,12 +53,16 @@ namespace Infrastructure.ObjectModel
         }
 
         protected Vector2 m_Position = Vector2.Zero;
+
         /// <summary>
         /// Represents the location of the sprite's origin point in screen coorinates
         /// </summary>
         public Vector2 Position
         {
-            get { return m_Position; }
+            get 
+            { 
+                return m_Position; 
+            }
             set
             {
                 if (m_Position != value)
@@ -66,6 +74,7 @@ namespace Infrastructure.ObjectModel
         }
 
         public Vector2 m_PositionOrigin;
+
         public Vector2 PositionOrigin
         {
             get { return m_PositionOrigin; }
@@ -73,6 +82,7 @@ namespace Infrastructure.ObjectModel
         }
 
         public Vector2 m_RotationOrigin = Vector2.Zero;
+
         public Vector2 RotationOrigin
         {
             get { return m_RotationOrigin; }// r_SpriteParameters.RotationOrigin; }
@@ -115,6 +125,7 @@ namespace Infrastructure.ObjectModel
         }
 
         protected Rectangle m_SourceRectangle;
+
         public Rectangle SourceRectangle
         {
             get { return m_SourceRectangle; }
@@ -135,6 +146,7 @@ namespace Infrastructure.ObjectModel
         }
 
         protected float m_Rotation = 0;
+
         public float Rotation
         {
             get { return m_Rotation; }
@@ -142,9 +154,13 @@ namespace Infrastructure.ObjectModel
         }
 
         protected Vector2 m_Scales = Vector2.One;
+
         public Vector2 Scales
         {
-            get { return m_Scales; }
+            get 
+            { 
+                return m_Scales; 
+            }
             set
             {
                 if (m_Scales != value)
@@ -157,6 +173,7 @@ namespace Infrastructure.ObjectModel
         }
 
         protected Color m_TintColor = Color.White;
+
         public Color TintColor
         {
             get { return m_TintColor; }
@@ -170,6 +187,7 @@ namespace Infrastructure.ObjectModel
         }
 
         protected float m_LayerDepth;
+
         public float LayerDepth
         {
             get { return m_LayerDepth; }
@@ -241,7 +259,6 @@ namespace Infrastructure.ObjectModel
             m_SourceRectangle = new Rectangle(0, 0, (int)m_WidthBeforeScale, (int)m_HeightBeforeScale);
         }
 
-
         private bool m_UseSharedBatch = true;
 
         protected SpriteBatch m_SpriteBatch;
@@ -310,10 +327,16 @@ namespace Infrastructure.ObjectModel
                 m_SpriteBatch.Begin();
             }
 
-            m_SpriteBatch.Draw(m_Texture, this.PositionForDraw,
-                 this.SourceRectangle, this.TintColor,
-                this.Rotation, this.RotationOrigin, this.Scales,
-                SpriteEffects.None, this.LayerDepth);
+            m_SpriteBatch.Draw(
+                m_Texture, 
+                this.PositionForDraw,
+                this.SourceRectangle,
+                this.TintColor,
+                this.Rotation,
+                this.RotationOrigin,
+                this.Scales,
+                SpriteEffects.None,
+                this.LayerDepth);
 
             if (!m_UseSharedBatch)
             {
