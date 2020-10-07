@@ -25,6 +25,9 @@ namespace Invaders.Classes
             Position = new Vector2(0, 0);
             m_Bullet1 = new Bullet(Color.Red, i_GameScreen);
             m_Bullet2 = new Bullet(Color.Red, i_GameScreen);
+
+            Initialize();
+            InitPosition();
         }
 
         public Bullet Bullet1 
@@ -197,8 +200,18 @@ namespace Invaders.Classes
 
         public void Draw(SpriteBatch i_spriteBatch)
         {
+            if (Visible)
+            {
+                if (m_Position.Y == 0)
+                {
+                    InitPosition();
+                }
+
+                i_spriteBatch.Draw(Texture, m_Position, TintColor);
+            }
+
             // BulletDraw
-            if(m_Bullet1.IsActive)
+            if (m_Bullet1.IsActive)
             {
                 m_Bullet1.Draw(i_spriteBatch);
             }

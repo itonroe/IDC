@@ -20,6 +20,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         public Barrier(GameScreen i_GameScreen) : base(k_TexturePath, i_GameScreen.Game)
         {
             m_GameScreen = i_GameScreen;
+            Initialize();
+        }
+
+        public void LoadTexture()
+        {
+            this.Texture = this.Game.Content.Load<Texture2D>(k_TexturePath);
         }
 
         public void Initialize(Vector2 i_Poition)
@@ -39,6 +45,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         public bool BulletIntersectionRectangle(Bullet i_bullet)
         {
             bool hit = false;
+
+            if (this.Texture == null)
+            {
+                return false;
+            }
 
             Rectangle bulletRectangle = new Rectangle((int)i_bullet.Position.X, (int)i_bullet.Position.Y, i_bullet.Texture.Width, i_bullet.Texture.Height);
             Rectangle barriesRectangle = new Rectangle((int)this.m_Position.X, (int)this.m_Position.Y, this.Texture.Width, this.Texture.Height);
@@ -77,7 +88,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             {
                 yIteration = this.Texture.Height - 1;
 
-                for (int i = yIteration; i >= 0 && demageCounter > 0; i--) 
+                for (int i = yIteration; i >= 0 && demageCounter > 0; i--)
                 {
                     for (int j = x; j < Math.Clamp(x + i_bulletWidth, 0, this.Texture.Width) && demageCounter > 0; j++)
                     {
@@ -93,7 +104,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             // Enemy bullet
             else
             {
-                for (int i = 0; i < this.Texture.Height && demageCounter > 0; i++) 
+                for (int i = 0; i < this.Texture.Height && demageCounter > 0; i++)
                 {
                     for (int j = x; j < Math.Clamp(x + i_bulletWidth, 0, this.Texture.Width) && demageCounter > 0; j++)
                     {
@@ -119,6 +130,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 
         public bool EnemyIntersectionRectangle(Sprite i_Sprite)
         {
+            if (this.Texture == null)
+            {
+                return false;
+            }
+
             bool hit = false;
 
             Rectangle enemyRectangle = new Rectangle((int)i_Sprite.Position.X, (int)i_Sprite.Position.Y, i_Sprite.Texture.Width, i_Sprite.Texture.Height);

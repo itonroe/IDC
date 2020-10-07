@@ -26,6 +26,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             m_GameScreen = i_GameScreen;
             m_LeftToRight = true;
             m_NumOfBullets = 0;
+
+            InitAndLoad();
         }
 
         public int ActiveBullets 
@@ -110,6 +112,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             {
                 for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
+                    if (m_Enemies[i, j].Animations.Enabled)
+                    {
+                        m_Enemies[i, j].Animations.Update(gameTime);
+                    }
                     m_Enemies[i, j].Update(gameTime, m_LeftToRight, distance);
 
                     if (m_Enemies[i, j].UpdateBullet(gameTime, m_GameScreen.GraphicsDevice))
@@ -285,7 +291,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 {
                     hit = true;
                     i_Enemy.DuringAnimation = true;
-                    i_Enemy.Animations.Restart();
+                    i_Enemy.InitAnimations();
                     i_bullet.IsActive = false;
                 }
             }
@@ -328,6 +334,20 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             }
 
             return allDead;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    if (m_Enemies[i, j].IsAlive)
+                    {
+                        m_Enemies[i, j].Draw(spriteBatch);
+                    }
+                }
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_GameTotalSeconds = 0;
             m_TimeToJump = 1;
             m_Animating = false;
+            Initialize();
         }
 
         public int Model 
@@ -109,7 +110,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
             TintColor = enemyColor;
 
-            InitAnimations();
             LoadContent(i_Model);
             InitPositions(i_DeltaX, i_DeltaY);
         }
@@ -123,6 +123,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             this.Animations.Add(rotateAnimator);
 
             rotateAnimator.Finished += new EventHandler(rotateAnimation_Finished);
+
+            this.Animations.Restart();
+            this.Animations.Enabled = true;
         }
 
         private void rotateAnimation_Finished(object sender, EventArgs e)
@@ -265,8 +268,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public void Draw(SpriteBatch i_SpriteBatch)
         {
+            if (IsAlive && !DuringAnimation)
+            {
+                i_SpriteBatch.Draw(Texture, m_Position, m_SourceRectangle, TintColor);
+            }
             // Bullet
-            if(m_Bullet.IsActive)
+            if (m_Bullet.IsActive)
             {
                 m_Bullet.Draw(i_SpriteBatch);
             }

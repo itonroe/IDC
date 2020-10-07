@@ -250,6 +250,11 @@ namespace Infrastructure.ObjectModel
                 }
             }
 
+            if (m_SpriteBatch == null)
+            {
+                return;
+            }
+
             m_SpriteBatch.Begin(
                 this.SpritesSortMode, this.BlendState, this.SamplerState,
                 this.DepthStencilState, this.RasterizerState, this.Shader, this.TransformMatrix);

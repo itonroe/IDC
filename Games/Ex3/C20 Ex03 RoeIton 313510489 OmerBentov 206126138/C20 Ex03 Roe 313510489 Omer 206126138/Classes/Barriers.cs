@@ -25,9 +25,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             for (int i = 0; i < i_NumOfBarriers; i++)
             {
                 m_Barriers[i] = new Barrier(i_GameScreen);
+                m_Barriers[i].Initialize();
             }
         }
-
+        public void Draw(SpriteBatch i_SpriteBatch)
+        {
+            foreach (Barrier barrier in m_Barriers)
+            {
+                InitPositions(m_GameScreen.GraphicsDevice);
+                barrier.Draw(i_SpriteBatch);
+            }
+        }
         public void InitPositions(GraphicsDevice i_graphicDevice)
         {
             int barriersWidth = m_Barriers[0].Texture.Width;

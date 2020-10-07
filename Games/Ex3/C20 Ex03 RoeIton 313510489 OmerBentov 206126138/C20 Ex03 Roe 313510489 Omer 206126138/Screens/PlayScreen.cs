@@ -24,7 +24,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private SpriteBatch m_SpriteBatch;
         private KeyboardState m_PrevKbState;
         private MouseState m_PrevMouseState;
-        private IInputManager m_InputManager;
 
         // Enemies collection
         private Enemies m_Enemies;
@@ -48,6 +47,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         public PlayScreen(Game i_Game) : base (i_Game)
         {
             m_Game = i_Game;
+            Initialize();
         }
 
         public override void Initialize()
@@ -97,10 +97,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public override void Update(GameTime gameTime)
         {
-            if (m_InputManager.ButtonsPressed(eInputButtons.Back) || m_InputManager.KeyPressed(Keys.Escape))
+            /*if (InputManager.ButtonsPressed(eInputButtons.Back) || InputManager.KeyPressed(Keys.Escape))
             {
                 this.Game.Exit();
-            }
+            }*/
 
             updateShip(gameTime);
             updateEnemies(gameTime);
@@ -310,27 +310,27 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         private void shipMoveByKB(GameTime gameTime)
         {
-            if (m_InputManager.KeyPressed(Keys.Escape))
+            if (InputManager.KeyPressed(Keys.Escape))
             {
                 System.Windows.Forms.MessageBox.Show(m_Player1.Score.Score.ToString() + "\n" + m_Player2.Score.Score.ToString(), "Game Over");
             }
 
-            if (m_InputManager.KeyHeld(Keys.P))
+            if (InputManager.KeyHeld(Keys.P))
             {
                 m_Player1.MoveRight(gameTime);
             }
 
-            if (m_InputManager.KeyHeld(Keys.I))
+            if (InputManager.KeyHeld(Keys.I))
             {
                 m_Player1.MoveLeft(gameTime);
             }
 
-            if (m_InputManager.KeyHeld(Keys.R))
+            if (InputManager.KeyHeld(Keys.R))
             {
                 m_Player2.MoveRight(gameTime);
             }
 
-            if (m_InputManager.KeyHeld(Keys.W))
+            if (InputManager.KeyHeld(Keys.W))
             {
                 m_Player2.MoveLeft(gameTime);
             }
@@ -372,9 +372,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         private void newShot()
         {
-            bool keyBoardClickPlayer1 = m_InputManager.KeyPressed(Keys.D9);
-            bool keyBoardClickPlayer2 = m_InputManager.KeyPressed(Keys.D3);
-            bool mouseClick = m_InputManager.ButtonPressed(eInputButtons.Left);
+            bool keyBoardClickPlayer1 = InputManager.KeyPressed(Keys.D9);
+            bool keyBoardClickPlayer2 = InputManager.KeyPressed(Keys.D3);
+            bool mouseClick = InputManager.ButtonPressed(eInputButtons.Left);
 
             if (keyBoardClickPlayer1 || mouseClick)
             {
@@ -448,6 +448,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_Player1.Draw(m_SpriteBatch);
             m_Player2.Draw(m_SpriteBatch);
             m_MotherShip.Draw(m_SpriteBatch);
+            m_Enemies.Draw(m_SpriteBatch);
+            m_Barriers.Draw(m_SpriteBatch);
 
             m_SpriteBatch.End();
             base.Draw(gameTime);

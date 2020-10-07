@@ -22,7 +22,14 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             k_EnemyVelocityPerSecond = 95;
             TintColor = Color.Red;
             Visible = false;
+            Initialize();
+            LoadTexture();
             initPositions();
+        }
+
+        private void LoadTexture()
+        {
+            this.Texture = this.Game.Content.Load<Texture2D>(k_AssetName);
         }
 
         private void initPositions()
@@ -46,7 +53,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             initPositions();
             m_Hit = false;
 
-            if (m_Animations["blink1"] == null)
+            if (m_Animations == null || m_Animations["blink1"] == null)
             {
                 InitAnimations();
                 
@@ -71,6 +78,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 
         public new void InitAnimations()
         {
+
             BlinkAnimator blinkAnimation = new BlinkAnimator("blink1", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(3));
             ShrinkAnimator shrinkAnimation = new ShrinkAnimator("shrink1", TimeSpan.FromSeconds(3));
             FadeOutAnimator fadeoutAnimator = new FadeOutAnimator("fadeout1", TimeSpan.FromSeconds(3));

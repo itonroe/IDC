@@ -34,6 +34,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             {
                 m_PlayerNumber = io_PlayerNumber;
                 SetPlayerNumber(io_PlayerNumber);
+                Initialize();
             }
             else
             {
@@ -60,6 +61,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                     //// this.TintColor = Color.Red
                     break;
             }
+
+            this.Texture = this.Game.Content.Load<Texture2D>(AssetName);
         }
 
         public enum ePlayerNumber
