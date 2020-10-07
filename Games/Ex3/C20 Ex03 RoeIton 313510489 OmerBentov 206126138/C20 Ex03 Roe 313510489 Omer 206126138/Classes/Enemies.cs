@@ -6,6 +6,7 @@ using Infrastructure.ObjectModel.Screens;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
@@ -20,6 +21,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         private int m_NumOfBullets;
 
         private GameScreen m_GameScreen;
+        private SoundEffect m_AllEnemiesDeadSound;
 
         public Enemies(GameScreen i_GameScreen)
         {
@@ -41,6 +43,19 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             {
                 m_NumOfBullets = value; 
             } 
+        }
+
+        public SoundEffect AllDeadSound
+        {
+            get
+            {
+                return m_AllEnemiesDeadSound;
+            }
+
+            set
+            {
+                m_AllEnemiesDeadSound = value;
+            }
         }
 
         public Enemy[,] Table 
@@ -81,6 +96,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                     m_Enemies[i, j].Initialize(model, j, i);
                 }
             }
+
+            m_AllEnemiesDeadSound = m_GameScreen.Game.Content.Load<SoundEffect>("Sounds/LevelWin");
         }
 
         public Enemy GetEnemy(int x, int y)

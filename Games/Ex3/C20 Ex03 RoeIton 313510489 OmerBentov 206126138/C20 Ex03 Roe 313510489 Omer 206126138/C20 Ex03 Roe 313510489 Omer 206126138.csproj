@@ -30,6 +30,7 @@
     <None Include="Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Sounds\" />
     <Folder Include="Infrastructure\Content\bin\Windows\Content\" />
   </ItemGroup>
 </Project>

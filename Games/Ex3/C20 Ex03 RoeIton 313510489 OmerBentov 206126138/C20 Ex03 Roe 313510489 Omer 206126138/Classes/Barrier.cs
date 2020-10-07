@@ -4,6 +4,7 @@ using System.Text;
 using Infrastructure.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using C20_Ex03_Roe_313510489_Omer_206126138;
 using Infrastructure.ObjectModel.Screens;
@@ -27,11 +28,21 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         {
             this.Texture = this.Game.Content.Load<Texture2D>(k_TexturePath);
         }
+        public enum eBarrierSounds
+        {
+            hit = 0
+        }
+
+        public void LoadSounds()
+        {
+            m_Sounds.Add(this.Game.Content.Load<SoundEffect>("Sounds/BarrierHit"));
+        }
 
         public void Initialize(Vector2 i_Poition)
         {
             Position = i_Poition;
             Visible = true;
+            LoadSounds();
         }
 
         public void Draw(SpriteBatch i_SpriteBatch)
@@ -62,6 +73,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 if (isBarrierGotHitFromBullet(fromBottom, (int)relativeX, i_bullet.Texture.Width, i_bullet.Texture.Height))
                 {
                     hit = true;
+                    Sounds[(int)Barrier.eBarrierSounds.hit].Play();
                     i_bullet.IsActive = false;
                     (m_GameScreen as PlayScreen).EnemyBulletDisabled();
                 }

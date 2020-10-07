@@ -9,6 +9,7 @@ using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138
 {
@@ -118,6 +119,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_Enemies.Update(gameTime);
             if (m_Enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
             {
+                m_Enemies.AllDeadSound.Play();
                 printScore();
             }
         }
@@ -273,6 +275,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (tempEnemy != null)
             {
                 i_Player.Score.AddScore(tempEnemy.Model);
+                tempEnemy.Sounds[(int)Enemy.eEnemySounds.Kill].Play();
             }
 
             // MotherSHip Intersect with bullets

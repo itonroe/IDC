@@ -6,7 +6,9 @@ using Infrastructure.ObjectModel.Screens;
 using Invaders.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 {
@@ -27,9 +29,15 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             initPositions();
         }
 
+        public enum eMotherShipSounds
+        {
+            Kill = 0
+        }
+
         private void LoadTexture()
         {
             this.Texture = this.Game.Content.Load<Texture2D>(k_AssetName);
+            m_Sounds.Add(Game.Content.Load<SoundEffect>("Sounds/MotherShipKill"));
         }
 
         private void initPositions()
@@ -130,6 +138,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 if (hit)
                 {
                     m_Hit = true;
+                    m_Sounds[(int)MotherShip.eMotherShipSounds.Kill].Play();
                     DuringAnimation = true;
                     m_Animations.Enabled = true;
                     m_Animations.Restart();

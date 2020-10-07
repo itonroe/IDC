@@ -5,6 +5,7 @@ using C20_Ex03_Roe_313510489_Omer_206126138.Classes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 using Infrastructure.ObjectModel;
 using Infrastructure.ObjectModel.Animators.ConcreteAnimators;
 using C20_Ex03_Roe_313510489_Omer_206126138;
@@ -77,9 +78,17 @@ namespace Invaders.Classes
             Position = new Vector2(x, y);
         }
 
+        public enum eShipSounds
+        {
+            SSGunShot = 0,
+            LifeDie = 1,
+        }
+
         public new void Initialize()
         {
             base.Initialize();
+            m_Sounds.Add(this.Game.Content.Load<SoundEffect>("Sounds/SSGunShot"));
+            m_Sounds.Add(this.Game.Content.Load<SoundEffect>("Sounds/LifeDie"));
         }
 
         public void MoveRight(GameTime gameTime)
@@ -103,13 +112,14 @@ namespace Invaders.Classes
                 if (!m_Bullet1.IsActive)
                 {
                     m_Bullet1.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
-
+                    m_Sounds[(int)Ship.eShipSounds.SSGunShot].Play();
                     return;
                 }
 
                 if (!m_Bullet2.IsActive)
                 {
                     m_Bullet2.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
+                    m_Sounds[(int)Ship.eShipSounds.SSGunShot].Play();
                 }
             }
         }
@@ -148,6 +158,7 @@ namespace Invaders.Classes
             }
             else
             {
+                Sounds[(int)Ship.eShipSounds.LifeDie].Play();
                 InitPosition();
                 m_Animations.Enabled = true;
 

@@ -1,6 +1,8 @@
 //*** Guy Ronen © 2008-2011 ***//
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+using System.Collections.Generic;
 using Infrastructure.ServiceInterfaces;
 using Infrastructure.ObjectModel.Animators;
 
@@ -8,6 +10,13 @@ namespace Infrastructure.ObjectModel
 {
     public class Sprite : LoadableDrawableComponent
     {
+        protected List<SoundEffect> m_Sounds;
+        public List<SoundEffect> Sounds
+        {
+            get { return m_Sounds; }
+            set { m_Sounds = value; }
+        }
+
         protected CompositeAnimator m_Animations;
         public CompositeAnimator Animations
         {
@@ -254,15 +263,15 @@ namespace Infrastructure.ObjectModel
 
         public Sprite(string i_AssetName, Game i_Game, int i_UpdateOrder, int i_DrawOrder)
             : base(i_AssetName, i_Game, i_UpdateOrder, i_DrawOrder)
-        { }
+        { m_Sounds = new List<SoundEffect>(); }
 
         public Sprite(string i_AssetName, Game i_Game, int i_CallsOrder)
             : base(i_AssetName, i_Game, i_CallsOrder)
-        { }
+        { m_Sounds = new List<SoundEffect>(); }
 
         public Sprite(string i_AssetName, Game i_Game)
             : base(i_AssetName, i_Game, int.MaxValue)
-        { }
+        { m_Sounds = new List<SoundEffect>(); }
 
         /// <summary>
         /// Default initialization of bounds
