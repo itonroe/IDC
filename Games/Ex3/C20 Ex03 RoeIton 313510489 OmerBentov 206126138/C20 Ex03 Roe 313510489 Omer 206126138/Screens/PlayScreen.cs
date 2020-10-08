@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using C20_Ex03_Roe_313510489_Omer_206126138.Classes;
+using C20_Ex03_Roe_313510489_Omer_206126138.Screens;
 using Infrastructure.Managers;
 using Infrastructure.ObjectModel.Screens;
 using Infrastructure.ServiceInterfaces;
@@ -22,7 +23,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private const int k_RadnomPopDifficulty = 500;
         private const int k_NumOfBarriers = 4;
 
-        private SpriteBatch m_SpriteBatch;
         private KeyboardState m_PrevKbState;
         private MouseState m_PrevMouseState;
 
@@ -98,10 +98,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public override void Update(GameTime gameTime)
         {
-            /*if (InputManager.ButtonsPressed(eInputButtons.Back) || InputManager.KeyPressed(Keys.Escape))
+            if (InputManager.KeyPressed(Keys.P))
             {
-                this.Game.Exit();
-            }*/
+                ScreensManager.SetCurrentScreen(new PauseScreen(this.Game));
+            }
 
             updateShip(gameTime);
             updateEnemies(gameTime);
