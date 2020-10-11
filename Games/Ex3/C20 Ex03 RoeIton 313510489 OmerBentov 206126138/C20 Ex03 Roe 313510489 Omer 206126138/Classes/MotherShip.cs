@@ -24,20 +24,15 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             k_EnemyVelocityPerSecond = 95;
             TintColor = Color.Red;
             Visible = false;
+            IsAlive = false;
             Initialize();
             LoadTexture();
             initPositions();
         }
 
-        public enum eMotherShipSounds
-        {
-            Kill = 0
-        }
-
         private void LoadTexture()
         {
             this.Texture = this.Game.Content.Load<Texture2D>(k_AssetName);
-            m_Sounds.Add(Game.Content.Load<SoundEffect>("Sounds/MotherShipKill"));
         }
 
         private void initPositions()
@@ -64,7 +59,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             if (m_Animations == null || m_Animations["blink1"] == null)
             {
                 InitAnimations();
-                
             }
 
             Animations.Enabled = false;
@@ -80,6 +74,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 if (Position.X >= GraphicsDevice.Viewport.Width)
                 {
                     Visible = false;
+                    IsAlive = false;
                 }
             }
         }
@@ -138,7 +133,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 if (hit)
                 {
                     m_Hit = true;
-                    m_Sounds[(int)MotherShip.eMotherShipSounds.Kill].Play();
+                    (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.MotherShipKill].Play();
                     DuringAnimation = true;
                     m_Animations.Enabled = true;
                     m_Animations.Restart();

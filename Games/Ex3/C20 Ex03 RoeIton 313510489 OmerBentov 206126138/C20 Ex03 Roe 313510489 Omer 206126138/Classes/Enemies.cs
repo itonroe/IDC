@@ -22,7 +22,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         private int m_NumOfBullets;
 
         private GameScreen m_GameScreen;
-        private SoundEffect m_AllEnemiesDeadSound;
 
         public Enemies(GameScreen i_GameScreen, int i_NumOfMatrixColumns)
         {
@@ -45,19 +44,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             {
                 m_NumOfBullets = value; 
             } 
-        }
-
-        public SoundEffect AllDeadSound
-        {
-            get
-            {
-                return m_AllEnemiesDeadSound;
-            }
-
-            set
-            {
-                m_AllEnemiesDeadSound = value;
-            }
         }
 
         public Enemy[,] Table 
@@ -98,8 +84,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                     m_Enemies[i, j].Initialize(model, j, i);
                 }
             }
-
-            m_AllEnemiesDeadSound = m_GameScreen.Game.Content.Load<SoundEffect>("Sounds/LevelWin");
         }
 
         public Enemy GetEnemy(int x, int y)
@@ -224,14 +208,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             int i = rndI.Next(0, m_Enemies.GetLength(0));
             int j = rndJ.Next(0, m_Enemies.GetLength(1));
 
-            /*while (!m_Enemies[i, j].IsAlive || m_Enemies[i, j].Bullet.IsActive)
+            if (m_Enemies[i, j].IsAlive && !m_Enemies[i, j].Bullet.IsActive)
             {
-                i = rndI.Next(0, m_Enemies.GetLength(0));
-                j = rndJ.Next(0, m_Enemies.GetLength(1));
-            }*/
-
-            m_Enemies[i, j].Shot();
-            m_NumOfBullets++;
+                m_Enemies[i, j].Shot();
+                m_NumOfBullets++;
+            }
         }
 
         public void ChanegeDirection()

@@ -106,6 +106,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 ScreensManager.SetCurrentScreen(new PauseScreen(this.Game));
             }
 
+            if (InputManager.KeyPressed(Keys.M))
+            {
+                (Game as GameWithScreens).ToogleMuteAllSounds();
+            }
+
             updateShip(gameTime);
             updateEnemies(gameTime);
             updateMotherShip(gameTime);
@@ -122,7 +127,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_Enemies.Update(gameTime);
             if (m_Enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
             {
-                m_Enemies.AllDeadSound.Play();
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.LevelWin].Play();
                 (base.m_ScreensManager as ScreensMananger).Push(new PlayScreen(this.Game, m_GameLevel + 1));
                 base.m_ScreensManager.SetCurrentScreen(new LevelTransitionScreen(this.Game, m_GameLevel + 1));
                 ExitScreen();
@@ -160,6 +165,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             // enemy reach bottom
             if (m_Enemies.IsEndOfGame())
             {
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.BarriersHit].Play();
                 printScore();
             }
 
@@ -280,7 +286,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (tempEnemy != null)
             {
                 i_Player.Score.AddScore(tempEnemy.Model);
-                tempEnemy.Sounds[(int)Enemy.eEnemySounds.Kill].Play();
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.EnemyKill].Play();
             }
 
             // MotherSHip Intersect with bullets
@@ -423,6 +429,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         private void printScore()
         {
+
             string message = $"Player 1 Score is: {m_Player1.Score.Score}\nPlayer 2 Score is: {m_Player2.Score.Score}";
 
             string winner;

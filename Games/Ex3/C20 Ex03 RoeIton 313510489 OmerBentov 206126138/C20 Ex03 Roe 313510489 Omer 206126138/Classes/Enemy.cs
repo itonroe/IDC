@@ -40,7 +40,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_GameTotalSeconds = 0;
             m_TimeToJump = 1;
             m_Animating = false;
-            m_Sounds = new List<SoundEffect>();
             Initialize();
         }
 
@@ -84,12 +83,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             Pink = 300,
             Blue = 200,
             Yellow = 70
-        }
-
-        public enum eEnemySounds
-        {
-            GunShot = 0,
-            Kill = 1
         }
 
         public void Initialize(string i_Model, float i_DeltaX, float i_DeltaY)
@@ -159,8 +152,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         public virtual void LoadContent(string i_Model)
         {
             m_EnemyModel = (eEnemyModels)Enum.Parse(typeof(eEnemyModels), i_Model);
-            m_Sounds.Add(this.Game.Content.Load<SoundEffect>("Sounds/EnemyGunShot"));
-            m_Sounds.Add(this.Game.Content.Load<SoundEffect>("Sounds/EnemyKill"));
         }
 
         public bool Update(GameTime i_GameTime, bool i_LeftToRight, int i_Distance)
@@ -274,7 +265,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (!m_Bullet.IsActive)
             {
                 m_Bullet.ChangedToActive(new Vector2(m_Position.X + (SourceRectangle.Width / 2), m_Position.Y));
-                m_Sounds[(int)eEnemySounds.GunShot].Play();
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.EnemyGunShot].Play();
             }
         }
 

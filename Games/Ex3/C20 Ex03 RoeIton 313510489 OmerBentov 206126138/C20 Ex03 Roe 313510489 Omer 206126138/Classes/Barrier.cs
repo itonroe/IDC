@@ -33,16 +33,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             hit = 0
         }
 
-        public void LoadSounds()
-        {
-            m_Sounds.Add(this.Game.Content.Load<SoundEffect>("Sounds/BarrierHit"));
-        }
-
         public void Initialize(Vector2 i_Poition)
         {
             Position = i_Poition;
             Visible = true;
-            LoadSounds();
         }
 
         public void Draw(SpriteBatch i_SpriteBatch)
@@ -73,7 +67,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 if (isBarrierGotHitFromBullet(fromBottom, (int)relativeX, i_bullet.Texture.Width, i_bullet.Texture.Height))
                 {
                     hit = true;
-                    Sounds[(int)Barrier.eBarrierSounds.hit].Play();
+                    (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.BarriersHit].Play();
                     i_bullet.IsActive = false;
                     (m_GameScreen as PlayScreen).EnemyBulletDisabled();
                 }

@@ -142,3 +142,5 @@ C:\GitHub\Education\IDC\Games\Ex3\C20 Ex03 RoeIton 313510489 OmerBentov 20612613
 C:\GitHub\Education\IDC\Games\Ex3\C20 Ex03 RoeIton 313510489 OmerBentov 206126138\C20 Ex03 Roe 313510489 Omer 206126138\obj\Debug\netcoreapp3.1\C20 Ex03 Roe 313510489 Omer 206126138.csproj.CopyComplete
 C:\GitHub\Education\IDC\Games\Ex3\C20 Ex03 RoeIton 313510489 OmerBentov 206126138\C20 Ex03 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Screens\blank.xnb
 C:\GitHub\Education\IDC\Games\Ex3\C20 Ex03 RoeIton 313510489 OmerBentov 206126138\C20 Ex03 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Screens\gradient.xnb
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex3\C20 Ex03 RoeIton 313510489 OmerBentov 206126138\C20 Ex03 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Screens\blank.xnb
+C:\Users\עומר\Desktop\שיעורים ועבודות\שנה ב\סמסטר ב\C#\IDC\Games\Ex3\C20 Ex03 RoeIton 313510489 OmerBentov 206126138\C20 Ex03 Roe 313510489 Omer 206126138\bin\Debug\netcoreapp3.1\Content\Screens\gradient.xnb

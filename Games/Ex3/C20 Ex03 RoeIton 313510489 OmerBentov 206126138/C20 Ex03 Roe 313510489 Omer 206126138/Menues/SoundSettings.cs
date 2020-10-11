@@ -4,6 +4,7 @@ using System.Text;
 using GameScreens.Sprites;
 using Infrastructure.ObjectModel.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -132,12 +133,21 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             {
                 ExitScreen();
             }
+
+            UpdateSettings();
         }
 
         //צריך לקרוא למתודה בכול פעם שמשנים ערך של סאונד כלשהו
         private void UpdateSettings()
         {
-            (Game as GameWithScreens).BackgroundSound.Volume = (m_BackgroundMusicVolume / 100);
+            (Game as GameWithScreens).BackgroundSound.Volume = m_BackgroundMusicVolume / 100f;
+            foreach(SoundEffectInstance soundEffectInstance in (Game as GameWithScreens).EffectsSounds)
+            {
+                soundEffectInstance.Volume = m_SoundEffectsVolume / 100f;
+            }
+
+            (Game as GameWithScreens).PrevBGSoundVolume = m_BackgroundMusicVolume / 100f;
+            (Game as GameWithScreens).PrevEfeectsSoundsVolume = m_SoundEffectsVolume / 100f;
         }
 
         private void SwitchSound()
