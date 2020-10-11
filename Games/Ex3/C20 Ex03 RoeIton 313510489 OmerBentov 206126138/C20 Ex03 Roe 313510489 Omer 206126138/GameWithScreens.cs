@@ -10,8 +10,31 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 {
     class GameWithScreens : Game
     {
-        GraphicsDeviceManager m_GraphicManager;
-        SoundEffectInstance m_BgSound; 
+        private GraphicsDeviceManager m_GraphicManager;
+        private SoundEffectInstance m_BgSound;
+
+        public SoundEffectInstance BackgroundSound{
+            set
+            {
+                m_BgSound = value;
+            }
+            get
+            {
+                return m_BgSound;
+            }
+        }
+
+        public GraphicsDeviceManager GraphicManager
+        {
+            set
+            {
+                m_GraphicManager = value;
+            }
+            get
+            {
+                return m_GraphicManager;
+            }
+        }
 
         public GameWithScreens()
         {
@@ -33,8 +56,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private void setScreens(ScreensMananger i_ScreenManager)
         {
             //i_ScreenManager.Push(new GameOverScreen(this));
-            i_ScreenManager.Push(new PlayScreen(this));
-            i_ScreenManager.Push(new LevelTransitionScreen(this, 1));
+            i_ScreenManager.Push(new PlayScreen(this, 1));
+            i_ScreenManager.Push(new LevelTransitionScreen(this, 1)); 
             i_ScreenManager.SetCurrentScreen(new WelcomeScreen(this));
         }
 

@@ -45,6 +45,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
             {
                 //Open Menu
                 this.ScreensManager.SetCurrentScreen(new MainMenu(this.Game));
+                ExitScreen();
             }
         }
 

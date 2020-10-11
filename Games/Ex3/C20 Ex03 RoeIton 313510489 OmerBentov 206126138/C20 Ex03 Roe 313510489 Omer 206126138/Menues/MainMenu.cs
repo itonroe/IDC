@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using GameScreens.Sprites;
+using Infrastructure.ObjectModel;
 using Infrastructure.ObjectModel.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -83,6 +85,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
                         break;
                     case 3:
                         //Play
+                        ExitScreen();
                         break;
                     case 4:
                         //Quit
@@ -126,11 +129,21 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
         private void drawMenuItems()
         {
+            Color ActiveColor = Color.Yellow;
+            Color InActiveColor = Color.White;
+
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
 
-            StringBuilder stringBuilder = new StringBuilder();
+            int startY = GraphicsDevice.Viewport.Height / 2 - 30;
+            int offset = 20;
+            int i = 0;
 
-            SpriteBatch.DrawString(consolasFont, $"{m_MenuItems[m_CurrentMenuItemIndex]}", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.White);
+            foreach (string menuItem in m_MenuItems)
+            {
+                SpriteBatch.DrawString(consolasFont, $"{m_MenuItems[i]}", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, startY + (offset * i)), i == m_CurrentMenuItemIndex ? ActiveColor : InActiveColor);
+
+                i++;
+            }
         }
     }
 }

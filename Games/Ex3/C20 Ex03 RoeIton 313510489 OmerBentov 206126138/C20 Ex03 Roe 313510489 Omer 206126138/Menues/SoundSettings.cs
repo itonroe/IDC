@@ -32,6 +32,18 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             initMenuItems();
         }
 
+        public SoundSettings(Game i_Game, int i_BackgroundMusicVolume, int i_SoundEffectsVolume, bool i_SoundOn) : base(i_Game)
+        {
+            m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
+            this.Add(m_Background);
+
+            m_SoundOn = i_SoundOn;
+            m_BackgroundMusicVolume = i_BackgroundMusicVolume;
+            m_SoundEffectsVolume = i_SoundEffectsVolume;
+
+            initMenuItems();
+        }
+
         private void initMenuItems()
         {
             m_MenuItems = new List<string>();
@@ -122,6 +134,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             }
         }
 
+        //צריך לקרוא למתודה בכול פעם שמשנים ערך של סאונד כלשהו
+        private void UpdateSettings()
+        {
+            (Game as GameWithScreens).BackgroundSound.Volume = (m_BackgroundMusicVolume / 100);
+        }
+
         private void SwitchSound()
         {
             m_SoundOn = !m_SoundOn;
@@ -141,13 +159,24 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             SpriteBatch.End();
         }
 
+
         private void drawMenuItems()
         {
+            Color ActiveColor = Color.Yellow;
+            Color InActiveColor = Color.White;
+
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
 
-            StringBuilder stringBuilder = new StringBuilder();
+            int startY = GraphicsDevice.Viewport.Height / 2 - 30;
+            int offset = 20;
+            int i = 0;
 
-            SpriteBatch.DrawString(consolasFont, $"{m_MenuItems[m_CurrentMenuItemIndex]}", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.White);
+            foreach (string menuItem in m_MenuItems)
+            {
+                SpriteBatch.DrawString(consolasFont, $"{m_MenuItems[i]}", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, startY + (offset * i)), i == m_CurrentMenuItemIndex ? ActiveColor : InActiveColor);
+
+                i++;
+            }
         }
     }
 }
