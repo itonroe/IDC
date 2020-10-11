@@ -61,7 +61,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
             SpriteBatch.Begin();
 
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
-            SpriteBatch.DrawString(consolasFont, $"Level {m_Level}\n\nTime To Start - {m_TimeToStart}'", new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White);
+            SpriteBatch.DrawString(consolasFont, $"Level {m_Level}\n\nTime To Start - '{m_TimeToStart}'", new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), Color.White);
 
             SpriteBatch.End();
         }
