@@ -16,6 +16,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         private const int k_MaxNumOfBullets = 5;
         private const int k_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
 
+        private int m_NumOfMatrixColumns;
         private Enemy[,] m_Enemies;
         private bool m_LeftToRight;
         private int m_NumOfBullets;
@@ -23,9 +24,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         private GameScreen m_GameScreen;
         private SoundEffect m_AllEnemiesDeadSound;
 
-        public Enemies(GameScreen i_GameScreen)
+        public Enemies(GameScreen i_GameScreen, int i_NumOfMatrixColumns)
         {
             m_GameScreen = i_GameScreen;
+            m_NumOfMatrixColumns = i_NumOfMatrixColumns;
             m_LeftToRight = true;
             m_NumOfBullets = 0;
 
@@ -73,7 +75,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 
         public void InitAndLoad()
         {
-            m_Enemies = new Enemy[5, 9];
+            m_Enemies = new Enemy[5, m_NumOfMatrixColumns];
             m_LeftToRight = true;
 
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
@@ -222,11 +224,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             int i = rndI.Next(0, m_Enemies.GetLength(0));
             int j = rndJ.Next(0, m_Enemies.GetLength(1));
 
-            while (!m_Enemies[i, j].IsAlive || m_Enemies[i, j].Bullet.IsActive)
+            /*while (!m_Enemies[i, j].IsAlive || m_Enemies[i, j].Bullet.IsActive)
             {
                 i = rndI.Next(0, m_Enemies.GetLength(0));
                 j = rndJ.Next(0, m_Enemies.GetLength(1));
-            }
+            }*/
 
             m_Enemies[i, j].Shot();
             m_NumOfBullets++;
