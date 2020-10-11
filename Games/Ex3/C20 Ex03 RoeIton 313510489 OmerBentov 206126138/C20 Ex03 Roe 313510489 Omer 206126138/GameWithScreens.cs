@@ -56,7 +56,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private void setScreens(ScreensMananger i_ScreenManager)
         {
             //i_ScreenManager.Push(new GameOverScreen(this));
-            i_ScreenManager.Push(new PlayScreen(this));
+            i_ScreenManager.Push(new PlayScreen(this, 1));
             i_ScreenManager.Push(new LevelTransitionScreen(this, 1)); 
             i_ScreenManager.SetCurrentScreen(new WelcomeScreen(this));
         }
