@@ -23,6 +23,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private const int k_RadnomPopDifficulty = 500;
         private const int k_NumOfBarriers = 4;
 
+        private int m_GameLevel;
+
         private KeyboardState m_PrevKbState;
         private MouseState m_PrevMouseState;
 
@@ -45,15 +47,16 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         // Barriers
         private Barriers m_Barriers;
 
-        public PlayScreen(Game i_Game) : base (i_Game)
+        public PlayScreen(Game i_Game, int i_GameLevel) : base (i_Game)
         {
             m_Game = i_Game;
+            m_GameLevel = i_GameLevel;
             Initialize();
         }
 
         public override void Initialize()
         {
-            m_Enemies = new Enemies(this);
+            m_Enemies = new Enemies(this, CalculateNumOfColumnsForEnemiesMatrix(m_GameLevel));
             m_Barriers = new Barriers(this, k_NumOfBarriers);
 
             try
@@ -120,7 +123,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (m_Enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
             {
                 m_Enemies.AllDeadSound.Play();
-                printScore();
+                (base.m_ScreensManager as ScreensMananger).Push(new PlayScreen(this.Game, m_GameLevel + 1));
+                base.m_ScreensManager.SetCurrentScreen(new LevelTransitionScreen(this.Game, m_GameLevel + 1));
+                ExitScreen();
             }
         }
 
@@ -456,6 +461,29 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
             m_SpriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private int CalculateNumOfColumnsForEnemiesMatrix(int i_GameLevel)
+        {
+            int ans = 9;
+
+            switch ((i_GameLevel - 1) % 4)
+            {
+                case 0:
+                    ans = 1;
+                    break;
+                case 1:
+                    ans = 10;
+                    break;
+                case 2:
+                    ans = 11;
+                    break;
+                default:
+                    ans = 9;
+                    break;
+            }
+
+            return ans;
         }
     }
 }
