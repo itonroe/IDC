@@ -255,6 +255,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (!m_Bullet.IsActive)
             {
                 m_Bullet.ChangedToActive(new Vector2(m_Position.X + (SourceRectangle.Width / 2), m_Position.Y));
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.EnemyGunShot].Play();
             }
         }
     }

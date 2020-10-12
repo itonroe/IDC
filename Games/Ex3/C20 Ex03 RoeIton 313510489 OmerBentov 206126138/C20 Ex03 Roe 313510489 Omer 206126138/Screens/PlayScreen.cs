@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using C20_Ex03_Roe_313510489_Omer_206126138.Classes;
+using C20_Ex03_Roe_313510489_Omer_206126138.Screens;
 using GameScreens.Sprites;
 using Infrastructure.Managers;
 using Infrastructure.ObjectModel.Screens;
@@ -47,9 +48,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         //Background
         Background m_Background;
 
-        public PlayScreen(Game i_Game) : base (i_Game)
+        private int m_GameLevel;
+
+        public PlayScreen(Game i_Game, int i_GameLevel) : base (i_Game)
         {
             m_Game = i_Game;
+            m_GameLevel = i_GameLevel;
 
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
             this.Add(m_Background);
@@ -57,7 +61,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public override void Initialize()
         {
-            m_Enemies = new Enemies(this);
+            m_Enemies = new Enemies(this, CalculateNumOfColumnsForEnemiesMatrix(m_GameLevel));
             m_Barriers = new Barriers(this, k_NumOfBarriers);
 
             try
@@ -113,9 +117,14 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public override void Update(GameTime gameTime)
         {
-            if (InputManager.ButtonsPressed(eInputButtons.Back) || InputManager.KeyPressed(Keys.Escape))
+            if (InputManager.KeyPressed(Keys.P))
             {
-                this.Game.Exit();
+                ScreensManager.SetCurrentScreen(new PauseScreen(this.Game));
+            }
+
+            if (InputManager.KeyPressed(Keys.M))
+            {
+                (Game as GameWithScreens).ToogleMuteAllSounds();
             }
 
             updateShip(gameTime);
@@ -134,10 +143,16 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_Enemies.Update(gameTime);
             if (m_Enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
             {
-                printScore();
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.LevelWin].Play();
+                (base.m_ScreensManager as ScreensMananger).Push(new PlayScreen(this.Game, m_GameLevel + 1));
+                base.m_ScreensManager.SetCurrentScreen(new LevelTransitionScreen(this.Game, m_GameLevel + 1));
+                ExitScreen();
             }
         }
-
+         
+            if (InputManager.KeyPressed(Keys.M))
+            {
+                (Game as GameWithScreens).ToogleMuteAllSounds();
         private void updateShip(GameTime gameTime)
         {
             GameIsOn();
@@ -169,6 +184,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             // enemy reach bottom
             if (m_Enemies.IsEndOfGame())
             {
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.BarriersHit].Play();
                 printScore();
             }
 
@@ -289,6 +305,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (tempEnemy != null)
             {
                 i_Player.Score.AddScore(tempEnemy.Model);
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.EnemyKill].Play();
             }
 
             // MotherSHip Intersect with bullets
@@ -453,6 +470,28 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
             System.Windows.Forms.MessageBox.Show(message, "Game Over");
             this.Game.Exit();
+        }
+        private int CalculateNumOfColumnsForEnemiesMatrix(int i_GameLevel)
+        {
+            int ans = 9;
+
+            switch ((i_GameLevel - 1) % 4)
+            {
+                case 0:
+                    ans = 1;
+                    break;
+                case 1:
+                    ans = 10;
+                    break;
+                case 2:
+                    ans = 11;
+                    break;
+                default:
+                    ans = 9;
+                    break;
+            }
+
+            return ans;
         }
     }
 }

@@ -10,12 +10,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 {
-    class WelcomeScreen : GameScreen
+    class GameOverScreen : GameScreen
     {
+        private string m_Score;
         Background m_Background;
 
-        public WelcomeScreen(Game i_Game) : base(i_Game)
+        public GameOverScreen(Game i_Game, string i_Score) : base(i_Game)
         {
+            m_Score = i_Score;
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
             this.Add(m_Background);
         }
@@ -29,10 +31,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
         {
             base.Update(gameTime);
 
-            if (InputManager.KeyPressed(Keys.Enter))
+            if (InputManager.KeyPressed(Keys.Home))
             {
-                //Start Game with Level 1
-                ExitScreen();
+                //Start new Game
+                //ExitScreen();
             }
 
             if (InputManager.KeyPressed(Keys.Escape))
@@ -45,7 +47,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
             {
                 //Open Menu
                 this.ScreensManager.SetCurrentScreen(new MainMenu(this.Game));
-                ExitScreen();
             }
         }
 
@@ -64,8 +65,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
         {
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
 
-            SpriteBatch.DrawString(consolasFont, $"Hello Friend, Welcome! - Press a suitable key\n\n" +
-                                                 $"     Enter - Start Game\n" +
+            SpriteBatch.DrawString(consolasFont, $"Game Over, {m_Score}\n\n" +
+                                                 $"     HOME - Start New Game\n" +
                                                  $"     M     - Main Menu\n" +
                                                  $"     Esc   - Exit", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.White);
         }

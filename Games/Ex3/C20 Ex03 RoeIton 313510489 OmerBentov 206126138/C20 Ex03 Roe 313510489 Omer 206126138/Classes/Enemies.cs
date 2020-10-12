@@ -15,15 +15,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         private const int k_MaxNumOfBullets = 5;
         private const int k_BulltDifficullty = 100; // 300 is easy - 1 is hard ( every frame)
 
+        private int m_NumOfMatrixColumns;
         private Enemy[,] m_Enemies;
         private bool m_LeftToRight;
         private int m_NumOfBullets;
 
         private GameScreen m_GameScreen;
 
-        public Enemies(GameScreen i_GameScreen)
+        public Enemies(GameScreen i_GameScreen, int i_NumOfMatrixColumns)
         {
             m_GameScreen = i_GameScreen;
+            m_NumOfMatrixColumns = i_NumOfMatrixColumns;
             m_LeftToRight = true;
             m_NumOfBullets = 0;
             InitAndLoad();
@@ -57,7 +59,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 
         public void InitAndLoad()
         {
-            m_Enemies = new Enemy[5, 9];
+            m_Enemies = new Enemy[5, m_NumOfMatrixColumns];
             m_LeftToRight = true;
 
             for (int i = 0; i < m_Enemies.GetLength(0); i++)

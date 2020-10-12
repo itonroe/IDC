@@ -100,6 +100,7 @@ namespace Invaders.Classes
                 if (!m_Bullet1.IsActive)
                 {
                     m_Bullet1.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
+                    (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.SSGunShot].Play();
 
                     return;
                 }
@@ -107,6 +108,7 @@ namespace Invaders.Classes
                 if (!m_Bullet2.IsActive)
                 {
                     m_Bullet2.ChangedToActive(new Vector2(Position.X + (Texture.Width / 2), Position.Y));
+                    (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.SSGunShot].Play();
                 }
             }
         }
@@ -145,6 +147,7 @@ namespace Invaders.Classes
             }
             else
             {
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.LifeDie].Play();
                 InitPosition();
                 m_Animations.Enabled = true;
 

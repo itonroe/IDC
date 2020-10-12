@@ -44,6 +44,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 if (isBarrierGotHitFromBullet(fromBottom, (int)relativeX, i_bullet.Texture.Width, i_bullet.Texture.Height))
                 {
                     hit = true;
+                    (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.BarriersHit].Play();
                     i_bullet.IsActive = false;
                     (m_GameScreen as PlayScreen).EnemyBulletDisabled();
                 }
