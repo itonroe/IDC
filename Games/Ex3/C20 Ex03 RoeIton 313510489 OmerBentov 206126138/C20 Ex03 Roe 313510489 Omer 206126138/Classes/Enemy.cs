@@ -82,35 +82,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             Yellow = 70
         }
 
-        public void Initialize(string i_Model, float i_DeltaX, float i_DeltaY)
+        public void SetPosition(float i_DeltaX, float i_DeltaY)
         {
-            base.Initialize();
-
-            // Enemy
-            Color enemyColor = Color.Black;
-
-            switch (Enum.Parse(typeof(eEnemyModels), i_Model))
-            {
-                case eEnemyModels.Pink:
-                    enemyColor = Color.LightPink;
-                    break;
-                case eEnemyModels.Blue:
-                    enemyColor = Color.LightBlue;
-                    break;
-                case eEnemyModels.Yellow:
-                    enemyColor = Color.LightYellow;
-                    break;
-                case eEnemyModels.Red:
-                    enemyColor = Color.Red;
-                    break;
-            }
-
-            m_EnemyModel = (eEnemyModels)Enum.Parse(typeof(eEnemyModels), i_Model);
-
-            TintColor = enemyColor;
-
-            InitAnimations();
-            LoadContent(i_Model);
             InitPositions(i_DeltaX, i_DeltaY);
         }
 
@@ -147,6 +120,28 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         public virtual void LoadContent(string i_Model)
         {
             m_EnemyModel = (eEnemyModels)Enum.Parse(typeof(eEnemyModels), i_Model);
+
+            Color enemyColor = Color.Black;
+
+            switch (Enum.Parse(typeof(eEnemyModels), i_Model))
+            {
+                case eEnemyModels.Pink:
+                    enemyColor = Color.LightPink;
+                    break;
+                case eEnemyModels.Blue:
+                    enemyColor = Color.LightBlue;
+                    break;
+                case eEnemyModels.Yellow:
+                    enemyColor = Color.LightYellow;
+                    break;
+                case eEnemyModels.Red:
+                    enemyColor = Color.Red;
+                    break;
+            }
+
+            m_EnemyModel = (eEnemyModels)Enum.Parse(typeof(eEnemyModels), i_Model);
+
+            TintColor = enemyColor;
         }
 
         public bool Update(GameTime i_GameTime, bool i_LeftToRight, int i_Distance)
@@ -260,15 +255,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (!m_Bullet.IsActive)
             {
                 m_Bullet.ChangedToActive(new Vector2(m_Position.X + (SourceRectangle.Width / 2), m_Position.Y));
-            }
-        }
-
-        public void Draw(SpriteBatch i_SpriteBatch)
-        {
-            // Bullet
-            if(m_Bullet.IsActive)
-            {
-                m_Bullet.Draw(i_SpriteBatch);
             }
         }
     }

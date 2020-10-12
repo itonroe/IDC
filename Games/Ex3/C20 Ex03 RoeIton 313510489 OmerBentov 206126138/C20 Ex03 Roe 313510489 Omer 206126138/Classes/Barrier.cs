@@ -20,20 +20,13 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         public Barrier(GameScreen i_GameScreen) : base(k_TexturePath, i_GameScreen.Game)
         {
             m_GameScreen = i_GameScreen;
+            base.LoadContent();
         }
 
         public void Initialize(Vector2 i_Poition)
         {
             Position = i_Poition;
             Visible = true;
-        }
-
-        public void Draw(SpriteBatch i_SpriteBatch)
-        {
-            if (Visible)
-            {
-                i_SpriteBatch.Draw(Texture, Position, Color.White);
-            }
         }
 
         public bool BulletIntersectionRectangle(Bullet i_bullet)

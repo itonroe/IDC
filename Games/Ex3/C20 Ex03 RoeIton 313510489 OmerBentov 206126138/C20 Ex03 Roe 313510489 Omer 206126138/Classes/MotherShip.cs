@@ -22,7 +22,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             k_EnemyVelocityPerSecond = 95;
             TintColor = Color.Red;
             Visible = false;
-            initPositions();
         }
 
         private void initPositions()
@@ -49,7 +48,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             if (m_Animations["blink1"] == null)
             {
                 InitAnimations();
-                
             }
 
             Animations.Enabled = false;

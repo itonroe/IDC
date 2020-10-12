@@ -26,6 +26,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             m_GameScreen = i_GameScreen;
             m_LeftToRight = true;
             m_NumOfBullets = 0;
+            InitAndLoad();
         }
 
         public int ActiveBullets 
@@ -76,7 +77,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                     }
 
                     m_Enemies[i, j] = new Enemy(assetName, m_GameScreen);
-                    m_Enemies[i, j].Initialize(model, j, i);
+                    m_Enemies[i, j].LoadContent(model);
                 }
             }
         }
@@ -208,6 +209,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             m_Enemies[i, j].Shot();
             m_NumOfBullets++;
         }
+        
+        public void InitPositions()
+        {
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j< m_Enemies.GetLength(1); j++)
+                {
+                    m_Enemies[i, j].SetPosition(j, i);
+                }
+            }
+        }
 
         public void ChanegeDirection()
         {
@@ -285,6 +297,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 {
                     hit = true;
                     i_Enemy.DuringAnimation = true;
+                    i_Enemy.InitAnimations();
+                    i_Enemy.Animations.Enabled = true;
                     i_Enemy.Animations.Restart();
                     i_bullet.IsActive = false;
                 }
@@ -328,6 +342,18 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             }
 
             return allDead;
+        }
+
+        public void AddEnemies()
+        {
+            for (int i = 0; i < m_Enemies.GetLength(0); i++)
+            {
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
+                {
+                    (m_GameScreen as PlayScreen).Add(m_Enemies[i, j]);
+                    (m_GameScreen as PlayScreen).Add(m_Enemies[i, j].Bullet);
+                }
+            }
         }
     }
 }
