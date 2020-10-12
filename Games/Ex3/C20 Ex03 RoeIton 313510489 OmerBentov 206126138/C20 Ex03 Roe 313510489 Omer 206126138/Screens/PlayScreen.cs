@@ -148,11 +148,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 base.m_ScreensManager.SetCurrentScreen(new LevelTransitionScreen(this.Game, m_GameLevel + 1));
                 ExitScreen();
             }
+
         }
-         
-            if (InputManager.KeyPressed(Keys.M))
-            {
-                (Game as GameWithScreens).ToogleMuteAllSounds();
+
         private void updateShip(GameTime gameTime)
         {
             GameIsOn();

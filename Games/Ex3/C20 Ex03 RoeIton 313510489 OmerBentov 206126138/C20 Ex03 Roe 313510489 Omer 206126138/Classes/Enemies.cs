@@ -202,14 +202,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             int i = rndI.Next(0, m_Enemies.GetLength(0));
             int j = rndJ.Next(0, m_Enemies.GetLength(1));
 
-            while (!m_Enemies[i, j].IsAlive || m_Enemies[i, j].Bullet.IsActive)
+           if (m_Enemies[i, j].IsAlive && !m_Enemies[i, j].Bullet.IsActive)
             {
-                i = rndI.Next(0, m_Enemies.GetLength(0));
-                j = rndJ.Next(0, m_Enemies.GetLength(1));
+                m_Enemies[i, j].Shot();
+                m_NumOfBullets++;
             }
-
-            m_Enemies[i, j].Shot();
-            m_NumOfBullets++;
         }
         
         public void InitPositions()
