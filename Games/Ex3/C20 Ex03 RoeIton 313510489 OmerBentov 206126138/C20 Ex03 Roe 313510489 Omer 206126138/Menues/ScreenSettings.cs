@@ -14,15 +14,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         private Background m_Background;
         private List<string> m_MenuItems;
 
-        private bool m_FullScreenMode;
         private int m_CurrentMenuItemIndex;
 
         public ScreenSettings(Game i_Game) : base(i_Game)
         {
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
             this.Add(m_Background);
-
-            m_FullScreenMode = false;
 
             initMenuItems();
         }
@@ -31,8 +28,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         {
             m_MenuItems = new List<string>();
 
-            m_MenuItems.Add("Allow Window Resizing: Off");
-            m_MenuItems.Add("Full Screen Mode: Off");
+            string modeResizing = this.Game.Window.AllowUserResizing ? "On" : "Off";
+            m_MenuItems.Add($"Allow Window Resizing: {modeResizing}");
+
+            string modeFullScreen = (Game as GameWithScreens).GraphicManager.IsFullScreen ? "On" : "Off";
+            m_MenuItems.Add($"Full Screen Mode: {modeFullScreen}");
 
             string modeMouse = this.Game.IsMouseVisible ? "Visible" : "Invisible";
             m_MenuItems.Add($"Mouse Visability: {modeMouse}");

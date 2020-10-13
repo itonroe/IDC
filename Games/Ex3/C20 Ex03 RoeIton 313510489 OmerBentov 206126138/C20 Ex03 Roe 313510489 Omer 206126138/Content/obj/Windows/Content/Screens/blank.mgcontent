@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Screens/blank.jpeg</SourceFile>
-  <SourceTime>2020-10-12T20:32:22.2429976+03:00</SourceTime>
-  <DestFile>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/bin/Windows/Content/Screens/blank.xnb</DestFile>
-  <DestTime>2020-10-12T20:36:06.3915104+03:00</DestTime>
+  <SourceFile>C:/GitHub/Education/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Screens/blank.jpeg</SourceFile>
+  <SourceTime>2020-10-13T10:59:01.8481282+03:00</SourceTime>
+  <DestFile>C:/GitHub/Education/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/bin/Windows/Content/Screens/blank.xnb</DestFile>
+  <DestTime>2020-10-13T11:00:29.8915299+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

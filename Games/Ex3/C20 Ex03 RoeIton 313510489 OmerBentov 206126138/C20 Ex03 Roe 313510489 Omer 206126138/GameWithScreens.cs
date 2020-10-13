@@ -18,6 +18,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private bool m_OnMute;
         private float m_PrevBGSoundVolume;
         private float m_PrevEfeectsSoundsVolume;
+        private int m_NumOfPlayers;
 
         public float PrevBGSoundVolume
         {
@@ -42,6 +43,24 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             set
             {
                 m_PrevEfeectsSoundsVolume = value;
+            }
+        }
+
+        public bool SoundsOn { 
+            get
+            {
+                return !m_OnMute;
+            }
+        }
+
+        public int NumOfPlayers { 
+            get
+            {
+                return m_NumOfPlayers;
+            }
+            set
+            {
+                m_NumOfPlayers = value;
             }
         }
 
@@ -95,6 +114,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_OnMute = false;
             m_PrevBGSoundVolume = 100;
             m_PrevEfeectsSoundsVolume = 100;
+
+            m_NumOfPlayers = 2;
         }
 
         private void setScreens(ScreensMananger i_ScreenManager)

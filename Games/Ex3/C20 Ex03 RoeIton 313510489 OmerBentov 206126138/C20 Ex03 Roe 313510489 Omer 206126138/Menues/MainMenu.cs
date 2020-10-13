@@ -16,15 +16,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         private Background m_Background;
         private List<string> m_MenuItems;
 
-        private int m_NumOfPlayers;
         private int m_CurrentMenuItemIndex;
 
         public MainMenu(Game i_Game) : base(i_Game)
         {
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
             this.Add(m_Background);
-
-            m_NumOfPlayers = 1;
 
             initMenuItems();
         }
@@ -34,7 +31,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             m_MenuItems = new List<string>();
 
             m_MenuItems.Add("Screen Settings");
-            m_MenuItems.Add("Players: One");
+            string numOfPlayers = (Game as GameWithScreens).NumOfPlayers == 1 ? "One" : "Two";
+            m_MenuItems.Add($"Players: {numOfPlayers}");
             m_MenuItems.Add("Sound Settings");
             m_MenuItems.Add("Play");
             m_MenuItems.Add("Quit");
@@ -104,14 +102,14 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
         private void ReplaceNumOfPlayers()
         {
-            if (m_NumOfPlayers == 1)
+            if ((Game as GameWithScreens).NumOfPlayers == 1)
             {
-                m_NumOfPlayers = 2;
+                (Game as GameWithScreens).NumOfPlayers = 2;
                 m_MenuItems[1] = "Players: Two";
             }
             else
             {
-                m_NumOfPlayers = 1;
+                (Game as GameWithScreens).NumOfPlayers = 1;
                 m_MenuItems[1] = "Players: One";
             }
         }

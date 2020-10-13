@@ -26,9 +26,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
             this.Add(m_Background);
 
-            m_SoundOn = true;
-            m_BackgroundMusicVolume = 100;
-            m_SoundEffectsVolume = 100;
+            m_SoundOn = (Game as GameWithScreens).SoundsOn;
+            m_BackgroundMusicVolume = (int)((Game as GameWithScreens).BackgroundSound.Volume * 100f);
+            m_SoundEffectsVolume = (int)((Game as GameWithScreens).EffectsSounds[0].Volume * 100f);
 
             initMenuItems();
         }
@@ -49,7 +49,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         {
             m_MenuItems = new List<string>();
 
-            m_MenuItems.Add("Toggle Sound: On");
+            string mode = (Game as GameWithScreens).SoundsOn ? "On" : "Off";
+            m_MenuItems.Add($"Toggle Sound: {mode}");
             m_MenuItems.Add($"Background Music Volume: {m_BackgroundMusicVolume}");
             m_MenuItems.Add($"Sounds Effects Volume: {m_SoundEffectsVolume}");
             m_MenuItems.Add("Done");
@@ -137,7 +138,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             UpdateSettings();
         }
 
-        //צריך לקרוא למתודה בכול פעם שמשנים ערך של סאונד כלשהו
         private void UpdateSettings()
         {
             (Game as GameWithScreens).BackgroundSound.Volume = m_BackgroundMusicVolume / 100f;
@@ -152,8 +152,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
         private void SwitchSound()
         {
-            m_SoundOn = !m_SoundOn;
-            string mode = m_SoundOn ? "On" : "Off";
+            (Game as GameWithScreens).ToogleMuteAllSounds();
+
+            string mode = (Game as GameWithScreens).SoundsOn ? "On" : "Off";
 
             m_MenuItems[0] = $"Toggle Sound: {mode}";
         }

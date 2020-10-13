@@ -16,8 +16,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 {
     public class PlayScreen : GameScreen
     {
-        private Game m_Game;
-
         private const double k_IncreseSpeedAfterFiveKills = 1.03;
         private const int k_LifeLost = -600;
         private const int k_RadnomPopDifficulty = 500;
@@ -52,7 +50,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public PlayScreen(Game i_Game, int i_GameLevel) : base (i_Game)
         {
-            m_Game = i_Game;
             m_GameLevel = i_GameLevel;
 
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
@@ -68,8 +65,19 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             {
                 m_Player1 = new Player(1, this);
                 m_Player1.Initialize();
-                m_Player2 = new Player(2, this);
-                m_Player2.Initialize();
+
+                this.Add(m_Player1);
+                this.Add(m_Player1.Bullet1);
+                this.Add(m_Player1.Bullet2);
+
+                if ((Game as GameWithScreens).NumOfPlayers == 2)
+                {
+                    m_Player2 = new Player(2, this);
+                    m_Player2.Initialize();
+                    this.Add(m_Player2);
+                    this.Add(m_Player2.Bullet1);
+                    this.Add(m_Player2.Bullet2);
+                }
             }
             catch (Exception e)
             {
@@ -77,18 +85,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             }
 
             m_MotherShip = new MotherShip(this);
-
-            m_CountEnemyKills = 0;
-
-
-            this.Add(m_Player1);
-            this.Add(m_Player1.Bullet1);
-            this.Add(m_Player1.Bullet2);
-            this.Add(m_Player2);
-            this.Add(m_Player2.Bullet1);
-            this.Add(m_Player2.Bullet2);
             this.Add(m_MotherShip);
 
+            m_CountEnemyKills = 0;
             m_Enemies.AddEnemies();
 
             base.Initialize();
@@ -99,7 +98,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_PositionBackground = Vector2.Zero;
 
             m_Player1.InitPosition();
-            m_Player2.InitPosition();
+
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
+            {
+                m_Player2.InitPosition();
+            }
 
             m_Barriers.InitPositions(GraphicsDevice);
             m_Enemies.InitPositions();
@@ -115,8 +118,29 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             initPositions();
         }
 
+        public void UpdateNumberOfPlayers()
+        {
+            if (m_Player2 != null && (Game as GameWithScreens).NumOfPlayers == 1)
+            {
+                this.Remove(m_Player2);
+                this.Remove(m_Player2.Bullet1);
+                this.Remove(m_Player2.Bullet2);
+            }
+            else if (m_Player2 == null && (Game as GameWithScreens).NumOfPlayers == 2)
+            {
+                m_Player2 = new Player(2, this);
+                m_Player2.Initialize();
+                this.Add(m_Player2);
+                this.Add(m_Player2.Bullet1);
+                this.Add(m_Player2.Bullet2);
+                m_Player2.InitPosition(); 
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
+            UpdateNumberOfPlayers();
+
             if (InputManager.KeyPressed(Keys.P))
             {
                 ScreensManager.SetCurrentScreen(new PauseScreen(this.Game));
@@ -186,18 +210,36 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 printScore();
             }
 
-            // enemy bullet hit ship
-            shipGotHitFromBullet(m_Player1, i_GraphicDevice);
-            shipGotHitFromBullet(m_Player2, i_GraphicDevice);
 
-            // ship bullet hit enemy
-            ShipHitEnemy(m_Player1);
-            ShipHitEnemy(m_Player2);
-
-            // Enemy and ship intersect
-            if (m_Enemies.ShipIntersection(m_Player1) || m_Enemies.ShipIntersection(m_Player2))
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
             {
-                printScore();
+                // enemy bullet hit ship
+                shipGotHitFromBullet(m_Player1, i_GraphicDevice);
+                shipGotHitFromBullet(m_Player2, i_GraphicDevice);
+
+                // ship bullet hit enemy
+                ShipHitEnemy(m_Player1);
+                ShipHitEnemy(m_Player2);
+
+                // Enemy and ship intersect
+                if (m_Enemies.ShipIntersection(m_Player1) || m_Enemies.ShipIntersection(m_Player2))
+                {
+                    printScore();
+                }
+            }
+            else
+            {
+                // enemy bullet hit ship
+                shipGotHitFromBullet(m_Player1, i_GraphicDevice);
+
+                // ship bullet hit enemy
+                ShipHitEnemy(m_Player1);
+
+                // Enemy and ship intersect
+                if (m_Enemies.ShipIntersection(m_Player1))
+                {
+                    printScore();
+                }
             }
 
             // Barriers and bullets
@@ -226,14 +268,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 playersBullets.Add(m_Player1.Bullet2);
             }
 
-            if (m_Player2.Bullet1.IsActive)
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
             {
-                playersBullets.Add(m_Player2.Bullet1);
-            }
+                if (m_Player2.Bullet1.IsActive)
+                {
+                    playersBullets.Add(m_Player2.Bullet1);
+                }
 
-            if (m_Player2.Bullet2.IsActive)
-            {
-                playersBullets.Add(m_Player2.Bullet2);
+                if (m_Player2.Bullet2.IsActive)
+                {
+                    playersBullets.Add(m_Player2.Bullet2);
+                }
             }
 
             // Enemies bullets
@@ -283,14 +328,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 bullets.Add(m_Player1.Bullet2);
             }
 
-            if (m_Player2.Bullet1.IsActive)
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
             {
-                bullets.Add(m_Player2.Bullet1);
-            }
+                if (m_Player2.Bullet1.IsActive)
+                {
+                    bullets.Add(m_Player2.Bullet1);
+                }
 
-            if (m_Player2.Bullet2.IsActive)
-            {
-                bullets.Add(m_Player2.Bullet2);
+                if (m_Player2.Bullet2.IsActive)
+                {
+                    bullets.Add(m_Player2.Bullet2);
+                }
             }
 
             return bullets;
@@ -328,9 +376,19 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         private void GameIsOn()
         {
-            if ((m_Player1.Lifes <= 0) && (m_Player2.Lifes <= 0))
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
             {
-                printScore();
+                if ((m_Player1.Lifes <= 0) && (m_Player2.Lifes <= 0))
+                {
+                    printScore();
+                }
+            }
+            else
+            {
+                if (m_Player1.Lifes <= 0)
+                {
+                    printScore();
+                }
             }
         }
 
@@ -356,14 +414,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 m_Player1.MoveLeft(gameTime);
             }
 
-            if (InputManager.KeyHeld(Keys.R))
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
             {
-                m_Player2.MoveRight(gameTime);
-            }
+                if (InputManager.KeyHeld(Keys.R))
+                {
+                    m_Player2.MoveRight(gameTime);
+                }
 
-            if (InputManager.KeyHeld(Keys.W))
-            {
-                m_Player2.MoveLeft(gameTime);
+                if (InputManager.KeyHeld(Keys.W))
+                {
+                    m_Player2.MoveLeft(gameTime);
+                }
             }
         }
 
@@ -412,7 +473,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 m_Player1.Shot();
             }
             
-            if (keyBoardClickPlayer2)
+            if (keyBoardClickPlayer2 && (Game as GameWithScreens).NumOfPlayers == 2)
             {
                 m_Player2.Shot();
             }
@@ -440,34 +501,45 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         {
             m_Player1.Bullet1.UpdateForShip(gameTime);
             m_Player1.Bullet2.UpdateForShip(gameTime);
-            m_Player2.Bullet1.UpdateForShip(gameTime);
-            m_Player2.Bullet2.UpdateForShip(gameTime);
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
+            {
+                m_Player2.Bullet1.UpdateForShip(gameTime);
+                m_Player2.Bullet2.UpdateForShip(gameTime);
+            }
         }
 
         private void printScore()
         {
-            string message = $"Player 1 Score is: {m_Player1.Score.Score}\nPlayer 2 Score is: {m_Player2.Score.Score}";
-
+            string message;
             string winner;
 
-            if (m_Player1.Score.Score > m_Player2.Score.Score)
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
             {
-                winner = "Player 1";
-            }
-            else if (m_Player1.Score.Score < m_Player2.Score.Score)
-            {
-                winner = "Player 2";
+                message = $"Player 1 Score is: {m_Player1.Score.Score}\nPlayer 2 Score is: {m_Player2.Score.Score}";
+
+                if (m_Player1.Score.Score > m_Player2.Score.Score)
+                {
+                    winner = "Player 1";
+                }
+                else if (m_Player1.Score.Score < m_Player2.Score.Score)
+                {
+                    winner = "Player 2";
+                }
+                else
+                {
+                    winner = "Tie";
+                }
+
+                message += $"\n\n";
+                message += winner.Equals("Tie") ? "It's a Tie" : $"{winner} is the winner";
             }
             else
             {
-                winner = "Tie";
+                message = $"Player Score is: {m_Player1.Score.Score}";
             }
 
-            message += $"\n\n";
-            message += winner.Equals("Tie") ? "It's a Tie" : $"{winner} is the winner";
-
-            System.Windows.Forms.MessageBox.Show(message, "Game Over");
-            this.Game.Exit();
+            ScreensManager.SetCurrentScreen(new GameOverScreen(Game, message));
+            ExitScreen();
         }
         private int CalculateNumOfColumnsForEnemiesMatrix(int i_GameLevel)
         {

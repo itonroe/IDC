@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using C20_Ex03_Roe_313510489_Omer_206126138.Menues;
 using GameScreens.Sprites;
+using Infrastructure.Managers;
 using Infrastructure.ObjectModel.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,18 +35,21 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
             if (InputManager.KeyPressed(Keys.Home))
             {
                 //Start new Game
-                //ExitScreen();
+                (m_ScreensManager as ScreensMananger).Push(new PlayScreen(Game, 1));
+                ExitScreen();
+                this.ScreensManager.SetCurrentScreen(new LevelTransitionScreen(Game, 1));
             }
-
-            if (InputManager.KeyPressed(Keys.Escape))
+            else if (InputManager.KeyPressed(Keys.Escape))
             {
                 //Close Game
                 this.Game.Exit();
             }
-
-            if (InputManager.KeyPressed(Keys.M))
+            else if(InputManager.KeyPressed(Keys.M))
             {
                 //Open Menu
+                (m_ScreensManager as ScreensMananger).Push(new PlayScreen(Game, 1));
+                (m_ScreensManager as ScreensMananger).Push(new LevelTransitionScreen(Game, 1));
+                ExitScreen();
                 this.ScreensManager.SetCurrentScreen(new MainMenu(this.Game));
             }
         }
