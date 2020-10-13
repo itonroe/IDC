@@ -16,7 +16,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         private float m_LeftBorder;
         private GameScreen m_GameScreen;
 
-        public Barriers(GameScreen i_GameScreen, int i_NumOfBarriers)
+        public Barriers(GameScreen i_GameScreen, int i_NumOfBarriers, float i_BarrierVelocityPerSecond)
         {
             m_LeftToRight = true;
             m_Barriers = new Barrier[i_NumOfBarriers];
@@ -24,7 +24,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 
             for (int i = 0; i < i_NumOfBarriers; i++)
             {
-                m_Barriers[i] = new Barrier(i_GameScreen);
+                m_Barriers[i] = new Barrier(i_GameScreen, i_BarrierVelocityPerSecond);
                 (m_GameScreen as PlayScreen).Add(m_Barriers[i]);
             }
         }

@@ -120,7 +120,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 if (hit)
                 {
                     m_Hit = true;
-                    (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.MotherShipKill].Play();
                     DuringAnimation = true;
                     m_Animations.Enabled = true;
                     m_Animations.Restart();

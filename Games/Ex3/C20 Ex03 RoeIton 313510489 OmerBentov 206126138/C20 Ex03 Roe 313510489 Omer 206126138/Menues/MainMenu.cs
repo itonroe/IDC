@@ -52,6 +52,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             if (InputManager.KeyPressed(Keys.Down))
             {
                 m_CurrentMenuItemIndex++;
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.MenuMove].Play();
 
                 if (m_CurrentMenuItemIndex >= m_MenuItems.Count)
                 {
@@ -62,6 +63,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             if (InputManager.KeyPressed(Keys.Up))
             {
                 m_CurrentMenuItemIndex--;
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.MenuMove].Play();
 
                 if (m_CurrentMenuItemIndex <= -1)
                 {

@@ -114,7 +114,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_OnMute = false;
             m_PrevBGSoundVolume = 100;
             m_PrevEfeectsSoundsVolume = 100;
-
             m_NumOfPlayers = 2;
         }
 
@@ -141,6 +140,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             BarriersHit = 5,
             LevelWin = 6,
             GameOver = 7,
+            MenuMove = 8,
         }
 
         protected override void Initialize()
@@ -168,6 +168,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/BarrierHit").CreateInstance());
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/LevelWin").CreateInstance());
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/GameOver").CreateInstance());
+            m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/MenuMove").CreateInstance());
         }
 
         protected override void Draw(GameTime gameTime)

@@ -13,13 +13,14 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
     public class Barrier : Sprite
     {
         private const string k_TexturePath = @"Sprites\Barrier_44x32";
-        private const int k_BarrierVelocityPerSecond = 35;
+        private float m_BarrierVelocityPerSecond;
 
         private GameScreen m_GameScreen;
 
-        public Barrier(GameScreen i_GameScreen) : base(k_TexturePath, i_GameScreen.Game)
+        public Barrier(GameScreen i_GameScreen, float i_BarrierVelocityPerSecond) : base(k_TexturePath, i_GameScreen.Game)
         {
             m_GameScreen = i_GameScreen;
+            m_BarrierVelocityPerSecond = i_BarrierVelocityPerSecond;
             base.LoadContent();
         }
 
@@ -161,7 +162,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 
         public void Move(bool i_LeftToRight, GameTime i_GameTime)
         {
-            float distance = k_BarrierVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
+            float distance = m_BarrierVelocityPerSecond * (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
             distance *= i_LeftToRight ? 1 : -1;
 

@@ -48,6 +48,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         private int m_GameLevel;
 
+
         public PlayScreen(Game i_Game, int i_GameLevel) : base (i_Game)
         {
             m_GameLevel = i_GameLevel;
@@ -58,8 +59,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public override void Initialize()
         {
-            m_Enemies = new Enemies(this, CalculateNumOfColumnsForEnemiesMatrix(m_GameLevel));
-            m_Barriers = new Barriers(this, k_NumOfBarriers);
+            m_Enemies = new Enemies(this, CalculateNumOfColumnsForEnemiesMatrix());
+            m_Barriers = new Barriers(this, k_NumOfBarriers, CalculateBarriersSpeed());
 
             try
             {
@@ -351,6 +352,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (tempEnemy != null)
             {
                 i_Player.Score.AddScore(tempEnemy.Model);
+                if (m_GameLevel >= 2 && m_GameLevel <= 4)
+                {
+                    i_Player.Score.AddScore(( m_GameLevel - 1 ) * 100);
+                }
+
                 (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.EnemyKill].Play();
             }
 
@@ -358,6 +364,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (m_MotherShip.IntersectionWithShipBullets(i_Player))
             {
                 i_Player.Score.AddScore(m_MotherShip.Model);
+                if(m_GameLevel >= 2 && m_GameLevel <= 4)
+                {
+                    i_Player.Score.AddScore((m_GameLevel - 1) * 100);
+                }
+
+                (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.MotherShipKill].Play();
             }
         }
 
@@ -541,14 +553,15 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             ScreensManager.SetCurrentScreen(new GameOverScreen(Game, message));
             ExitScreen();
         }
-        private int CalculateNumOfColumnsForEnemiesMatrix(int i_GameLevel)
+
+        private int CalculateNumOfColumnsForEnemiesMatrix()
         {
             int ans = 9;
 
-            switch ((i_GameLevel - 1) % 4)
+            switch ((m_GameLevel - 1) % 4)
             {
                 case 0:
-                    ans = 1;
+                    ans = 9;
                     break;
                 case 1:
                     ans = 10;
@@ -556,8 +569,38 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 case 2:
                     ans = 11;
                     break;
+                case 3:
+                    ans = 12;
+                    break;
                 default:
                     ans = 9;
+                    break;
+            }
+
+            return ans;
+        }
+
+        private float CalculateBarriersSpeed()
+        {
+            const int defaultVelocityPerSecond = 35;
+            float ans = 0;
+
+            switch ((m_GameLevel - 1) % 4)
+            {
+                case 0:
+                    ans = 0;
+                    break;
+                case 1:
+                    ans = defaultVelocityPerSecond;
+                    break;
+                case 2:
+                    ans = (float)(defaultVelocityPerSecond * 0.6);
+                    break;
+                case 3:
+                    ans = (float)(defaultVelocityPerSecond * 0.36);
+                    break;
+                default:
+                    ans = defaultVelocityPerSecond;
                     break;
             }
 
