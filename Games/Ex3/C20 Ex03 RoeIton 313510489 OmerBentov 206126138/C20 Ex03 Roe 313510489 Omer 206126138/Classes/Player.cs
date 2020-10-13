@@ -95,5 +95,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         {
             i_SpriteBatch.DrawString(m_Score.m_ConsolasFont, $"P{m_PlayerNumber} Score:{m_Score.Score}", new Vector2(0, (m_PlayerNumber - 1) * 20), m_TextColor);
         }
+
+        public void BeginDraw()
+        {
+            m_SpriteBatch.Begin();
+        }
     }
 }

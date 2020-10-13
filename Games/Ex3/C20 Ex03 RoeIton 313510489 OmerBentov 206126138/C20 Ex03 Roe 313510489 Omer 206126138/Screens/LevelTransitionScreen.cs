@@ -24,8 +24,13 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
             m_Level = i_Level;
             m_SecondsShow = TimeSpan.FromSeconds(2.5);
             m_TimeToStart = "3";
+            Game.Window.ClientSizeChanged += Window_ClientSizeChanged; 
+            this.Add(m_Background); 
+        }
 
-            this.Add(m_Background);
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
         }
 
         public override void Initialize()

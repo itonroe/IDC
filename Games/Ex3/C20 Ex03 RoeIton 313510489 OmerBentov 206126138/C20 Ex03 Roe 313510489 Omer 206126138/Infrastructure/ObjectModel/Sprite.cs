@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Infrastructure.ServiceInterfaces;
 using Infrastructure.ObjectModel.Animators;
+using System;
 
 namespace Infrastructure.ObjectModel
 {
@@ -254,15 +255,18 @@ namespace Infrastructure.ObjectModel
 
         public Sprite(string i_AssetName, Game i_Game, int i_UpdateOrder, int i_DrawOrder)
             : base(i_AssetName, i_Game, i_UpdateOrder, i_DrawOrder)
-        { }
+        {
+        }
 
         public Sprite(string i_AssetName, Game i_Game, int i_CallsOrder)
             : base(i_AssetName, i_Game, i_CallsOrder)
-        { }
+        {
+        }
 
         public Sprite(string i_AssetName, Game i_Game)
             : base(i_AssetName, i_Game, int.MaxValue)
-        { }
+        {
+        }
 
         /// <summary>
         /// Default initialization of bounds
@@ -439,6 +443,11 @@ namespace Infrastructure.ObjectModel
         public Sprite ShallowClone()
         {
             return this.MemberwiseClone() as Sprite;
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            this.Scales = new Vector2(Game.Window.ClientBounds.Width / 750, Game.Window.ClientBounds.Height / 600);
         }
     }
 }

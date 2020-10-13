@@ -25,11 +25,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
         }
 
-        private void Window_ClientSizeChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void initMenuItems()
         {
             m_MenuItems = new List<string>();
@@ -152,6 +147,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
                 i++;
             }
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
         }
     }
 }

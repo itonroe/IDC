@@ -5,6 +5,7 @@ using C20_Ex03_Roe_313510489_Omer_206126138.Classes;
 using C20_Ex03_Roe_313510489_Omer_206126138.Screens;
 using GameScreens.Sprites;
 using Infrastructure.Managers;
+using Infrastructure.ObjectModel;
 using Infrastructure.ObjectModel.Screens;
 using Infrastructure.ServiceInterfaces;
 using Invaders.Classes;
@@ -51,21 +52,25 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public PlayScreen(Game i_Game, int i_GameLevel) : base (i_Game)
         {
+            Game.Window.AllowUserResizing = false;
             m_GameLevel = i_GameLevel;
-
-            m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
+            Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
+            m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);  
             this.Add(m_Background);
         }
 
         public override void Initialize()
         {
+            m_Background.Width = Game.Window.ClientBounds.Width;
+            m_Background.Height = Game.Window.ClientBounds.Height;
+
             m_Enemies = new Enemies(this, CalculateNumOfColumnsForEnemiesMatrix());
             m_Barriers = new Barriers(this, k_NumOfBarriers, CalculateBarriersSpeed());
 
             try
             {
-                m_Player1 = new Player(1, this);
-                m_Player1.Initialize();
+                    m_Player1 = new Player(1, this);
+                    m_Player1.Initialize();
 
                 this.Add(m_Player1);
                 this.Add(m_Player1.Bullet1);
@@ -73,8 +78,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
                 if ((Game as GameWithScreens).NumOfPlayers == 2)
                 {
-                    m_Player2 = new Player(2, this);
-                    m_Player2.Initialize();
+
+                        m_Player2 = new Player(2, this);
+                        m_Player2.Initialize();
+
+
                     this.Add(m_Player2);
                     this.Add(m_Player2.Bullet1);
                     this.Add(m_Player2.Bullet2);
@@ -561,7 +569,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             switch ((m_GameLevel - 1) % 4)
             {
                 case 0:
-                    ans = 9;
+                    ans = 1;
                     break;
                 case 1:
                     ans = 10;
@@ -605,6 +613,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             }
 
             return ans;
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
+            initPositions();
         }
     }
 }

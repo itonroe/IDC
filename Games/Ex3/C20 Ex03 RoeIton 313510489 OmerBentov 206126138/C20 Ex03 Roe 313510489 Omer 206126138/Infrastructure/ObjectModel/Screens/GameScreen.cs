@@ -1,5 +1,6 @@
 //*** Guy Ronen © 2008-2011 ***//
 using System;
+using GameScreens.Sprites;
 using Infrastructure.Managers;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;

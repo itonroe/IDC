@@ -24,29 +24,34 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         public SoundSettings(Game i_Game) : base(i_Game)
         {
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
+
             this.Add(m_Background);
 
             m_SoundOn = (Game as GameWithScreens).SoundsOn;
             m_BackgroundMusicVolume = (int)((Game as GameWithScreens).BackgroundSound.Volume * 100f);
             m_SoundEffectsVolume = (int)((Game as GameWithScreens).EffectsSounds[0].Volume * 100f);
-
+            Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
             initMenuItems();
         }
 
         public SoundSettings(Game i_Game, int i_BackgroundMusicVolume, int i_SoundEffectsVolume, bool i_SoundOn) : base(i_Game)
         {
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
+
             this.Add(m_Background);
 
             m_SoundOn = i_SoundOn;
             m_BackgroundMusicVolume = i_BackgroundMusicVolume;
             m_SoundEffectsVolume = i_SoundEffectsVolume;
-
+            Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
             initMenuItems();
         }
 
         private void initMenuItems()
         {
+            m_Background.Width = Game.Window.ClientBounds.Width;
+            m_Background.Height = Game.Window.ClientBounds.Height;
+
             m_MenuItems = new List<string>();
 
             string mode = (Game as GameWithScreens).SoundsOn ? "On" : "Off";
@@ -132,12 +137,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
                 }
             }
 
+            UpdateSettings();
+
             if (InputManager.KeyPressed(Keys.Enter) && m_CurrentMenuItemIndex == 3)
             {
                 ExitScreen();
             }
-
-            UpdateSettings();
         }
 
         private void UpdateSettings()
@@ -190,6 +195,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
                 i++;
             }
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
         }
     }
 }
