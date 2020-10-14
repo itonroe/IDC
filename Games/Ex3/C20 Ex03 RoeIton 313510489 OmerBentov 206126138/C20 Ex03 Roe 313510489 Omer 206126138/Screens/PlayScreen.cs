@@ -603,7 +603,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             switch ((m_GameLevel - 1) % 4)
             {
                 case 0:
-                    ans = 1;
+                    ans = 9;
                     break;
                 case 1:
                     ans = 10;
