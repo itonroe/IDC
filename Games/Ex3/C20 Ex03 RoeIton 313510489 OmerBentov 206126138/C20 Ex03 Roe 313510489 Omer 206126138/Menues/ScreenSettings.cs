@@ -45,6 +45,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         public override void Initialize()
         {
             base.Initialize();
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
         }
 
         public override void Update(GameTime gameTime)

@@ -24,7 +24,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         public SoundSettings(Game i_Game) : base(i_Game)
         {
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
-
             this.Add(m_Background);
 
             m_SoundOn = (Game as GameWithScreens).SoundsOn;
@@ -37,7 +36,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         public SoundSettings(Game i_Game, int i_BackgroundMusicVolume, int i_SoundEffectsVolume, bool i_SoundOn) : base(i_Game)
         {
             m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
-
             this.Add(m_Background);
 
             m_SoundOn = i_SoundOn;
@@ -49,9 +47,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
         private void initMenuItems()
         {
-            m_Background.Width = Game.Window.ClientBounds.Width;
-            m_Background.Height = Game.Window.ClientBounds.Height;
-
             m_MenuItems = new List<string>();
 
             string mode = (Game as GameWithScreens).SoundsOn ? "On" : "Off";
@@ -66,6 +61,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
         public override void Initialize()
         {
             base.Initialize();
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
         }
 
         public override void Update(GameTime gameTime)

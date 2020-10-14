@@ -72,14 +72,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             Green = 2,
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-
-            DrawLives((m_GameScreen as PlayScreen).SpriteBatch);
-            DrawScore((m_GameScreen as PlayScreen).SpriteBatch);
-        }
-
         public void DrawLives(SpriteBatch i_SpriteBatch)
         {
             for(int i = 1; i <= Lifes; i++)

@@ -50,47 +50,78 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private int m_GameLevel;
 
 
-        public PlayScreen(Game i_Game, int i_GameLevel) : base (i_Game)
+        public PlayScreen(Game i_Game, int i_GameLevel) : base(i_Game)
+        {
+            ConstructorMethod(i_Game, i_GameLevel);
+        }
+
+        public PlayScreen(Game i_Game, int i_GameLevel, Player i_Player1, Player i_Player2) : base(i_Game)
+        {
+            ConstructorMethod(i_Game, i_GameLevel);
+
+            m_Player1 = i_Player1;
+
+            if ((Game as GameWithScreens).NumOfPlayers == 2)
+            {
+                m_Player2 = i_Player2;
+            }
+        }
+
+        private void ConstructorMethod(Game i_Game, int i_GameLevel)
         {
             Game.Window.AllowUserResizing = false;
             m_GameLevel = i_GameLevel;
             Game.Window.ClientSizeChanged += Window_ClientSizeChanged;
-            m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);  
+            m_Background = new Background(i_Game, @"Sprites\BG_Space01_1024x768", 1);
             this.Add(m_Background);
         }
 
         public override void Initialize()
         {
-            m_Background.Width = Game.Window.ClientBounds.Width;
-            m_Background.Height = Game.Window.ClientBounds.Height;
-
             m_Enemies = new Enemies(this, CalculateNumOfColumnsForEnemiesMatrix());
             m_Barriers = new Barriers(this, k_NumOfBarriers, CalculateBarriersSpeed());
 
-            try
+
+            if (m_GameLevel == 1)
             {
+                try
+                {
                     m_Player1 = new Player(1, this);
                     m_Player1.Initialize();
 
+                    this.Add(m_Player1);
+                    this.Add(m_Player1.Bullet1);
+                    this.Add(m_Player1.Bullet2);
+
+                    if ((Game as GameWithScreens).NumOfPlayers == 2)
+                    {
+
+                        m_Player2 = new Player(2, this);
+                        m_Player2.Initialize();
+
+
+                        this.Add(m_Player2);
+                        this.Add(m_Player2.Bullet1);
+                        this.Add(m_Player2.Bullet2);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            else
+            {
                 this.Add(m_Player1);
                 this.Add(m_Player1.Bullet1);
                 this.Add(m_Player1.Bullet2);
 
                 if ((Game as GameWithScreens).NumOfPlayers == 2)
                 {
-
-                        m_Player2 = new Player(2, this);
-                        m_Player2.Initialize();
-
-
                     this.Add(m_Player2);
                     this.Add(m_Player2.Bullet1);
                     this.Add(m_Player2.Bullet2);
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
             }
 
             m_MotherShip = new MotherShip(this);
@@ -100,6 +131,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_Enemies.AddEnemies();
 
             base.Initialize();
+
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
         }
 
         private void initPositions()
@@ -142,7 +175,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 this.Add(m_Player2);
                 this.Add(m_Player2.Bullet1);
                 this.Add(m_Player2.Bullet2);
-                m_Player2.InitPosition(); 
+                m_Player2.InitPosition();
             }
         }
 
@@ -174,14 +207,15 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         private void updateEnemies(GameTime gameTime)
         {
             m_Enemies.Update(gameTime);
-            if (m_Enemies.AllEnemiesAreDead() && !m_MotherShip.IsAlive)
+            if (m_Enemies.AllEnemiesAreDead())
             {
                 (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.LevelWin].Play();
-                (base.m_ScreensManager as ScreensMananger).Push(new PlayScreen(this.Game, m_GameLevel + 1));
+
+                (base.m_ScreensManager as ScreensMananger).Push(new PlayScreen(this.Game, m_GameLevel + 1, m_Player1, m_Player2));
+
                 base.m_ScreensManager.SetCurrentScreen(new LevelTransitionScreen(this.Game, m_GameLevel + 1));
                 ExitScreen();
             }
-
         }
 
         private void updateShip(GameTime gameTime)
@@ -299,9 +333,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 }
             }
 
-            foreach(Bullet eBullet in enemyBullets)
+            foreach (Bullet eBullet in enemyBullets)
             {
-                foreach(Bullet pBullet in playersBullets)
+                foreach (Bullet pBullet in playersBullets)
                 {
                     eBullet.BulletIntersectionBullet(pBullet);
                 }
@@ -318,7 +352,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             List<Bullet> bullets = new List<Bullet>();
 
             // Enemies bullets
-            foreach(Enemy enemy in m_Enemies.Table)
+            foreach (Enemy enemy in m_Enemies.Table)
             {
                 if (enemy.Bullet.IsActive)
                 {
@@ -327,7 +361,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             }
 
             // players bullets
-            if(m_Player1.Bullet1.IsActive)
+            if (m_Player1.Bullet1.IsActive)
             {
                 bullets.Add(m_Player1.Bullet1);
             }
@@ -362,7 +396,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 i_Player.Score.AddScore(tempEnemy.Model);
                 if (m_GameLevel >= 2 && m_GameLevel <= 4)
                 {
-                    i_Player.Score.AddScore(( m_GameLevel - 1 ) * 100);
+                    i_Player.Score.AddScore((m_GameLevel - 1) * 100);
                 }
 
                 (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.EnemyKill].Play();
@@ -372,7 +406,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             if (m_MotherShip.IntersectionWithShipBullets(i_Player))
             {
                 i_Player.Score.AddScore(m_MotherShip.Model);
-                if(m_GameLevel >= 2 && m_GameLevel <= 4)
+                if (m_GameLevel >= 2 && m_GameLevel <= 4)
                 {
                     i_Player.Score.AddScore((m_GameLevel - 1) * 100);
                 }
@@ -386,7 +420,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             bool answer = false;
 
             Random rnd = new Random();
-            if(rnd.Next(0, k_RadnomPopDifficulty) == 0)
+            if (rnd.Next(0, k_RadnomPopDifficulty) == 0)
             {
                 answer = true;
             }
@@ -492,7 +526,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             {
                 m_Player1.Shot();
             }
-            
+
             if (keyBoardClickPlayer2 && (Game as GameWithScreens).NumOfPlayers == 2)
             {
                 m_Player2.Shot();
@@ -619,6 +653,30 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         {
             m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
             initPositions();
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            SpriteBatch.Begin();
+
+            try
+            {
+                m_Player1.DrawLives(SpriteBatch);
+                m_Player1.DrawScore(SpriteBatch);
+                if ((Game as GameWithScreens).NumOfPlayers == 2)
+                {
+                    m_Player2.DrawLives(SpriteBatch);
+                    m_Player2.DrawScore(SpriteBatch);
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Draw Player before screen");
+            }
+
+            SpriteBatch.End();
         }
     }
 }
