@@ -119,7 +119,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         private void setScreens(ScreensMananger i_ScreenManager)
         {
-            //i_ScreenManager.Push(new GameOverScreen(this));
             i_ScreenManager.Push(new PlayScreen(this, 1));
             i_ScreenManager.Push(new LevelTransitionScreen(this, 1));
             i_ScreenManager.SetCurrentScreen(new WelcomeScreen(this));
@@ -169,11 +168,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/LevelWin").CreateInstance());
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/GameOver").CreateInstance());
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/MenuMove").CreateInstance());
-        }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
         }
 
         public void MuteEffectsSounds()

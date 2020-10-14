@@ -659,24 +659,25 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         {
             base.Draw(gameTime);
 
-            SpriteBatch.Begin();
-
             try
             {
+
+                SpriteBatch.Begin();
                 m_Player1.DrawLives(SpriteBatch);
                 m_Player1.DrawScore(SpriteBatch);
+
                 if ((Game as GameWithScreens).NumOfPlayers == 2)
                 {
                     m_Player2.DrawLives(SpriteBatch);
                     m_Player2.DrawScore(SpriteBatch);
                 }
+
+                SpriteBatch.End();
             }
             catch
             {
                 Console.WriteLine("Draw Player before screen");
             }
-
-            SpriteBatch.End();
         }
     }
 }

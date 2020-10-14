@@ -72,6 +72,18 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             Green = 2,
         }
 
+        public override void Draw (GameTime gameTime)
+        {
+            try
+            {
+                base.Draw(gameTime);
+            }
+            catch
+            {
+                Console.WriteLine("Try");
+            }
+        }
+
         public void DrawLives(SpriteBatch i_SpriteBatch)
         {
             for(int i = 1; i <= Lifes; i++)
@@ -86,11 +98,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         public void DrawScore(SpriteBatch i_SpriteBatch)
         {
             i_SpriteBatch.DrawString(m_Score.m_ConsolasFont, $"P{m_PlayerNumber} Score:{m_Score.Score}", new Vector2(0, (m_PlayerNumber - 1) * 20), m_TextColor);
-        }
-
-        public void BeginDraw()
-        {
-            m_SpriteBatch.Begin();
         }
     }
 }

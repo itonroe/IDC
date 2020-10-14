@@ -27,6 +27,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
         public override void Initialize()
         {
             base.Initialize();
+            m_Background.Scales = new Vector2(Game.Window.ClientBounds.Width / m_Background.WidthBeforeScale, Game.Window.ClientBounds.Height / m_Background.HeightBeforeScale);
         }
         
         public override void Update(GameTime gameTime)
@@ -70,10 +71,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
         {
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
 
-            SpriteBatch.DrawString(consolasFont, $"Game Over, {m_Score}\n\n" +
+            SpriteBatch.DrawString(consolasFont, $"Game Over!!!\n{m_Score}\n\n" +
                                                  $"     HOME - Start New Game\n" +
                                                  $"     M     - Main Menu\n" +
-                                                 $"     Esc   - Exit", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.White);
+                                                 $"     Esc   - Exit", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.Red);
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
