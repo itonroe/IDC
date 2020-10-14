@@ -74,7 +74,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
             SpriteBatch.DrawString(consolasFont, $"Game Over!!!\n{m_Score}\n\n" +
                                                  $"     HOME - Start New Game\n" +
                                                  $"     M     - Main Menu\n" +
-                                                 $"     Esc   - Exit", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.Red);
+                                                 $"     Esc   - Exit", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.Yellow);
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)

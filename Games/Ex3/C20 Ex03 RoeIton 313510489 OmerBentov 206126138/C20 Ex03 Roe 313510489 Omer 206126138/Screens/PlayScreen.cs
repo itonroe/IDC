@@ -193,6 +193,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 (Game as GameWithScreens).ToogleMuteAllSounds();
             }
 
+            
+
             updateShip(gameTime);
             updateEnemies(gameTime);
             updateMotherShip(gameTime);
@@ -455,7 +457,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         {
             if (InputManager.KeyPressed(Keys.Escape))
             {
-                System.Windows.Forms.MessageBox.Show(m_Player1.Score.Score.ToString() + "\n" + m_Player2.Score.Score.ToString(), "Game Over");
+                printScore();
             }
 
             if (InputManager.KeyHeld(Keys.P))
