@@ -131,6 +131,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
                         m_MenuItems[1] = $"Background Music Volume: {m_BackgroundMusicVolume}";
                         break;
+
                     case 2:
                         if (m_SoundEffectsVolume > 0)
                         {
@@ -140,9 +141,12 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
                         m_MenuItems[2] = $"Sounds Effects Volume: {m_SoundEffectsVolume}";
                         break;
                 }
-            }
 
-            UpdateSettings();
+                if((Game as GameWithScreens).SoundsOn)
+                {
+                    UpdateSettings();
+                }
+            }
 
             if (InputManager.KeyPressed(Keys.Enter) && m_CurrentMenuItemIndex == 3)
             {
