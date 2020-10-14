@@ -213,7 +213,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
         {
             for (int i = 0; i < m_Enemies.GetLength(0); i++)
             {
-                for (int j = 0; j< m_Enemies.GetLength(1); j++)
+                for (int j = 0; j < m_Enemies.GetLength(1); j++)
                 {
                     m_Enemies[i, j].SetPosition(j, i);
                 }
@@ -251,7 +251,9 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                     if(i_ship.Bullet1.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet1))
                     {
                         enemyGotHit = m_Enemies[i, j];
-                    } else if (i_ship.Bullet2.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet2))
+                    }
+                    else 
+                    if (i_ship.Bullet2.IsActive && m_Enemies[i, j].IsAlive && BulletIntersectsEnemy(m_Enemies[i, j], i_ship.Bullet2))
                     {
                         enemyGotHit = m_Enemies[i, j];
                     }

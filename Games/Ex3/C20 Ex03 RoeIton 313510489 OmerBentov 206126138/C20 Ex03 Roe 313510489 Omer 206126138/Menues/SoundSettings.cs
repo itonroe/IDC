@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 {
-    class SoundSettings : GameScreen
+    public class SoundSettings : GameScreen
     {
         private Background m_Background;
         private List<string> m_MenuItems;
@@ -99,13 +99,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
                         break;
                     case 1:
                         if (m_BackgroundMusicVolume < 100)
+                        {
                             m_BackgroundMusicVolume += 10;
+                        }
 
                         m_MenuItems[1] = $"Background Music Volume: {m_BackgroundMusicVolume}";
                         break;
                     case 2:
                         if (m_SoundEffectsVolume < 100)
+                        {
                             m_SoundEffectsVolume += 10;
+                        }
 
                         m_MenuItems[2] = $"Sounds Effects Volume: {m_SoundEffectsVolume}";
                         break;
@@ -121,13 +125,18 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
                         break;
                     case 1:
                         if (m_BackgroundMusicVolume > 0)
+                        {
                             m_BackgroundMusicVolume -= 10;
+                        }
 
                         m_MenuItems[1] = $"Background Music Volume: {m_BackgroundMusicVolume}";
                         break;
                     case 2:
                         if (m_SoundEffectsVolume > 0)
+                        {
                             m_SoundEffectsVolume -= 10;
+                        }
+
                         m_MenuItems[2] = $"Sounds Effects Volume: {m_SoundEffectsVolume}";
                         break;
                 }
@@ -173,7 +182,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
             SpriteBatch.End();
         }
 
-
         private void drawMenuItems()
         {
             Color ActiveColor = Color.Yellow;
@@ -181,13 +189,18 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
 
-            int startY = GraphicsDevice.Viewport.Height / 2 - 30;
+            int startY = (GraphicsDevice.Viewport.Height / 2) - 30;
             int offset = 20;
             int i = 0;
 
             foreach (string menuItem in m_MenuItems)
             {
-                SpriteBatch.DrawString(consolasFont, $"{m_MenuItems[i]}", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, startY + (offset * i)), i == m_CurrentMenuItemIndex ? ActiveColor : InActiveColor);
+                SpriteBatch.DrawString(
+                    consolasFont,
+                    $"{m_MenuItems[i]}",
+                    new Vector2((GraphicsDevice.Viewport.Width / 2) - 180,
+                    startY + (offset * i)),
+                    i == m_CurrentMenuItemIndex ? ActiveColor : InActiveColor);
 
                 i++;
             }

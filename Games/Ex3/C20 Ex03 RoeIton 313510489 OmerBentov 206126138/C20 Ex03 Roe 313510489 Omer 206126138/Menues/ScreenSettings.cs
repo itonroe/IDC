@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 {
-    class ScreenSettings : GameScreen
+    public class ScreenSettings : GameScreen
     {
         private Background m_Background;
         private List<string> m_MenuItems;
@@ -74,7 +74,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
                 }
             }
 
-            if ((InputManager.KeyPressed(Keys.PageUp) || InputManager.KeyPressed(Keys.PageDown)))
+            if (InputManager.KeyPressed(Keys.PageUp) || InputManager.KeyPressed(Keys.PageDown))
             {
                 switch (m_CurrentMenuItemIndex)
                 {
@@ -138,13 +138,18 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Menues
 
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
 
-            int startY = GraphicsDevice.Viewport.Height / 2 - 30;
+            int startY = (GraphicsDevice.Viewport.Height / 2) - 30;
             int offset = 20;
             int i = 0;
 
             foreach (string menuItem in m_MenuItems)
             {
-                SpriteBatch.DrawString(consolasFont, $"{m_MenuItems[i]}", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, startY + (offset * i)), i == m_CurrentMenuItemIndex ? ActiveColor : InActiveColor);
+                SpriteBatch.DrawString(
+                    consolasFont,
+                    $"{m_MenuItems[i]}",
+                    new Vector2((GraphicsDevice.Viewport.Width / 2 ) - 180, 
+                    startY + (offset * i)),
+                    i == m_CurrentMenuItemIndex ? ActiveColor : InActiveColor);
 
                 i++;
             }

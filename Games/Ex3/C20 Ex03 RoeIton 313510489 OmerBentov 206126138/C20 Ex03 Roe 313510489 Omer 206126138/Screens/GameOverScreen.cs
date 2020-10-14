@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 {
-    class GameOverScreen : GameScreen
+    public class GameOverScreen : GameScreen
     {
         private string m_Score;
-        Background m_Background;
+        public Background m_Background;
 
         public GameOverScreen(Game i_Game, string i_Score) : base(i_Game)
         {
@@ -36,19 +36,19 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 
             if (InputManager.KeyPressed(Keys.Home))
             {
-                //Start new Game
+                // Start new Game
                 (m_ScreensManager as ScreensMananger).Push(new PlayScreen(Game, 1));
                 ExitScreen();
                 this.ScreensManager.SetCurrentScreen(new LevelTransitionScreen(Game, 1));
             }
             else if (InputManager.KeyPressed(Keys.Escape))
             {
-                //Close Game
+                // Close Game
                 this.Game.Exit();
             }
             else if(InputManager.KeyPressed(Keys.M))
             {
-                //Open Menu
+                // Open Menu
                 (m_ScreensManager as ScreensMananger).Push(new PlayScreen(Game, 1));
                 (m_ScreensManager as ScreensMananger).Push(new LevelTransitionScreen(Game, 1));
                 ExitScreen();
@@ -70,11 +70,16 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
         private void drawInstructions()
         {
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
-
-            SpriteBatch.DrawString(consolasFont, $"Game Over!!!\n{m_Score}\n\n" +
+            string toPrint = $"Game Over!!!\n{m_Score}\n\n" +
                                                  $"     HOME - Start New Game\n" +
                                                  $"     M     - Main Menu\n" +
-                                                 $"     Esc   - Exit", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.Yellow);
+                                                 $"     Esc   - Exit";
+
+            SpriteBatch.DrawString(
+                consolasFont,
+                toPrint,
+                new Vector2((GraphicsDevice.Viewport.Width / 2) - 180, (GraphicsDevice.Viewport.Height / 2) - 30),
+                Color.Yellow);
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)

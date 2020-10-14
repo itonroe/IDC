@@ -11,11 +11,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 {
-    class PauseScreen : GameScreen
+    public class PauseScreen : GameScreen
     {
         public PauseScreen(Game i_Game) : base(i_Game)
         {
-            
             this.IsModal = true;
             this.IsOverlayed = true;
             this.BlackTintAlpha = 0.40f;
@@ -38,7 +37,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 
             if (InputManager.KeyPressed(Keys.R))
             {
-                //Return
+                // Return
                 ExitScreen();
             }
         }
@@ -58,8 +57,11 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
         {
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
 
-            SpriteBatch.DrawString(consolasFont, $"Pause Game\n\n" +
-                                                 $"R - Return", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.White);
+            SpriteBatch.DrawString(
+                consolasFont,
+                $"Pause Game\n\n" + $"R - Return",
+                new Vector2((GraphicsDevice.Viewport.Width / 2) - 180, (GraphicsDevice.Viewport.Height / 2) - 30),
+                Color.White);
         }
     }
 }

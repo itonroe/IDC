@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138
 {
-    class GameWithScreens : Game
+    public class GameWithScreens : Game
     {
         private GraphicsDeviceManager m_GraphicManager;
         private SoundEffectInstance m_BgSound;
@@ -46,18 +46,21 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             }
         }
 
-        public bool SoundsOn { 
+        public bool SoundsOn 
+        { 
             get
             {
                 return !m_OnMute;
             }
         }
 
-        public int NumOfPlayers { 
+        public int NumOfPlayers 
+        { 
             get
             {
                 return m_NumOfPlayers;
             }
+
             set
             {
                 m_NumOfPlayers = value;
@@ -74,25 +77,27 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         public SoundEffectInstance BackgroundSound
         {
-            set
-            {
-                m_BgSound = value;
-            }
             get
             {
                 return m_BgSound;
+            }
+
+            set
+            {
+                m_BgSound = value;
             }
         }
 
         public GraphicsDeviceManager GraphicManager
         {
-            set
-            {
-                m_GraphicManager = value;
-            }
             get
             {
                 return m_GraphicManager;
+            }
+
+            set
+            {
+                m_GraphicManager = value;
             }
         }
 
@@ -150,15 +155,15 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
         protected void LoadSounds()
         {
-            //Backgorund
+            ////Backgorund
             m_BgSound = this.Content.Load<SoundEffect>("Sounds/BGMusic").CreateInstance();
             m_BgSound.IsLooped = true;
             m_BgSound.Play();
 
-            //Menu Sound
+            ////Menu Sound
             m_MenuMove = this.Content.Load<SoundEffect>("Sounds/MenuMove").CreateInstance();
 
-            //Effects sounds
+            ////Effects sounds
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/SSGunShot").CreateInstance());
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/LifeDie").CreateInstance());
             m_EffectsSounds.Add(this.Content.Load<SoundEffect>("Sounds/EnemyGunShot").CreateInstance());
@@ -184,7 +189,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         {
             m_PrevBGSoundVolume = BackgroundSound.Volume;
 
-            BackgroundSound.Volume = 0;
+            m_BgSound.Volume = 0;
         }
 
         public void SetBGSound(float i_Volume)

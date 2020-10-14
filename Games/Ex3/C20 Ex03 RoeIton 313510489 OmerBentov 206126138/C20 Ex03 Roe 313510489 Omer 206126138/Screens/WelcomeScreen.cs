@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 {
-    class WelcomeScreen : GameScreen
+    public class WelcomeScreen : GameScreen
     {
-        Background m_Background;
+        private Background m_Background;
 
         public WelcomeScreen(Game i_Game) : base(i_Game)
         {
@@ -31,19 +31,19 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 
             if (InputManager.KeyPressed(Keys.Enter))
             {
-                //Start Game with Level 1
+                // Start Game with Level 1
                 ExitScreen();
             }
 
             if (InputManager.KeyPressed(Keys.Escape))
             {
-                //Close Game
+                // Close Game
                 this.Game.Exit();
             }
 
             if (InputManager.KeyPressed(Keys.M))
             {
-                //Open Menu
+                // Open Menu
                 ExitScreen();
                 this.ScreensManager.SetCurrentScreen(new MainMenu(this.Game));
             }
@@ -63,11 +63,16 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
         private void drawInstructions()
         {
             SpriteFont consolasFont = ContentManager.Load<SpriteFont>(@"Fonts\Consolas");
+            string toPrint = $"Hello Friend, Welcome! - Press a suitable key\n\n" +
+                $"     Enter - Start Game\n" +
+                $"     M     - Main Menu\n" +
+                $"     Esc   - Exit";
 
-            SpriteBatch.DrawString(consolasFont, $"Hello Friend, Welcome! - Press a suitable key\n\n" +
-                                                 $"     Enter - Start Game\n" +
-                                                 $"     M     - Main Menu\n" +
-                                                 $"     Esc   - Exit", new Vector2(GraphicsDevice.Viewport.Width / 2 - 180, GraphicsDevice.Viewport.Height / 2 - 30), Color.White);
+            SpriteBatch.DrawString(
+                consolasFont,
+                toPrint,
+                new Vector2((GraphicsDevice.Viewport.Width / 2) - 180, (GraphicsDevice.Viewport.Height / 2) - 30),
+                Color.White);
         }
     }
 }

@@ -6,8 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Infrastructure.ObjectModel;
 using Infrastructure.ObjectModel.Animators.ConcreteAnimators;
 using Infrastructure.ServiceInterfaces;
-using Vector2 = Microsoft.Xna.Framework.Vector2;
 using Infrastructure.ObjectModel.Screens;
+using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138
 {
@@ -28,7 +28,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             get { return m_Animating; }
             set { m_Animating = value; }
         }
-
 
         public Enemy(string i_Asset, GameScreen i_GameScreen) : base(i_Asset, i_GameScreen.Game)
         {

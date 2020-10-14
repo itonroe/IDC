@@ -72,7 +72,7 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
             Green = 2,
         }
 
-        public override void Draw (GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             try
             {

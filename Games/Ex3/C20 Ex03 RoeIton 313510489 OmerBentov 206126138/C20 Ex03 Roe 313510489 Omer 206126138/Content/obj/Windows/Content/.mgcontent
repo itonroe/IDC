@@ -4,19 +4,19 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/BarrierHit.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/BGMusic.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/EnemyGunShot.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/EnemyKill.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/GameOver.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/LevelWin.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/LifeDie.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/MenuMove.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/MotherShipKill.wav</File>
+    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/../../../../../../../../../../../../../Temp/XNA_Assets/Ex03/Sounds/SSGunShot.wav</File>
     <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Fonts/Consolas.spritefont</File>
     <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Screens/blank.jpeg</File>
     <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Screens/gradient.jpeg</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/BarrierHit.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/BGMusic.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/EnemyGunShot.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/EnemyKill.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/GameOver.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/LevelWin.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/LifeDie.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/MenuMove.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/MotherShipKill.wav</File>
-    <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sounds/SSGunShot.wav</File>
     <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sprites/Barrier_44x32.png</File>
     <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sprites/BG_Space01_1024x768.jpg</File>
     <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sprites/Bullet.png</File>
@@ -26,16 +26,16 @@
     <File>C:/Users/עומר/Desktop/שיעורים ועבודות/שנה ב/סמסטר ב/C#/IDC/Games/Ex3/C20 Ex03 RoeIton 313510489 OmerBentov 206126138/C20 Ex03 Roe 313510489 Omer 206126138/Content/Sprites/Ship02_32x32.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
+    <File>Sounds/BarrierHit.wav</File>
+    <File>Sounds/BGMusic.wav</File>
+    <File>Sounds/EnemyGunShot.wav</File>
+    <File>Sounds/EnemyKill.wav</File>
+    <File>Sounds/GameOver.wav</File>
+    <File>Sounds/LevelWin.wav</File>
+    <File>Sounds/LifeDie.wav</File>
+    <File>Sounds/MenuMove.wav</File>
+    <File>Sounds/MotherShipKill.wav</File>
+    <File>Sounds/SSGunShot.wav</File>
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

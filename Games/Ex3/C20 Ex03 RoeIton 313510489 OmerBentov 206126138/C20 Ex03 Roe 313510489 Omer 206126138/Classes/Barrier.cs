@@ -67,7 +67,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
 
             int yIteration;
 
-            // ship bullet
             if (i_bottom)
             {
                 yIteration = this.Texture.Height - 1;
@@ -85,7 +84,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Classes
                 }
             }
 
-            // Enemy bullet
             else
             {
                 for (int i = 0; i < this.Texture.Height && demageCounter > 0; i++) 

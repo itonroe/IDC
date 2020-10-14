@@ -7,7 +7,7 @@ using Infrastructure.ServiceInterfaces;
 
 namespace Infrastructure.Managers
 {
-    // TODO 10: Implement the collisions manager service:
+    //// TODO 10: Implement the collisions manager service:
     public class CollisionsManager : GameService, ICollisionsManager
     {
         protected readonly List<ICollidable> m_Collidables = new List<ICollidable>();

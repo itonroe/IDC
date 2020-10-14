@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
 {
-    class LevelTransitionScreen : GameScreen
+    public class LevelTransitionScreen : GameScreen
     {
         private Background m_Background;
         private int m_Level;
@@ -48,13 +48,17 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138.Screens
             if (m_SecondsShow.TotalSeconds >= 2)
             {
                 m_TimeToStart = "3";
-            } else if (m_SecondsShow.TotalSeconds >= 1 && m_SecondsShow.TotalSeconds < 2)
+            } 
+            else 
+            if (m_SecondsShow.TotalSeconds >= 1 && m_SecondsShow.TotalSeconds < 2)
             {
                 m_TimeToStart = "2";
-            } else if (m_SecondsShow.TotalSeconds >= 0 && m_SecondsShow.TotalSeconds < 1)
+            }
+            else if (m_SecondsShow.TotalSeconds >= 0 && m_SecondsShow.TotalSeconds < 1)
             {
                 m_TimeToStart = "1";
-            } else
+            }
+            else
             {
                 ExitScreen();
             }

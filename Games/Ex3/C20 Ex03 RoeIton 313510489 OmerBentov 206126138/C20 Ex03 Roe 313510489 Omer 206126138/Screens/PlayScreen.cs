@@ -44,11 +44,10 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
         // Barriers
         private Barriers m_Barriers;
 
-        //Background
-        Background m_Background;
+        // Background
+        private Background m_Background;
 
         private int m_GameLevel;
-
 
         public PlayScreen(Game i_Game, int i_GameLevel) : base(i_Game)
         {
@@ -81,7 +80,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
             m_Enemies = new Enemies(this, CalculateNumOfColumnsForEnemiesMatrix());
             m_Barriers = new Barriers(this, k_NumOfBarriers, CalculateBarriersSpeed());
 
-
             if (m_GameLevel == 1)
             {
                 try
@@ -95,10 +93,8 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
                     if ((Game as GameWithScreens).NumOfPlayers == 2)
                     {
-
                         m_Player2 = new Player(2, this);
                         m_Player2.Initialize();
-
 
                         this.Add(m_Player2);
                         this.Add(m_Player2.Bullet1);
@@ -193,8 +189,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 (Game as GameWithScreens).ToogleMuteAllSounds();
             }
 
-            
-
             updateShip(gameTime);
             updateEnemies(gameTime);
             updateMotherShip(gameTime);
@@ -254,7 +248,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
                 (Game as GameWithScreens).EffectsSounds[(int)GameWithScreens.eEffectsSounds.BarriersHit].Play();
                 printScore();
             }
-
 
             if ((Game as GameWithScreens).NumOfPlayers == 2)
             {
@@ -663,7 +656,6 @@ namespace C20_Ex03_Roe_313510489_Omer_206126138
 
             try
             {
-
                 SpriteBatch.Begin();
                 m_Player1.DrawLives(SpriteBatch);
                 m_Player1.DrawScore(SpriteBatch);
